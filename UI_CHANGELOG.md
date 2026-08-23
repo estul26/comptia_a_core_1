@@ -1,27 +1,36 @@
-# V5.3 UI Refresh
+# V6 UI — Study Workspace Redesign
 
-This release keeps the verified V5.2 study engine and refreshes the interface.
+This release keeps the reviewed V5.30 bilingual lesson data and the existing study engine, but substantially redesigns the interface around the way a learner actually uses the app.
 
-## Improvements
+## Major improvements
 
-- Cleaner two-level toolbar with search separated from study controls
-- Stronger course branding and clearer progress area
-- More readable objective hierarchy and navigation states
-- Refined English and Uyghur reading panes with language markers
-- Improved line length, spacing, headings, and paragraph rhythm
-- Better technical-term chips and action controls
-- More prominent Next button and sticky mobile navigation
-- New mobile objective selector so lesson navigation is no longer lost on small screens
-- Improved responsive layout for tablets and phones
-- Preserves dark mode, fonts, cards, recall, notes, bookmarks, search, progress, sharing, and offline/PWA behavior
+- Rebuilt the visual hierarchy around **course navigation → objective controls → bilingual reader**
+- New compact A+ course identity and a clearer progress card with live percentage
+- Cleaner objective navigation with stronger active states, sticky domain labels, better completion markers, and improved search
+- Consolidated the top toolbar so search and everyday reading controls stay visible while secondary actions live in a **More** menu
+- Split objective identity into clear objective/domain/position metadata instead of one crowded title line
+- Separated English and Uyghur objective titles for cleaner bilingual scanning
+- Redesigned the English and Uyghur panes as independent reading cards with more comfortable line length, spacing, headings, and sticky language headers
+- Improved technical-term chips, note editor, completion state, bookmark state, recall controls, resume reading, and previous/next navigation
+- Refined Cards mode to match the new visual system
+- Improved dark mode contrast and component consistency
+- Added stronger keyboard focus states and an `aria-live` toast status
+- Added reduced-motion support
+- Reworked tablet/mobile layouts with a sticky search toolbar, mobile objective selector, stacked reader cards, and sticky previous/next controls
+- Preserves progress, notes, bookmarks, search, synced scrolling, language layout, Uyghur font choice, reading position, Cards/recall mode, sharing, printing, installation, and offline/PWA behavior
+
+## Compatibility / data safety
+
+- No lesson text was removed or rewritten by the UI redesign
+- Existing localStorage keys were preserved, so saved browser progress and notes remain compatible
+- Existing element IDs required by the JavaScript study engine were preserved
+- Service-worker cache name was bumped so the refreshed interface is picked up cleanly after deployment
 
 ## Validation
 
-- 42 unique DOM IDs, no duplicates
-- All 42 JavaScript element references resolve
-- Embedded JavaScript syntax passes `node --check`
-- Service worker syntax passes `node --check`
-- `manifest.webmanifest` and `package.json` parse as valid JSON
-- 28 lessons present (intro + 27 objectives)
-- No empty English or Uyghur lesson data
-- No `_redirects` file
+- 47 unique DOM IDs, no duplicates
+- All JavaScript `$()` element references resolve to an existing ID
+- Embedded JavaScript passes `node --check`
+- Service worker passes `node --check`
+- `manifest.webmanifest`, `package.json`, and `wrangler.jsonc` parse as valid JSON/JSONC-compatible project files
+- 28 lessons remain present: introduction + 27 objectives

@@ -1,12 +1,12 @@
 {
-  "name": "CompTIA A+ Core 1 — English ↔ Uyghur Study",
+  "name": "CompTIA A+ Core 1 — English ↔ Uyghur Study Workspace",
   "short_name": "A+ Uyghur",
-  "description": "Bilingual English–Uyghur CompTIA A+ Core 1 study reader.",
+  "description": "Bilingual English–Uyghur CompTIA A+ Core 1 study workspace with progress, recall and offline support.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
-  "background_color": "#f4f6f8",
-  "theme_color": "#2563eb",
+  "background_color": "#f5f7fb",
+  "theme_color": "#1967d2",
   "lang": "en",
   "icons": [
     {

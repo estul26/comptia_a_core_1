@@ -97,3 +97,9 @@ V5.2 fixes the study-card alignment boundary bug, improves reading-position resu
 All exam objectives **1.1–1.3, 2.1–2.8, 3.1–3.8, 4.1–4.2, and 5.1–5.6** have received deep source-vs-Uyghur human-style review.
 
 The **Introduction** is not yet claimed as deeply reviewed.
+
+## V6 study workspace redesign
+
+The V6 interface keeps the reviewed V5.30 bilingual lesson content and study engine while making the app substantially calmer and easier to scan. Course navigation, objective controls, and the bilingual reader now have distinct visual levels; secondary toolbar actions are grouped under **More**; English and Uyghur reading panes use improved typography and spacing; and mobile navigation has been refined for phone-sized study sessions.
+
+Existing browser-saved progress, bookmarks, notes, font choice, reading position, language layout, and recall settings remain compatible.
