@@ -1,45 +1,76 @@
 # CompTIA A+ Core 1 — English ↔ Uyghur Study Reader
 
-A bilingual CompTIA A+ Core 1 study website with English and Uyghur side by side.
+A bilingual CompTIA A+ Core 1 study app with English and Uyghur side by side.
 
 ## Features
 
+- 27 CompTIA A+ Core 1 exam objectives
 - English ↔ Uyghur bilingual reading
-- 27 exam objectives
-- Search, bookmarks, progress, notes
-- Active recall: hide English or Uyghur
-- Better Uyghur typography and RTL handling
+- Improved Uyghur Arabic-script typography and RTL handling
+- Search, bookmarks, progress and personal notes
+- Active recall: hide English or hide Uyghur
 - Offline/PWA support
 - Shareable objective links
 - Installable on supported browsers/devices
-- Cloudflare Pages ready
+- Cloudflare Workers Static Assets deployment
 
-## Cloudflare Pages deployment
+## Cloudflare deployment
 
-Connect this GitHub repository to Cloudflare Pages.
+This repository is configured for **Cloudflare Workers Static Assets**.
 
-Recommended settings:
+Cloudflare deploy command:
 
-- Framework preset: None
+```bash
+npx wrangler deploy
+```
+
+The permanent configuration is stored in `wrangler.jsonc`:
+
+- Worker: `comptia-a-core-1`
+- Static assets directory: repository root (`.`)
 - Production branch: `main`
-- Build command: leave blank
-- Root directory: repository root
-- Build output directory: repository root (`.`) if Cloudflare asks for one
 
-The repository root contains `index.html`, `_headers`, `_redirects`, the web manifest, and service worker.
+`package.json` pins the Wrangler version used by the project so future deployments are more predictable.
+
+## Static asset controls
+
+`.assetsignore` prevents repository-only files such as `README.md`, `source/`,
+Wrangler configuration and local development files from being published as website assets.
+
+Keep these deployment files in the root because Wrangler reads them while deploying:
+
+- `_headers`
+- `_redirects`
+
+## Offline Uyghur font behavior
+
+The preferred online font remains **Noto Naskh Arabic**. The service worker now caches
+Google Fonts resources after the first successful online visit, so later offline visits can
+continue using the preferred Uyghur typography when those resources have already been loaded.
+
+The app still has local fallback fonts when the preferred web font is unavailable.
 
 ## Local preview
 
-You can open `index.html` directly for basic use.
-
-For service-worker/offline testing, serve the folder over HTTP instead, for example:
+Basic preview:
 
 ```bash
 python3 -m http.server 8080
 ```
 
-Then open `http://localhost:8080`.
+Then open:
 
-## Notes
+```text
+http://localhost:8080
+```
 
-Study progress, bookmarks, font settings, and notes are stored in the browser's localStorage.
+For Cloudflare-local behavior:
+
+```bash
+npm install
+npm run dev
+```
+
+## User data
+
+Study progress, bookmarks, reading position, font settings and notes are stored locally in the browser.

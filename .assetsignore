@@ -1,0 +1,13 @@
+# Repository / development files
+.git/
+.github/
+.wrangler/
+node_modules/
+.DS_Store
+README.md
+source/
+wrangler.jsonc
+package.json
+package-lock.json
+*.zip
+PATCH_INSTRUCTIONS.md
