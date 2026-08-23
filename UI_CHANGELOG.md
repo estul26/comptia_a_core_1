@@ -34,3 +34,11 @@ This release keeps the reviewed V5.30 bilingual lesson data and the existing stu
 - Service worker passes `node --check`
 - `manifest.webmanifest`, `package.json`, and `wrangler.jsonc` parse as valid JSON/JSONC-compatible project files
 - 28 lessons remain present: introduction + 27 objectives
+
+
+## V6.1 — Reading Space Update
+- Removed the large objective title/action header from the reading canvas.
+- Moved Complete, Bookmark, Notes, Resume, and Recall tools into the **More** menu.
+- Expanded the bilingual reader to use the freed vertical space.
+- Kept a compact objective selector on mobile.
+- Bumped the service-worker cache so the new layout appears after deployment.
