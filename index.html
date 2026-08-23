@@ -535,6 +535,59 @@ body.dark{--muted:#a8b5c6;--muted-2:#8e9caf}
 }
 @media print{.lesson-context{display:none!important}}
 
+
+/* =========================================================
+   v6.3 — Uyghur / Markdown formatting engine
+   Proper semantic rendering for all five course domains.
+   ========================================================= */
+.article strong{font-weight:820;color:var(--text)}
+.article code{
+  display:inline-block;max-width:100%;padding:.08em .38em;border:1px solid var(--line);
+  border-radius:5px;background:var(--panel-soft);color:var(--text);font:600 .88em/1.45 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace;
+  direction:ltr;unicode-bidi:isolate;vertical-align:.04em;overflow-wrap:anywhere
+}
+.article h3,.article h4,.article h5,.article h6{color:var(--text);font-weight:830;line-height:1.34;scroll-margin-top:74px}
+.article h3{font-size:1.23em;margin:1.75em 0 .72em;padding-bottom:.42em;border-bottom:1px solid var(--line)}
+.article h4{font-size:1.08em;margin:1.45em 0 .55em}
+.article h5{font-size:1em;margin:1.25em 0 .48em;color:color-mix(in srgb,var(--text) 90%,var(--muted))}
+.article h6{font-size:.94em;margin:1.15em 0 .42em;color:var(--muted);letter-spacing:.01em}
+.article h3:before{height:.92em}
+.article h4:before,.article h5:before,.article h6:before{content:none}
+.article ul,.article ol{margin:.55em 0 1.05em;padding-left:1.45em}
+.article ol{padding-left:1.7em}
+.article li{margin:.36em 0;padding-left:.16em}
+.article li>ul,.article li>ol{margin:.34em 0 .42em}
+.article li::marker{color:var(--accent);font-weight:780}
+.article .list-cont{display:block;margin-top:.26em;color:color-mix(in srgb,var(--text) 92%,var(--muted))}
+#ugArticle ul,#ugArticle ol{padding-left:0;padding-right:1.55em}
+#ugArticle ol{padding-right:1.85em}
+#ugArticle li{padding-left:0;padding-right:.12em;text-align:right}
+#ugArticle li::marker{color:#c56a05}
+#ugArticle h3,#ugArticle h4,#ugArticle h5,#ugArticle h6{text-align:right}
+#ugArticle h3{border-right:4px solid #d97706;padding-right:.58em}#ugArticle h3:before{display:none}
+.md-rule{border:0;border-top:1px solid var(--line);margin:1.6em 0}
+.md-quote{margin:1em 0 1.25em;padding:.78em 1em;border-left:4px solid var(--accent);border-radius:0 9px 9px 0;background:var(--accent2);color:var(--text)}
+.md-quote>p:first-child{margin-top:0}.md-quote>p:last-child{margin-bottom:0}
+#ugArticle .md-quote{border-left:0;border-right:4px solid #d97706;border-radius:9px 0 0 9px;background:var(--warn-soft);text-align:right}
+.md-table-wrap{width:100%;max-width:100%;overflow-x:auto;margin:1em 0 1.4em;border:1px solid var(--line);border-radius:10px;background:var(--panel);-webkit-overflow-scrolling:touch;box-shadow:0 1px 2px rgba(16,24,40,.025)}
+.md-table{width:100%;min-width:520px;border-collapse:separate;border-spacing:0;font-size:.91em;line-height:1.55}
+.md-table th,.md-table td{padding:10px 12px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);vertical-align:top;text-align:left;overflow-wrap:anywhere}
+.md-table th:last-child,.md-table td:last-child{border-right:0}.md-table tbody tr:last-child td{border-bottom:0}
+.md-table th{background:var(--panel-soft);font-weight:800;color:var(--text);white-space:normal}
+.md-table tbody tr:nth-child(even) td{background:color-mix(in srgb,var(--panel-soft) 42%,transparent)}
+#ugArticle .md-table{direction:rtl}
+#ugArticle .md-table th,#ugArticle .md-table td{text-align:right;border-right:0;border-left:1px solid var(--line)}
+#ugArticle .md-table th:last-child,#ugArticle .md-table td:last-child{border-left:0}
+#ugArticle .md-table .md-ltr-cell{direction:ltr;text-align:left;unicode-bidi:isolate}
+.ltr-run{unicode-bidi:isolate}
+.article p:hover .copybtn,.article li:hover .copybtn,.article h3:hover .copybtn,.article h4:hover .copybtn,.article h5:hover .copybtn,.article h6:hover .copybtn{opacity:.5}
+@media(max-width:900px){
+  .article h3{font-size:1.17em;margin-top:1.55em}.article h4{font-size:1.055em}.md-table{min-width:480px;font-size:.88em}.md-table th,.md-table td{padding:9px 10px}
+}
+@media print{
+  .md-table-wrap{overflow:visible;box-shadow:none}.md-table{min-width:0}.article code{border-color:#bbb;background:#f5f5f5}.md-quote{break-inside:avoid}.md-table tr{break-inside:avoid}
+}
+
 </style>
 </head>
 <body>
@@ -707,44 +760,195 @@ let scrollLock=false, suppressScrollSave=false;
 
 function esc(s){return s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 function rich(text,q="",rtl=false){
-  const blocks=text.split(/\n\s*\n/).map(x=>x.trim()).filter(Boolean);
-  let out="", matches=0;
+  // v6.3 local Markdown renderer. The lesson data is trusted/local, but every
+  // text fragment is escaped before markup is emitted. This deliberately
+  // supports only the structures used by the course notes.
+  const lines=String(text||"").replace(/\r\n?/g,"\n").split("\n");
+  let matches=0;
   const qre=q?new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g,"\\$&"),"gi"):null;
-  const formatRaw=s=>{
-    // Split mixed Uyghur/English text. Isolating Latin/number runs prevents
-    // strings such as TCP/UDP, Wi-Fi, 220-1201, IPv4, and IPs from reversing.
-    const pieces = rtl
-      ? s.split(/([A-Za-z][A-Za-z0-9+_.:/()#-]*(?:\s+[A-Za-z0-9][A-Za-z0-9+_.:/()#-]*)*|\b\d+(?:[.:/-]\d+)+\b)/g)
-      : [s];
-    return pieces.map(part=>{
-      if(!part) return "";
-      const isLtr = rtl && (/^[A-Za-z]/.test(part) || /^\d+(?:[.:/-]\d+)+$/.test(part));
-      let x=esc(part);
-      if(qre)x=x.replace(qre,m=>{matches++;return "<mark>"+m+"</mark>"});
-      return isLtr ? '<bdi dir="ltr">'+x+'</bdi>' : x;
-    }).join("");
-  };
-  const hi=s=>formatRaw(s);
-  for(const b of blocks){
-    const lines=b.split("\n").map(x=>x.trim()).filter(Boolean);
-    if(lines.length && lines.every(x=>x.startsWith("- "))){
-      out+="<ul>"+lines.map(x=>"<li>"+hi(x.slice(2))+"</li>").join("")+"</ul>";continue;
-    }
-    if(lines.length===1 && /^#{1,4}\s+/.test(lines[0])){
-      out+="<h3>"+hi(lines[0].replace(/^#{1,4}\s+/,""))+"</h3>";continue;
-    }
-    // Mixed markdown list paragraph
-    if(lines.some(x=>x.startsWith("- "))){
-      let normal=[], lis=[];
-      for(const line of lines){ if(line.startsWith("- ")) lis.push(line.slice(2)); else normal.push(line.replace(/^#{1,4}\s+/,"")); }
-      if(normal.length) out+="<p>"+hi(normal.join(" "))+"</p>";
-      if(lis.length) out+="<ul>"+lis.map(x=>"<li>"+hi(x)+"</li>").join("")+"</ul>";
-      continue;
-    }
-    const txt=lines.join(" ").replace(/^#{1,4}\s+/,"");
-    out+="<p>"+hi(txt)+"</p>";
+
+  function markAndEscape(raw){
+    let x=esc(raw);
+    if(qre)x=x.replace(qre,m=>{matches++;return "<mark>"+m+"</mark>"});
+    return x;
   }
-  return [out,matches];
+
+  function isPureLtr(raw){
+    const hasLatin=/[A-Za-z]/.test(raw);
+    const hasArabic=/[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF]/.test(raw);
+    return hasLatin&&!hasArabic;
+  }
+
+  function plain(raw,forceLtr=false){
+    if(!rtl || forceLtr)return markAndEscape(raw);
+    // Entire English-only fragments get one isolation wrapper. This is
+    // important for curly apostrophes and arrows (for example "won’t" or
+    // "Power → Network → IP"), which can otherwise visually reorder in RTL.
+    if(isPureLtr(raw))return '<bdi dir="ltr" class="ltr-run">'+markAndEscape(raw)+'</bdi>';
+    // In genuinely mixed Uyghur/English text, isolate technical LTR runs.
+    const re=/([A-Za-z][A-Za-z0-9+_.:/()#'’–-]*(?:[ \t]+[A-Za-z0-9][A-Za-z0-9+_.:/()#'’–-]*)*|\b\d+(?:[.:/-]\d+)*\b)/g;
+    return raw.split(re).map(part=>{
+      if(!part)return "";
+      const isLtr=/^[A-Za-z]/.test(part)||/^\d+(?:[.:/-]\d+)*$/.test(part);
+      const x=markAndEscape(part);
+      return isLtr?'<bdi dir="ltr">'+x+'</bdi>':x;
+    }).join("");
+  }
+
+  function inline(raw){
+    raw=String(raw||"");
+    let out="",i=0;
+    while(i<raw.length){
+      const bold=raw.indexOf("**",i);
+      const code=raw.indexOf("`",i);
+      let next=-1,kind="";
+      if(bold!==-1 && (code===-1||bold<code)){next=bold;kind="bold"}
+      else if(code!==-1){next=code;kind="code"}
+      if(next===-1){out+=plain(raw.slice(i));break}
+      if(next>i)out+=plain(raw.slice(i,next));
+      if(kind==="bold"){
+        const close=raw.indexOf("**",next+2);
+        if(close===-1){out+=plain(raw.slice(next));break}
+        out+="<strong>"+inline(raw.slice(next+2,close))+"</strong>";
+        i=close+2;
+      }else{
+        const close=raw.indexOf("`",next+1);
+        if(close===-1){out+=plain(raw.slice(next));break}
+        out+='<code dir="ltr">'+plain(raw.slice(next+1,close),true)+"</code>";
+        i=close+1;
+      }
+    }
+    return out;
+  }
+
+  function indentWidth(ws){return ws.replace(/\t/g,"    ").length}
+  function listInfo(line){
+    const m=line.match(/^(\s*)([-+*]|\d+[.)])\s+(.*)$/);
+    if(!m)return null;
+    return {indent:indentWidth(m[1]),ordered:/^\d/.test(m[2]),num:parseInt(m[2],10)||1,content:m[3]};
+  }
+  function isHr(line){return /^\s*(?:(?:-{3,})|(?:_{3,})|(?:\*\s*\*\s*\*\s*))\s*$/.test(line)}
+  function isHeading(line){return /^\s*#{1,6}\s+/.test(line)}
+  function isQuote(line){return /^\s*>\s?/.test(line)}
+  function splitRow(line){
+    let x=line.trim();
+    if(x.startsWith("|"))x=x.slice(1);
+    if(x.endsWith("|"))x=x.slice(0,-1);
+    return x.split("|").map(c=>c.trim());
+  }
+  function isTableDivider(line){
+    const cells=splitRow(line);
+    return cells.length>1 && cells.every(c=>/^:?-{3,}:?$/.test(c.replace(/\s+/g,"")));
+  }
+  function tableStart(i,arr){
+    return i+1<arr.length && arr[i].includes("|") && isTableDivider(arr[i+1]);
+  }
+  function blockStart(i,arr){
+    if(i>=arr.length)return true;
+    const line=arr[i];
+    if(!line.trim())return true;
+    return isHeading(line)||isHr(line)||isQuote(line)||!!listInfo(line)||tableStart(i,arr);
+  }
+
+  function parseList(arr,start,baseIndent){
+    const first=listInfo(arr[start]);
+    if(!first)return {html:"",next:start};
+    const ordered=first.ordered;
+    const tag=ordered?"ol":"ul";
+    const startAttr=ordered && first.num!==1?' start="'+first.num+'"':"";
+    const items=[];
+    let i=start;
+    while(i<arr.length){
+      const m=listInfo(arr[i]);
+      if(!m||m.indent<baseIndent)break;
+      if(m.indent>baseIndent){
+        if(!items.length)break;
+        const nested=parseList(arr,i,m.indent);
+        items[items.length-1].nested+=nested.html;
+        i=nested.next;
+        continue;
+      }
+      if(m.ordered!==ordered)break;
+      const item={body:inline(m.content),nested:""};
+      i++;
+      // Allow a more-indented continuation line under the current list item.
+      while(i<arr.length && arr[i].trim() && !listInfo(arr[i]) && !isHeading(arr[i]) && !isHr(arr[i]) && !isQuote(arr[i]) && !tableStart(i,arr)){
+        const ws=(arr[i].match(/^\s*/)||[""])[0];
+        if(indentWidth(ws)<=baseIndent)break;
+        item.body+='<span class="list-cont">'+inline(arr[i].trim())+'</span>';
+        i++;
+      }
+      items.push(item);
+    }
+    const html='<'+tag+startAttr+'>'+items.map(it=>'<li>'+it.body+it.nested+'</li>').join("")+'</'+tag+'>';
+    return {html,next:i};
+  }
+
+  function parseBlocks(arr){
+    let out="",i=0;
+    while(i<arr.length){
+      const line=arr[i];
+      if(!line.trim()){i++;continue}
+
+      if(isHr(line)){
+        out+='<hr class="md-rule" aria-hidden="true">';i++;continue;
+      }
+
+      const hm=line.match(/^\s*(#{1,6})\s+(.+)$/);
+      if(hm){
+        const level=Math.min(6,Math.max(3,hm[1].length+2));
+        out+='<h'+level+' class="md-heading md-level-'+hm[1].length+'">'+inline(hm[2].trim())+'</h'+level+'>';
+        i++;continue;
+      }
+
+      if(tableStart(i,arr)){
+        const heads=splitRow(arr[i]);
+        const aligns=splitRow(arr[i+1]).map(c=>c.startsWith(":")&&c.endsWith(":")?"center":c.endsWith(":")?"right":c.startsWith(":")?"left":"");
+        i+=2;
+        const rows=[];
+        while(i<arr.length && arr[i].trim() && arr[i].includes("|") && !isHr(arr[i])){
+          rows.push(splitRow(arr[i]));i++;
+        }
+        const cellAttrs=(c,k)=>{
+          let attrs=aligns[k]?' style="text-align:'+aligns[k]+'"':'';
+          if(rtl&&isPureLtr(c))attrs+=' dir="ltr" class="md-ltr-cell"';
+          return attrs;
+        };
+        const th=heads.map((c,k)=>'<th'+cellAttrs(c,k)+'>'+inline(c)+'</th>').join("");
+        const body=rows.map(row=>'<tr>'+heads.map((_,k)=>{const c=row[k]||"";return '<td'+cellAttrs(c,k)+'>'+inline(c)+'</td>'}).join("")+'</tr>').join("");
+        out+='<div class="md-table-wrap" role="region" aria-label="Scrollable comparison table" tabindex="0"><table class="md-table"><thead><tr>'+th+'</tr></thead><tbody>'+body+'</tbody></table></div>';
+        continue;
+      }
+
+      if(isQuote(line)){
+        const quoted=[];
+        while(i<arr.length && (isQuote(arr[i])||!arr[i].trim())){
+          if(!arr[i].trim())quoted.push("");
+          else quoted.push(arr[i].replace(/^\s*>\s?/,""));
+          i++;
+        }
+        out+='<blockquote class="md-quote">'+parseBlocks(quoted)+'</blockquote>';
+        continue;
+      }
+
+      const li=listInfo(line);
+      if(li){
+        const list=parseList(arr,i,li.indent);out+=list.html;i=list.next;continue;
+      }
+
+      const para=[];
+      while(i<arr.length && arr[i].trim() && !blockStart(i,arr)){
+        para.push(arr[i].trim());i++;
+      }
+      // Safety fallback: consume at least one line if an unusual construct was
+      // not matched above.
+      if(!para.length){para.push(arr[i].trim());i++}
+      out+='<p>'+inline(para.join(" "))+'</p>';
+    }
+    return out;
+  }
+
+  return [parseBlocks(lines),matches];
 }
 
 const TECH_TERMS=[
@@ -779,7 +983,7 @@ function renderTerms(){
   });
 }
 function addCopyButtons(root){
-  root.querySelectorAll("p,h3,li").forEach(el=>{
+  root.querySelectorAll("p,h3,h4,h5,h6,li").forEach(el=>{
     const b=document.createElement("button");b.className="copybtn";b.type="button";b.textContent="Copy";
     b.onclick=async e=>{
       e.stopPropagation();
@@ -1004,7 +1208,7 @@ $("ugPane").addEventListener("scroll",()=>{
 });
 ["enArticle","ugArticle"].forEach(id=>{
   $(id).addEventListener("mouseover",e=>{
-    const t=e.target.closest("p,li,h3");
+    const t=e.target.closest("p,li,h3,h4,h5,h6,blockquote");
     if(!t)return;
     $(id).querySelectorAll(".focus-line").forEach(x=>x.classList.remove("focus-line"));
     t.classList.add("focus-line");

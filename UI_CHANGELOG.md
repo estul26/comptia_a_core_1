@@ -44,6 +44,20 @@ This release keeps the reviewed V5.30 bilingual lesson data and the existing stu
 - Bumped the service-worker cache so the new layout appears after deployment.
 
 
+
+## V6.3 — Uyghur Formatting Engine
+
+- Replaced the simple paragraph/bullet renderer with a safe local Markdown renderer.
+- Added real heading hierarchy for `#` through `######`.
+- Added `**bold**` and inline `` `code` `` rendering.
+- Added ordered lists and nested ordered/unordered lists.
+- Added responsive Markdown tables with RTL-aware Uyghur alignment.
+- Added blockquote / study-note callouts and horizontal separators.
+- Preserved LTR isolation for English technical terms, ports, versions, paths and IP addresses inside Uyghur.
+- Added whole-fragment/cell LTR isolation for English-only RTL content, preventing punctuation such as curly apostrophes and arrows from reordering.
+- Extended copy/focus behavior to the new heading levels.
+- Bumped the PWA cache to V6.3.
+
 ## V6.2 — Desktop Polish
 - Reduced the full-desktop sidebar to 280px; compact desktop hides the sidebar so the bilingual reader stays wide.
 - Simplified the main toolbar to Search, Language, Sync, Cards, and More.
