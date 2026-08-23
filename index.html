@@ -214,6 +214,94 @@ kbd{font-family:inherit;font-size:11px;border:1px solid var(--line);background:v
   .mobile-lang-tabs .btn{flex:1}
 }
 
+
+/* v5.3 — UI refinement */
+:root{
+  --bg:#f3f6fa;--panel:#ffffff;--panel2:#f7f9fc;--text:#162033;--muted:#64748b;
+  --line:#dbe3ed;--accent:#1769e0;--accent2:#edf5ff;--good:#16803b;--warn:#a16207;
+  --shadow:0 10px 30px rgba(26,46,77,.08);--sidebar:316px;
+}
+body.dark{
+  --bg:#0b111a;--panel:#121b27;--panel2:#182331;--text:#eef4fb;--muted:#9aa9bb;
+  --line:#29384a;--accent:#65a7ff;--accent2:#122b49;--shadow:0 12px 34px rgba(0,0,0,.26);
+}
+body{background:var(--bg)}
+.app{grid-template-columns:var(--sidebar) minmax(0,1fr)}
+.sidebar{background:var(--panel);box-shadow:8px 0 28px rgba(27,45,73,.035);z-index:6}
+.brand{padding:22px 20px 18px;position:relative}
+.brand:before{content:"A+";display:grid;place-items:center;width:42px;height:42px;margin-bottom:13px;border-radius:11px;background:#1769e0;color:#fff;font-weight:800;font-size:16px;letter-spacing:-.04em;box-shadow:0 6px 16px rgba(23,105,224,.22)}
+.brand h1{font-size:18px;letter-spacing:-.025em}.brand p{line-height:1.5}
+#netStatus{font-weight:700}
+.progress-wrap{padding:16px 20px}.progress{height:7px;border:0;background:var(--panel2)}
+.progress>div{border-radius:99px}.progress-label{font-weight:600}
+.side-search{padding:13px 14px 8px}.side-search input{height:40px;padding:9px 12px;background:var(--panel2)}
+#bookmarksOnlyBtn{background:transparent!important;border-style:dashed}
+.nav{padding:5px 10px 30px}.domain-title{padding:17px 10px 7px;font-size:10px;letter-spacing:.09em}
+.nav-item{padding:10px 11px;border-radius:8px;margin:1px 0;border-left:3px solid transparent}
+.nav-item:hover{background:var(--panel2)}
+.nav-item.active{background:var(--accent2);border-left-color:var(--accent);color:var(--accent);font-weight:700}
+.nav-item .num{width:42px;color:var(--muted);font-weight:700}.nav-item.active .num{color:var(--accent)}
+.main{background:var(--bg)}
+.top{position:relative;display:block;padding:9px 16px;background:color-mix(in srgb,var(--panel) 96%,transparent);backdrop-filter:blur(16px);box-shadow:0 1px 0 var(--line);z-index:30}
+.top-main{display:flex;align-items:center;gap:9px;position:relative}.top-main .grow{flex:1}
+.search-wrap{position:relative;max-width:760px}.search-wrap .search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:18px;color:var(--muted);pointer-events:none}
+.top input{height:42px;padding:9px 13px 9px 38px;background:var(--panel2);border-color:transparent!important;box-shadow:inset 0 0 0 1px var(--line)}
+.top input:focus{outline:2px solid color-mix(in srgb,var(--accent) 28%,transparent);outline-offset:1px;background:var(--panel)}
+.top-tools{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:8px;overflow-x:auto;scrollbar-width:none}.top-tools::-webkit-scrollbar{display:none}
+.tool-group{display:flex;gap:6px;align-items:center;white-space:nowrap}.view-tools{padding-right:8px;border-right:1px solid var(--line)}
+.top select,.btn{height:34px;border-radius:7px;padding:6px 9px;font-size:12px;font-weight:600}
+.btn{box-shadow:none}.btn:hover{background:var(--panel2);border-color:#b7c7da}.btn.on{box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 30%,transparent)}
+.btn.compact{min-width:34px;padding-inline:7px}.focus-toggle{height:42px;padding-inline:12px}
+.global-results{top:51px;left:52px;right:auto;width:min(760px,calc(100vw - 390px));border-radius:10px;padding:7px;box-shadow:0 18px 46px rgba(20,39,67,.16)}
+.lesson-head{padding:24px 28px 14px;background:var(--bg);border-bottom:0}
+.lesson-kicker{display:flex;align-items:center;gap:8px;margin-bottom:6px}.objective-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px var(--accent2)}
+.crumb{margin:0;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.065em}
+.lesson-head h2{max-width:1150px;font-size:clamp(22px,2.15vw,31px);line-height:1.22;letter-spacing:-.035em;margin:0 0 14px;color:var(--text)}
+.lesson-actions{padding:10px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);gap:7px}
+.complete{padding-right:10px;font-weight:600}.complete input{width:16px;height:16px;accent-color:var(--accent)}
+.recall-tools{gap:5px}.reading-mode-note{margin-left:auto}
+.resume-pill{border-radius:7px;padding:6px 9px;font-weight:700}
+.note{border-radius:9px;box-shadow:none;background:var(--panel)}.note textarea{border-radius:7px;background:var(--panel2)}
+.termbar{padding:11px 0 0;gap:5px}.termchip{border-radius:6px;padding:5px 8px;background:transparent;font-weight:650}.termchip:hover,.termchip.active{background:var(--accent2)}
+.content-wrap{padding:0 24px 22px;max-width:1900px;width:100%;margin:0 auto}
+.reader{border-radius:10px;box-shadow:0 8px 28px rgba(27,45,73,.055);border-color:#d7e1ec;min-height:520px}
+body.dark .reader{border-color:var(--line)}
+.pane{padding:0 clamp(22px,2.2vw,38px) 72px;background:var(--panel)}
+#enPane{background:color-mix(in srgb,var(--panel) 97%,#e9f3ff)}
+#ugPane{background:color-mix(in srgb,var(--panel) 98%,#fff8e7)}
+.pane+.pane{border-left:1px solid #cfdbea}
+body.dark .pane+.pane{border-left-color:var(--line)}
+.pane-title{margin:0 calc(-1 * clamp(22px,2.2vw,38px)) 24px;padding:14px clamp(22px,2.2vw,38px);background:color-mix(in srgb,var(--panel) 95%,transparent);box-shadow:0 1px 0 var(--line)}
+.pane-title>div{display:flex;align-items:center;gap:8px}.pane-title strong{font-size:13px;letter-spacing:.01em}.pane-title span{font-size:10px;text-transform:uppercase;letter-spacing:.055em}
+.lang-dot{width:7px;height:7px;border-radius:50%;display:inline-block}.en-dot{background:#1769e0}.ug-dot{background:#d97706}
+.article{max-width:780px;margin:0 auto;color:var(--text);line-height:1.84}
+.article p{margin-bottom:1.3em}.article h3{font-size:1.12em;line-height:1.35;margin:1.8em 0 .8em;padding-bottom:.35em;border-bottom:1px solid var(--line)}
+#ugArticle{line-height:2.22;max-width:820px}.copybtn{opacity:.18;transition:opacity .15s}.article p:hover .copybtn,.article li:hover .copybtn,.article h3:hover .copybtn{opacity:1}
+.bottom{margin-top:12px;padding:0 2px}.bottom .btn{height:38px;padding-inline:15px}.bottom #nextBtn{background:var(--accent);border-color:var(--accent);color:#fff}.bottom #nextBtn:hover{filter:brightness(.96)}
+.pair-view{border-radius:10px;box-shadow:var(--shadow);padding:14px}.pair-card{border-radius:8px;box-shadow:none;margin-bottom:10px}.pair-side{padding:18px 20px}.align-badge{border-radius:5px}
+.mobile-study-nav{display:none}
+.toast{border-radius:7px;box-shadow:0 12px 28px rgba(0,0,0,.18)}
+@media(max-width:1050px){
+  :root{--sidebar:270px}.top-tools{justify-content:flex-start}.reading-mode-note{display:none}.global-results{width:calc(100vw - 330px)}
+}
+@media(max-width:760px){
+  .app{display:block}.sidebar{display:none}.main{overflow:visible}.top{position:sticky;top:0;padding:8px 10px;z-index:40}
+  .top-main{gap:6px}.focus-toggle{display:none!important}.search-wrap{max-width:none}.top input{height:40px}
+  .top-tools{margin-top:7px;padding-bottom:2px}.view-tools{border-right:0;padding-right:0}.top select,.btn{height:33px}
+  #ugFont{max-width:175px}.global-results{top:49px;left:0;right:0;width:100%;max-height:60vh}
+  .mobile-study-nav{display:grid;grid-template-columns:auto 1fr;align-items:center;gap:9px;margin:0 0 16px;padding:9px 10px;background:var(--panel);border:1px solid var(--line);border-radius:8px}
+  .mobile-study-nav label{font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+  .mobile-study-nav select{width:100%;min-width:0;border:0;background:var(--panel2);color:var(--text);border-radius:6px;padding:8px;font-weight:650}
+  .lesson-head{padding:17px 12px 10px}.lesson-head h2{font-size:21px;margin-bottom:12px}.lesson-actions{overflow-x:auto;flex-wrap:nowrap;padding:8px 0;scrollbar-width:none}.lesson-actions::-webkit-scrollbar{display:none}.complete{flex:0 0 auto}.recall-tools{flex:0 0 auto}.termbar{padding-top:9px}
+  .content-wrap{padding:0 8px 14px}.reader{border-radius:8px;overflow:visible}.pane{height:62vh;padding:0 18px 56px}.pane-title{margin:0 -18px 18px;padding:12px 18px}.pane+.pane{border-left:0;border-top:1px solid var(--line)}
+  .article{font-size:var(--fs);line-height:1.78}.article p{margin-bottom:1.15em}#ugArticle{line-height:2.08}
+  .bottom{position:sticky;bottom:0;z-index:15;background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(10px);padding:8px 2px 2px;margin-top:6px}.bottom .btn{min-width:104px}
+  .pair-view{border-radius:8px;padding:8px}.pair-card{margin-bottom:8px}.pair-side{padding:15px}
+}
+@media(max-width:430px){
+  .tool-group{gap:4px}.top select,.btn{font-size:11px;padding-inline:7px}.lesson-actions .btn{font-size:11px}.lesson-head h2{font-size:19px}.pane{height:64vh}
+}
+
 @media print{
   .sidebar,.top,.lesson-actions,.bottom,.note{display:none!important}.app{display:block;height:auto}.main{overflow:visible}.content-wrap{padding:0}
   .reader{display:grid;grid-template-columns:1fr 1fr;border:0;box-shadow:none}.pane{overflow:visible;padding:12px}.pane-title{position:static}
@@ -225,7 +313,7 @@ kbd{font-family:inherit;font-size:11px;border:1px solid var(--line);background:v
   <aside class="sidebar">
     <div class="brand">
       <h1>CompTIA A+ Core 1</h1>
-      <p>English ↔ ئۇيغۇرچە Study Reader · v5.2 Verified · <span id="netStatus">Online</span></p>
+      <p>English ↔ ئۇيغۇرچە Study Reader · v5.3 UI · <span id="netStatus">Online</span></p>
     </div>
     <div class="progress-wrap">
       <div class="progress-label"><span>Course progress</span><span id="progressText">0 / 27</span></div>
@@ -240,33 +328,46 @@ kbd{font-family:inherit;font-size:11px;border:1px solid var(--line);background:v
 
   <main class="main">
     <div class="top">
-      <button class="btn desktop-only" id="focusBtn">☰ Focus</button>
-      <div class="grow"><input id="lessonSearch" type="search" placeholder="Search this lesson or whole course…"></div><div class="global-results" id="globalResults"></div>
-      <select id="languageMode" title="Language layout">
-        <option value="both">English + Uyghur</option>
-        <option value="en">English only</option>
-        <option value="ug">Uyghur only</option>
-      </select>
-      <select id="ugFont" title="Uyghur font">
-        <option value="naskh">ئۇيغۇرچە · Noto Naskh</option>
-        <option value="sans">ئۇيغۇرچە · Noto Sans</option>
-        <option value="geeza">ئۇيغۇرچە · Geeza Pro (Mac)</option>
-        <option value="ukij">ئۇيغۇرچە · UKIJ Tuz</option>
-      </select>
-      <button class="btn on" id="syncBtn" title="Toggle synchronized scrolling" aria-label="Toggle synchronized scrolling">⇅ Sync</button>
-      <button class="btn" id="fontDown" title="Decrease text size" aria-label="Decrease text size">A−</button>
-      <button class="btn" id="fontUp" title="Increase text size" aria-label="Increase text size">A+</button>
-      <button class="btn" id="themeBtn" title="Toggle dark mode" aria-label="Toggle dark mode">☾</button>
-      <button class="btn" id="pairBtn" title="Switch between columns and paired study cards">▦ Cards</button>
-      <button class="btn" id="focusLineBtn" title="Dim other paragraphs while reading">◎ Focus line</button>
-      <button class="btn" id="exportNotesBtn" title="Download all your saved notes">⇩ Notes</button>
-      <button class="btn" id="shareBtn" title="Copy a link to this objective">↗ Share</button>
-      <button class="btn" id="installBtn" title="Install this study app" style="display:none">＋ Install</button>
-      <button class="btn" onclick="window.print()">Print</button>
+      <div class="top-main">
+        <button class="btn focus-toggle desktop-only" id="focusBtn" title="Toggle focus mode">☰ <span>Focus</span></button>
+        <div class="grow search-wrap"><span class="search-icon">⌕</span><input id="lessonSearch" type="search" placeholder="Search this lesson or whole course…" aria-label="Search lesson or course"></div>
+        <div class="global-results" id="globalResults"></div>
+      </div>
+      <div class="top-tools" aria-label="Study tools">
+        <div class="tool-group view-tools">
+          <select id="languageMode" title="Language layout" aria-label="Language layout">
+            <option value="both">English + Uyghur</option>
+            <option value="en">English only</option>
+            <option value="ug">Uyghur only</option>
+          </select>
+          <select id="ugFont" title="Uyghur font" aria-label="Uyghur font">
+            <option value="naskh">ئۇيغۇرچە · Noto Naskh</option>
+            <option value="sans">ئۇيغۇرچە · Noto Sans</option>
+            <option value="geeza">ئۇيغۇرچە · Geeza Pro (Mac)</option>
+            <option value="ukij">ئۇيغۇرچە · UKIJ Tuz</option>
+          </select>
+          <button class="btn on" id="syncBtn" title="Toggle synchronized scrolling" aria-label="Toggle synchronized scrolling">⇅ Sync</button>
+          <button class="btn compact" id="fontDown" title="Decrease text size" aria-label="Decrease text size">A−</button>
+          <button class="btn compact" id="fontUp" title="Increase text size" aria-label="Increase text size">A+</button>
+          <button class="btn compact" id="themeBtn" title="Toggle dark mode" aria-label="Toggle dark mode">◐</button>
+        </div>
+        <div class="tool-group study-tools">
+          <button class="btn" id="pairBtn" title="Switch between columns and paired study cards">▦ Cards</button>
+          <button class="btn" id="focusLineBtn" title="Dim other paragraphs while reading">◎ Focus</button>
+          <button class="btn" id="exportNotesBtn" title="Download all your saved notes">⇩ Notes</button>
+          <button class="btn" id="shareBtn" title="Copy a link to this objective">↗ Share</button>
+          <button class="btn" id="installBtn" title="Install this study app" style="display:none">＋ Install</button>
+          <button class="btn compact" onclick="window.print()" title="Print lesson" aria-label="Print lesson">⌘P</button>
+        </div>
+      </div>
     </div>
 
     <section class="lesson-head">
-      <div class="crumb" id="crumb"></div>
+      <div class="mobile-study-nav">
+        <label for="mobileLessonSelect">Jump to objective</label>
+        <select id="mobileLessonSelect" aria-label="Jump to objective"></select>
+      </div>
+      <div class="lesson-kicker"><span class="objective-dot"></span><div class="crumb" id="crumb"></div></div>
       <h2 id="lessonTitle"></h2>
       <div class="lesson-actions">
         <label class="complete"><input type="checkbox" id="completeBox"> Mark this objective complete</label>
@@ -290,11 +391,11 @@ kbd{font-family:inherit;font-size:11px;border:1px solid var(--line);background:v
     <div class="content-wrap">
       <div class="reader">
         <section class="pane" id="enPane">
-          <div class="pane-title"><strong>English</strong><span>Original transcript</span></div>
+          <div class="pane-title"><div><span class="lang-dot en-dot"></span><strong>English</strong></div><span>Original transcript</span></div>
           <article class="article" id="enArticle"></article>
         </section>
         <section class="pane" id="ugPane">
-          <div class="pane-title"><strong>ئۇيغۇرچە</strong><span>Study translation</span></div>
+          <div class="pane-title"><div><span class="lang-dot ug-dot"></span><strong>ئۇيغۇرچە</strong></div><span>Study translation</span></div>
           <article class="article" id="ugArticle" lang="ug" dir="rtl"></article>
         </section>
       </div>
@@ -536,6 +637,15 @@ function progress(){
   $("progressText").textContent=`${done} / ${objectiveCount}`;
   $("progressBar").style.width=(objectiveCount?done/objectiveCount*100:0)+"%";
 }
+function buildMobileLessonSelect(){
+  const sel=$("mobileLessonSelect");
+  if(!sel)return;
+  if(!sel.options.length){
+    sel.innerHTML=LESSONS.map((l,i)=>`<option value="${i}">${l.id==="intro"?"Introduction":"Objective "+l.id} — ${esc(l.domain_en)}</option>`).join("");
+    sel.onchange=()=>{state.index=Number(sel.value);render();};
+  }
+  sel.value=String(state.index);
+}
 function buildNav(filter=""){
   const nav=$("nav");nav.innerHTML="";
   let lastDomain=null, visible=0;
@@ -597,6 +707,7 @@ function render(){
   suppressScrollSave=true;
   setScrollImmediate($("enPane"),0);setScrollImmediate($("ugPane"),0);
   requestAnimationFrame(()=>requestAnimationFrame(()=>{suppressScrollSave=false}));
+  buildMobileLessonSelect();
   buildNav($("courseSearch").value.trim());
   progress();
 }

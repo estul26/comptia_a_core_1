@@ -79,3 +79,14 @@ Study progress, bookmarks, reading position, font settings and notes are stored 
 ## V5.2 verification
 
 V5.2 fixes the study-card alignment boundary bug, improves reading-position resume, validates saved browser settings safely, and preserves the chosen language layout. The original transcript remains in `source/`; obvious speech-to-text term corrections used by the study display are documented in `TRANSCRIPT_CORRECTIONS.md`.
+
+
+## V5.3 UI refresh
+
+- Cleaner two-level study toolbar
+- Improved visual hierarchy and reading width
+- Refined English/Uyghur language panes
+- More readable objective navigation and progress
+- Mobile objective selector
+- Sticky mobile previous/next navigation
+- Preserves the verified V5.2 study engine and storage behavior

@@ -1,10 +1,10 @@
-# V5.2 Verification Report
+# V5.3 Verification Report
 
 Audit date: 2026-08-23
 
 ## Result
 
-The V5.2 repository passed the final application regression suite after fixing issues found during the audit.
+The V5.3 repository passed the final application regression suite after fixing issues found during the audit.
 
 ### Interaction regression: 33 / 33 passed
 
@@ -92,3 +92,8 @@ Verified:
 ## Environment limitation
 
 The audit environment blocks browser navigation to localhost/file URLs, so a true end-to-end service-worker registration over a local HTTP origin could not be executed. The service worker was syntax-checked, its referenced cache files were verified, and the PWA/static-asset configuration was structurally validated. A final Cloudflare deployment is still the definitive end-to-end test of the hosting environment.
+
+
+## V5.3 UI regression note
+
+The V5.3 release changes presentation and adds a mobile objective selector. The previously verified study engine is retained. Static dependency and syntax checks were rerun after the UI changes; no missing element references or duplicate IDs were found.
