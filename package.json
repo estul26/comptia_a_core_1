@@ -1,6 +1,6 @@
 {
   "name": "comptia-a-core-1",
-  "version": "6.0.0",
+  "version": "6.2.0",
   "private": true,
   "scripts": {
     "dev": "wrangler dev",

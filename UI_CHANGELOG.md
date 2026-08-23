@@ -42,3 +42,19 @@ This release keeps the reviewed V5.30 bilingual lesson data and the existing stu
 - Expanded the bilingual reader to use the freed vertical space.
 - Kept a compact objective selector on mobile.
 - Bumped the service-worker cache so the new layout appears after deployment.
+
+
+## V6.2 — Desktop Polish
+- Reduced the full-desktop sidebar to 280px; compact desktop hides the sidebar so the bilingual reader stays wide.
+- Simplified the main toolbar to Search, Language, Sync, Cards, and More.
+- Moved font size, theme, and reading-focus controls into More.
+- Added a tiny current-objective context strip instead of restoring the large lesson header.
+- Capped the desktop reading workspace at 1940px for ultrawide monitors.
+- Limited English line length to 74ch and Uyghur content to 48rem for easier reading.
+- Tightened English and Uyghur line spacing and paragraph spacing to show more lesson content.
+- Reduced sticky language-header height.
+- Improved secondary-label contrast and minimum label sizing.
+- Added a 901–1180px compact-desktop mode with a slim objective selector and side-by-side bilingual panes.
+- Moved the stacked/mobile layout breakpoint to 900px to avoid cramped narrow-desktop layouts.
+- Preserved all existing study-engine IDs, localStorage keys, notes, bookmarks, progress, recall, cards, PWA, and offline behavior.
+- Bumped the service-worker cache to V6.2.

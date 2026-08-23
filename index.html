@@ -437,6 +437,104 @@ body.focus .lesson-head{padding-left:max(30px,6vw);padding-right:max(30px,6vw)}b
 }
 @media print{.compact-mobile-objective{display:none!important}.content-wrap{padding-top:0}}
 
+
+/* =========================================================
+   v6.2 — Desktop polish
+   Calm desktop hierarchy, denser reader, better ultrawide behavior.
+   ========================================================= */
+:root{
+  --sidebar:280px;
+  --muted:#596579;
+  --muted-2:#667085;
+}
+body.dark{--muted:#a8b5c6;--muted-2:#8e9caf}
+
+/* Compact, deliberate desktop toolbar */
+.top{padding:8px 14px;gap:9px;min-height:56px}
+.top-main{min-width:220px}
+.search-wrap{max-width:680px}
+.top input{height:38px}
+.top-tools{gap:6px;flex:0 0 auto}
+.top select,.top .btn,.more-menu>summary{height:34px}
+.top #languageMode{min-width:138px}
+.more-menu>summary{width:38px;justify-content:center;padding:0;font-size:17px;letter-spacing:.08em;color:var(--muted)}
+.more-popover{top:40px;width:min(330px,calc(100vw - 24px));padding:8px}
+.menu-label{font-size:10px;color:var(--muted)}
+.menu-display-row{display:grid;grid-template-columns:40px 40px 1fr;gap:5px;margin-bottom:5px}
+.menu-display-row .btn{margin:0!important;width:100%!important;justify-content:center!important}
+.menu-display-row .menu-icon-action{justify-content:flex-start!important}
+.more-popover .btn{min-height:36px;font-size:12px}
+
+/* Tiny context strip: orientation without a giant lesson header */
+.lesson-context{
+  width:100%;max-width:1940px;margin:0 auto;min-height:34px;padding:6px 18px 0;
+  display:flex;align-items:center;gap:10px;color:var(--muted);font-size:11px;
+}
+.lesson-context-main{display:flex;align-items:center;min-width:0;gap:7px}
+.context-objective{font-weight:850;color:var(--accent);font-variant-numeric:tabular-nums;white-space:nowrap}
+.context-separator{color:var(--line-strong)}
+.context-domain{font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.context-counter{margin-left:auto;color:var(--muted);font-weight:750;font-variant-numeric:tabular-nums;white-space:nowrap}
+.lesson-meta-hidden{display:none!important}
+
+/* Reader uses the screen, but text does not become uncomfortably wide */
+.content-wrap{width:100%;max-width:1940px;margin:0 auto;padding:8px 18px 16px}
+.reader{gap:12px;min-height:0}
+.pane{padding:0 clamp(22px,2vw,34px) 64px}
+.pane-title{
+  margin:0 calc(-1 * clamp(22px,2vw,34px)) 20px;
+  padding:10px clamp(22px,2vw,34px);min-height:42px;
+}
+.pane-title strong{font-size:12.5px}
+.pane-title span{font-size:10.5px;letter-spacing:.045em;text-transform:none;color:var(--muted)}
+.article{width:100%;max-width:74ch;margin-inline:auto;line-height:1.72}
+.article p{margin-bottom:1.08em}
+.article h3{margin:1.55em 0 .68em}
+.article li{margin:.32em 0}
+#ugArticle{width:100%;max-width:48rem;margin-inline:auto;line-height:2.0}
+.bottom{max-width:1940px;margin-top:8px;padding-inline:18px}
+
+/* Slightly calmer sidebar density */
+.brand{padding:17px 15px 13px}.brand-mark{width:42px;height:42px;border-radius:12px}
+.progress-wrap{margin-inline:10px;padding:12px}.side-search{padding-inline:10px}.nav{padding-inline:7px}
+.nav-item{min-height:40px;padding:7px 9px}.nav-item .label{font-size:12.25px}.domain-title{font-size:10.5px;color:var(--muted)}
+
+/* Compact desktop: hide the sidebar before it squeezes the bilingual reader.
+   The objective selector replaces sidebar navigation while both reading panes stay side-by-side. */
+@media (max-width:1180px) and (min-width:901px){
+  .app{grid-template-columns:1fr}.sidebar{display:none}.focus-toggle{display:none!important}
+  .top{padding-inline:12px}.search-wrap{max-width:620px}.top #languageMode{min-width:126px}
+  .top-tools{gap:4px}.tool-group{gap:4px}.global-results{width:min(720px,calc(100vw - 40px));left:12px}
+  .compact-mobile-objective{display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px;align-items:center;margin:6px 12px 0;padding:6px 9px;border:1px solid var(--line);border-radius:9px;background:var(--panel)}
+  .compact-mobile-objective label{font-size:10px;font-weight:850;letter-spacing:.06em;color:var(--muted);text-transform:uppercase}
+  .compact-mobile-objective select{min-width:0;width:100%;padding:6px 8px;border:0;border-radius:6px;background:var(--panel-soft);font-size:12px;font-weight:700;color:var(--text)}
+  .lesson-context{display:none}.content-wrap{padding-inline:12px}.bottom{padding-inline:12px}
+  .pane{padding-inline:22px}.pane-title{margin-left:-22px;margin-right:-22px;padding-inline:22px}
+  .article{max-width:72ch}.pane-title span{display:none}
+}
+
+/* Tablet / narrow-window mode: stacked reader. */
+@media (max-width:900px){
+  .app{display:block;height:auto;min-height:100vh}.sidebar{display:none}.main{overflow:visible}
+  .top{position:sticky;top:0;display:block;padding:8px 10px;z-index:60}.top-main{min-width:0}
+  .focus-toggle{display:none!important}.top-tools{margin-top:7px;justify-content:space-between;overflow-x:auto;scrollbar-width:none}
+  .top-tools::-webkit-scrollbar{display:none}.view-tools,.study-tools{flex:0 0 auto}.top #languageMode{min-width:132px}
+  .global-results{top:48px;left:0;right:0;width:100%;max-height:62vh}.more-menu{display:block}
+  .lesson-context{display:none}.compact-mobile-objective{display:grid;grid-template-columns:auto 1fr;gap:8px;align-items:center;margin:8px 10px 0;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--panel)}
+  .compact-mobile-objective label{font-size:10px;font-weight:850;letter-spacing:.06em;color:var(--muted);text-transform:uppercase}
+  .compact-mobile-objective select{min-width:0;width:100%;padding:7px 8px;border:0;border-radius:7px;background:var(--panel-soft);font-size:12px;font-weight:700;color:var(--text)}
+  .content-wrap{padding:8px 8px 10px}.reader{grid-template-columns:1fr;gap:9px;overflow:visible}
+  .pane{height:63vh;border-radius:11px;padding:0 19px 56px}.pane+.pane{border-left:1px solid var(--line);border-top:1px solid var(--line)}
+  .pane-title{margin:0 -19px 18px;padding:10px 19px;border-radius:11px 11px 0 0}
+  .article{max-width:74ch;line-height:1.78}.article p{margin-bottom:1.12em}#ugArticle{max-width:48rem;line-height:2.06}
+  .bottom{position:sticky;bottom:0;z-index:40;margin-top:7px;padding:7px 8px calc(7px + env(safe-area-inset-bottom));background:color-mix(in srgb,var(--bg) 91%,transparent);backdrop-filter:blur(14px);border-top:1px solid var(--line)}
+}
+
+@media (min-width:1941px){
+  .content-wrap,.lesson-context,.bottom{max-width:1940px}
+}
+@media print{.lesson-context{display:none!important}}
+
 </style>
 </head>
 <body>
@@ -481,17 +579,20 @@ body.focus .lesson-head{padding-left:max(30px,6vw);padding-right:max(30px,6vw)}b
             <option value="ug">Uyghur only</option>
           </select>
           <button class="btn on" id="syncBtn" title="Toggle synchronized scrolling" aria-label="Toggle synchronized scrolling">⇅ Sync</button>
-          <button class="btn compact" id="fontDown" title="Decrease text size" aria-label="Decrease text size">A−</button>
-          <button class="btn compact" id="fontUp" title="Increase text size" aria-label="Increase text size">A+</button>
-          <button class="btn compact" id="themeBtn" title="Toggle dark mode" aria-label="Toggle dark mode">◐</button>
         </div>
         <div class="tool-group study-tools">
           <button class="btn" id="pairBtn" title="Switch between columns and paired study cards">▦ Cards</button>
-          <button class="btn" id="focusLineBtn" title="Dim other paragraphs while reading">◎ Reading focus</button>
           <details class="more-menu">
-            <summary>More ···</summary>
+            <summary aria-label="More reader controls" title="More reader controls">•••</summary>
             <div class="more-popover">
-              <div class="menu-label">Uyghur font</div>
+              <div class="menu-label">Reading</div>
+              <div class="menu-display-row">
+                <button class="btn compact" id="fontDown" title="Decrease text size" aria-label="Decrease text size">A−</button>
+                <button class="btn compact" id="fontUp" title="Increase text size" aria-label="Increase text size">A+</button>
+                <button class="btn menu-icon-action" id="themeBtn" title="Toggle dark mode" aria-label="Toggle dark mode">◐ Theme</button>
+              </div>
+              <button class="btn" id="focusLineBtn" title="Dim other paragraphs while reading">◎ Reading focus</button>
+              <div class="menu-label menu-label-spaced">Uyghur font</div>
               <select id="ugFont" class="more-select" title="Uyghur font" aria-label="Uyghur font">
                 <option value="naskh">Noto Naskh</option>
                 <option value="sans">Noto Sans</option>
@@ -530,12 +631,17 @@ body.focus .lesson-head{padding-left:max(30px,6vw);padding-right:max(30px,6vw)}b
       <select id="mobileLessonSelect" aria-label="Jump to objective"></select>
     </div>
 
-    <!-- Hidden lesson metadata kept for the existing study engine.
-         The large lesson header is removed to maximize reading space. -->
+    <div class="lesson-context" aria-label="Current objective">
+      <div class="lesson-context-main">
+        <span class="context-objective" id="objectiveBadge">INTRO</span>
+        <span class="context-separator" aria-hidden="true">·</span>
+        <span class="context-domain" id="domainChip">Course introduction</span>
+      </div>
+      <span class="context-counter" id="lessonCounter">1 of 28</span>
+    </div>
+
+    <!-- Hidden metadata retained for search, deep links, and the existing study engine. -->
     <div class="lesson-meta-hidden" aria-hidden="true">
-      <span id="objectiveBadge">INTRO</span>
-      <span id="domainChip">Course introduction</span>
-      <span id="lessonCounter">1 of 28</span>
       <div id="crumb"></div>
       <h2 id="lessonTitle"></h2>
       <div id="lessonTitleUg" lang="ug" dir="rtl"></div>
