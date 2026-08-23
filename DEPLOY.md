@@ -26,3 +26,7 @@ Deploy manually:
 ```bash
 npm run deploy
 ```
+
+## Important
+
+There is intentionally **no `_redirects` file** in this repository. Hash-based objective navigation does not require one.

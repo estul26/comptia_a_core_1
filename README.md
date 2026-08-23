@@ -13,6 +13,7 @@ A bilingual CompTIA A+ Core 1 study app with English and Uyghur side by side.
 - Shareable objective links
 - Installable on supported browsers/devices
 - Cloudflare Workers Static Assets deployment
+- Verified V5.2 runtime fixes and safer saved-state handling
 
 ## Cloudflare deployment
 
@@ -74,3 +75,7 @@ npm run dev
 ## User data
 
 Study progress, bookmarks, reading position, font settings and notes are stored locally in the browser.
+
+## V5.2 verification
+
+V5.2 fixes the study-card alignment boundary bug, improves reading-position resume, validates saved browser settings safely, and preserves the chosen language layout. The original transcript remains in `source/`; obvious speech-to-text term corrections used by the study display are documented in `TRANSCRIPT_CORRECTIONS.md`.
