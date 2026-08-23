@@ -81,7 +81,7 @@ Study progress, bookmarks, reading position, font settings and notes are stored 
 V5.2 fixes the study-card alignment boundary bug, improves reading-position resume, validates saved browser settings safely, and preserves the chosen language layout. The original transcript remains in `source/`; obvious speech-to-text term corrections used by the study display are documented in `TRANSCRIPT_CORRECTIONS.md`.
 
 
-## V5.3 UI refresh
+## V5.30 UI refresh
 
 - Cleaner two-level study toolbar
 - Improved visual hierarchy and reading width
@@ -90,3 +90,10 @@ V5.2 fixes the study-card alignment boundary bug, improves reading-position resu
 - Mobile objective selector
 - Sticky mobile previous/next navigation
 - Preserves the verified V5.2 study engine and storage behavior
+
+
+## Translation review status
+
+All exam objectives **1.1–1.3, 2.1–2.8, 3.1–3.8, 4.1–4.2, and 5.1–5.6** have received deep source-vs-Uyghur human-style review.
+
+The **Introduction** is not yet claimed as deeply reviewed.
