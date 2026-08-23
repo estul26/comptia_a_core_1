@@ -4,10 +4,12 @@
 .wrangler/
 node_modules/
 .DS_Store
+.gitignore
+.assetsignore
 README.md
+DEPLOY.md
 source/
 wrangler.jsonc
 package.json
 package-lock.json
 *.zip
-PATCH_INSTRUCTIONS.md
