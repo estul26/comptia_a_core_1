@@ -588,6 +588,55 @@ body.dark{--muted:#a8b5c6;--muted-2:#8e9caf}
   .md-table-wrap{overflow:visible;box-shadow:none}.md-table{min-width:0}.article code{border-color:#bbb;background:#f5f5f5}.md-quote{break-inside:avoid}.md-table tr{break-inside:avoid}
 }
 
+
+
+/* =========================================================
+   v6.4 — RTL / bidi polish
+   Fix mixed-direction parentheticals, ordered-list markers,
+   copy-button positioning, pane-label alignment and RTL tables.
+   ========================================================= */
+#ugPane .pane-title{direction:rtl;text-align:right}
+#ugPane .pane-title>div{direction:rtl}
+#ugPane .pane-title>span{direction:ltr;unicode-bidi:isolate}
+
+/* Native RTL ordered-list markers can paint as `.1`. Draw the marker as one
+   isolated LTR token instead, while retaining normal RTL list indentation. */
+#ugArticle ol{list-style:none;padding-right:0}
+#ugArticle ol>li{position:relative;padding-right:2.35em;padding-left:0}
+#ugArticle ol>li::before{
+  content:counter(list-item) ".";position:absolute;right:0;top:0;width:1.85em;
+  direction:ltr;unicode-bidi:isolate;text-align:right;color:#c56a05;font-weight:800;
+  font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+  font-variant-numeric:tabular-nums
+}
+#ugArticle .ltr-parenthetical{white-space:normal}
+
+/* Copy is an on-demand overlay now; it no longer floats into the text line or
+   creates a visually detached column on the far side of the Uyghur article. */
+.article p,.article li,.article h3,.article h4,.article h5,.article h6{position:relative}
+.copybtn,#ugArticle .copybtn{
+  float:none;position:absolute;z-index:3;top:-.15rem;right:0;left:auto;
+  margin:0;padding:3px 7px;border:1px solid var(--line);border-radius:6px;
+  background:color-mix(in srgb,var(--panel) 94%,transparent);box-shadow:0 1px 2px rgba(16,24,40,.05);
+  color:var(--muted);font-size:10px;font-weight:750;line-height:1.35;opacity:0;
+  transform:translateY(-82%);pointer-events:none;transition:opacity .14s,color .14s,border-color .14s
+}
+.article p:hover>.copybtn,.article li:hover>.copybtn,.article h3:hover>.copybtn,
+.article h4:hover>.copybtn,.article h5:hover>.copybtn,.article h6:hover>.copybtn,
+.copybtn:focus-visible{opacity:.88;pointer-events:auto}
+.copybtn:hover{opacity:1!important;color:var(--accent);border-color:color-mix(in srgb,var(--accent) 36%,var(--line))}
+#ugArticle .copybtn{right:0}
+
+/* Keep RTL table geometry predictable, but isolate English-only cells as a
+   complete LTR unit. The wrapper remains horizontally scrollable on phones. */
+#ugArticle .md-table-wrap{direction:rtl}
+#ugArticle .md-table{direction:rtl}
+#ugArticle .md-table th,#ugArticle .md-table td{unicode-bidi:plaintext}
+#ugArticle .md-table .md-ltr-cell{direction:ltr;unicode-bidi:isolate;text-align:left}
+@media(max-width:900px){
+  .copybtn,#ugArticle .copybtn{transform:translateY(-72%);font-size:9px;padding:2px 6px}
+}
+
 </style>
 </head>
 <body>
@@ -760,7 +809,7 @@ let scrollLock=false, suppressScrollSave=false;
 
 function esc(s){return s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 function rich(text,q="",rtl=false){
-  // v6.3 local Markdown renderer. The lesson data is trusted/local, but every
+  // v6.4 local Markdown renderer. The lesson data is trusted/local, but every
   // text fragment is escaped before markup is emitted. This deliberately
   // supports only the structures used by the course notes.
   const lines=String(text||"").replace(/\r\n?/g,"\n").split("\n");
@@ -785,13 +834,28 @@ function rich(text,q="",rtl=false){
     // important for curly apostrophes and arrows (for example "won’t" or
     // "Power → Network → IP"), which can otherwise visually reorder in RTL.
     if(isPureLtr(raw))return '<bdi dir="ltr" class="ltr-run">'+markAndEscape(raw)+'</bdi>';
-    // In genuinely mixed Uyghur/English text, isolate technical LTR runs.
-    const re=/([A-Za-z][A-Za-z0-9+_.:/()#'’–-]*(?:[ \t]+[A-Za-z0-9][A-Za-z0-9+_.:/()#'’–-]*)*|\b\d+(?:[.:/-]\d+)*\b)/g;
-    return raw.split(re).map(part=>{
-      if(!part)return "";
-      const isLtr=/^[A-Za-z]/.test(part)||/^\d+(?:[.:/-]\d+)*$/.test(part);
-      const x=markAndEscape(part);
-      return isLtr?'<bdi dir="ltr">'+x+'</bdi>':x;
+
+    // v6.4: isolate a complete Latin parenthetical INCLUDING both brackets.
+    // Keeping "(" and ")" inside the same LTR isolate prevents the Unicode
+    // bidi algorithm from turning e.g. (Copper Network Cables) into ...)).
+    const arabic='\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF';
+    const parenRe=new RegExp('(\\((?=[^()\\n]*[A-Za-z])[^()\\n'+arabic+']*\\))','g');
+    const pieces=raw.split(parenRe);
+    return pieces.map(piece=>{
+      if(!piece)return "";
+      if(/^\([^()\n]*[A-Za-z][^()\n]*\)$/.test(piece) && !new RegExp('['+arabic+']').test(piece)){
+        return '<bdi dir="ltr" class="ltr-run ltr-parenthetical">'+markAndEscape(piece)+'</bdi>';
+      }
+      // In genuinely mixed Uyghur/English text, isolate technical LTR runs.
+      // Parentheses are intentionally excluded here; complete parentheticals
+      // are handled above so punctuation cannot escape the isolate.
+      const re=/([A-Za-z][A-Za-z0-9+_.:/#'’–-]*(?:[ \t]+[A-Za-z0-9][A-Za-z0-9+_.:/#'’–-]*)*|\b\d+(?:[.:/-]\d+)*\b)/g;
+      return piece.split(re).map(part=>{
+        if(!part)return "";
+        const isLtr=/^[A-Za-z]/.test(part)||/^\d+(?:[.:/-]\d+)*$/.test(part);
+        const x=markAndEscape(part);
+        return isLtr?'<bdi dir="ltr" class="ltr-run">'+x+'</bdi>':x;
+      }).join("");
     }).join("");
   }
 
@@ -985,6 +1049,7 @@ function renderTerms(){
 function addCopyButtons(root){
   root.querySelectorAll("p,h3,h4,h5,h6,li").forEach(el=>{
     const b=document.createElement("button");b.className="copybtn";b.type="button";b.textContent="Copy";
+    b.title="Copy this section";b.setAttribute("aria-label","Copy this section");
     b.onclick=async e=>{
       e.stopPropagation();
       const clone=el.cloneNode(true);clone.querySelectorAll("button").forEach(x=>x.remove());
