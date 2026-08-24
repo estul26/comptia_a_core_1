@@ -637,6 +637,61 @@ body.dark{--muted:#a8b5c6;--muted-2:#8e9caf}
   .copybtn,#ugArticle .copybtn{transform:translateY(-72%);font-size:9px;padding:2px 6px}
 }
 
+/* =========================================================
+   v6.5 — RTL content polish
+   Let English-only study blocks read naturally without pulling
+   the whole Uyghur lesson into LTR, and give Uyghur-only mode a
+   little more desktop reading width.
+   ========================================================= */
+#ugArticle .md-ltr-block,
+#ugArticle .md-tech-ltr{
+  direction:ltr;unicode-bidi:isolate;text-align:left;
+  width:fit-content;max-width:100%;margin-left:auto;margin-right:0
+}
+#ugArticle p.md-ltr-block{margin-left:auto;margin-right:0}
+#ugArticle .md-heading.md-ltr-block,
+#ugArticle .md-heading.md-tech-ltr{
+  text-align:left
+}
+#ugArticle h3.md-ltr-block,
+#ugArticle h3.md-tech-ltr{
+  border-right:0;border-left:4px solid #d97706;
+  padding-right:0;padding-left:.58em
+}
+
+/* Pure-English lists become a compact LTR island anchored to the right edge
+   of the Uyghur article. This keeps bullets/numbers on the natural English
+   side while preserving the surrounding RTL page geometry. */
+#ugArticle .md-ltr-list{
+  direction:ltr;unicode-bidi:isolate;text-align:left;
+  width:fit-content;max-width:100%;margin-left:auto;margin-right:0
+}
+#ugArticle ul.md-ltr-list{padding-left:1.45em;padding-right:0}
+#ugArticle ul.md-ltr-list>li{padding-left:.12em;padding-right:0;text-align:left}
+#ugArticle ol.md-ltr-list{padding-left:2.35em;padding-right:0}
+#ugArticle ol.md-ltr-list>li{padding-left:.12em;padding-right:0;text-align:left}
+#ugArticle ol.md-ltr-list>li::before{
+  left:-2.2em;right:auto;width:1.85em;text-align:right
+}
+
+/* Editorial transcript-correction lines are mixed-language metadata rather
+   than normal prose. Let the first strong character choose their direction
+   and visually separate them from the lesson explanation. */
+#ugArticle .md-editor-note{
+  unicode-bidi:plaintext;text-align:start;
+  width:100%;margin:1em 0 1.2em;padding:.7em .85em;
+  border:1px solid color-mix(in srgb,#d97706 20%,var(--line));
+  border-radius:9px;background:color-mix(in srgb,var(--warn-soft) 60%,var(--panel));
+  font-size:.94em;line-height:1.75
+}
+
+/* Uyghur-only desktop mode can use more of the pane without making bilingual
+   mode too wide. Keep comfortable line lengths on smaller screens. */
+@media(min-width:901px){
+  body.language-ug #ugArticle{max-width:62rem}
+  body.language-ug #ugPane{padding-left:clamp(30px,4vw,62px);padding-right:clamp(30px,4vw,62px)}
+}
+
 </style>
 </head>
 <body>
@@ -809,7 +864,7 @@ let scrollLock=false, suppressScrollSave=false;
 
 function esc(s){return s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 function rich(text,q="",rtl=false){
-  // v6.4 local Markdown renderer. The lesson data is trusted/local, but every
+  // v6.5 local Markdown renderer. The lesson data is trusted/local, but every
   // text fragment is escaped before markup is emitted. This deliberately
   // supports only the structures used by the course notes.
   const lines=String(text||"").replace(/\r\n?/g,"\n").split("\n");
@@ -826,6 +881,34 @@ function rich(text,q="",rtl=false){
     const hasLatin=/[A-Za-z]/.test(raw);
     const hasArabic=/[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF]/.test(raw);
     return hasLatin&&!hasArabic;
+  }
+
+  function stripMd(raw){
+    return String(raw||"").replace(/\*\*|`/g,"").trim();
+  }
+
+  function isTechDominantHeading(raw){
+    if(!rtl)return false;
+    const x=stripMd(raw);
+    if(!/^[A-Za-z0-9]/.test(x)||!/[A-Za-z]/.test(x))return false;
+    const arabic=(x.match(/[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF]/g)||[]).length;
+    const latin=(x.match(/[A-Za-z]/g)||[]).length;
+    // Short connectors such as "ۋە" between technical identifiers should
+    // not reverse the identifier sequence (T568A ۋە T568B Pinout).
+    return arabic>0&&arabic<=4&&latin>=6;
+  }
+
+  function isEditorNote(raw){
+    return /^\s*(?:\*\*)?(?:Transcript correction|Source-scope note):/i.test(String(raw||""));
+  }
+
+  function blockAttrs(raw,kind="text"){
+    if(!rtl)return "";
+    const x=stripMd(raw);
+    if(isPureLtr(x))return ' dir="ltr" class="md-ltr-block"';
+    if(kind==="heading"&&isTechDominantHeading(x))return ' dir="ltr" class="md-tech-ltr"';
+    if(isEditorNote(raw))return ' dir="auto" class="md-editor-note"';
+    return "";
   }
 
   function plain(raw,forceLtr=false){
@@ -933,7 +1016,7 @@ function rich(text,q="",rtl=false){
         continue;
       }
       if(m.ordered!==ordered)break;
-      const item={body:inline(m.content),nested:""};
+      const item={raw:m.content,body:inline(m.content),nested:""};
       i++;
       // Allow a more-indented continuation line under the current list item.
       while(i<arr.length && arr[i].trim() && !listInfo(arr[i]) && !isHeading(arr[i]) && !isHr(arr[i]) && !isQuote(arr[i]) && !tableStart(i,arr)){
@@ -944,7 +1027,9 @@ function rich(text,q="",rtl=false){
       }
       items.push(item);
     }
-    const html='<'+tag+startAttr+'>'+items.map(it=>'<li>'+it.body+it.nested+'</li>').join("")+'</'+tag+'>';
+    const pureLtrList=rtl&&items.length>0&&items.every(it=>isPureLtr(stripMd(it.raw)));
+    const listAttrs=pureLtrList?' dir="ltr" class="md-ltr-list"':"";
+    const html='<'+tag+startAttr+listAttrs+'>'+items.map(it=>'<li>'+it.body+it.nested+'</li>').join("")+'</'+tag+'>';
     return {html,next:i};
   }
 
@@ -961,7 +1046,16 @@ function rich(text,q="",rtl=false){
       const hm=line.match(/^\s*(#{1,6})\s+(.+)$/);
       if(hm){
         const level=Math.min(6,Math.max(3,hm[1].length+2));
-        out+='<h'+level+' class="md-heading md-level-'+hm[1].length+'">'+inline(hm[2].trim())+'</h'+level+'>';
+        const headingRaw=hm[2].trim();
+        const attrs=blockAttrs(headingRaw,"heading");
+        const extraClass=attrs.includes('class=')?"":' class="md-heading md-level-'+hm[1].length+'"';
+        if(extraClass){
+          out+='<h'+level+extraClass+'>'+inline(headingRaw)+'</h'+level+'>';
+        }else{
+          const cls=(attrs.match(/class="([^"]+)"/)||[])[1]||"";
+          const dir=(attrs.match(/dir="([^"]+)"/)||[])[1]||"";
+          out+='<h'+level+' class="md-heading md-level-'+hm[1].length+' '+cls+'"'+(dir?' dir="'+dir+'"':"")+'>'+inline(headingRaw)+'</h'+level+'>';
+        }
         i++;continue;
       }
 
@@ -1007,7 +1101,9 @@ function rich(text,q="",rtl=false){
       // Safety fallback: consume at least one line if an unusual construct was
       // not matched above.
       if(!para.length){para.push(arr[i].trim());i++}
-      out+='<p>'+inline(para.join(" "))+'</p>';
+      const paraRaw=para.join(" ");
+      const attrs=blockAttrs(paraRaw,"paragraph");
+      out+='<p'+attrs+'>'+inline(paraRaw)+'</p>';
     }
     return out;
   }
