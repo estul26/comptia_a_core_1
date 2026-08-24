@@ -5,6 +5,16 @@
 Deep human-style review has started.
 
 ### Fully reviewed in this version
+- **Introduction — Course and Exam Overview**
+  - Course purpose and audience
+  - Core 1 / Core 2 certification path
+  - Core 1 knowledge areas
+  - Source-stated 220-1201 exam details
+  - Certification Synergy score interpretation
+  - Exam Objectives study guidance
+  - Five exam domains and weights
+  - Objective 1.1 example wording
+  - Course-use and subscription guidance
 - **Objective 1.1 — Mobile Device Hardware**
   - Mobile Device Hardware
   - Battery
@@ -280,10 +290,23 @@ Deep human-style review has started.
   - Print queue / spooler
   - Printer/network connectivity
 
-### Not yet claimed as deeply reviewed
-- Introduction
+## What was corrected in the Introduction
 
-The existing translation for those sections is retained until each objective receives the same source-vs-translation review.
+### Meaning and source fidelity
+- Rebuilt the introduction against the complete English source while preserving its welcoming, encouraging and lightly humorous tone.
+- Preserved the free-course promise, intended learner profile, Core 1/Core 2 certification path and later Network+/Security+ progression.
+- Preserved the source-stated 220-1201 release timing, question formats, time limit, score scale and five domain weights without adding outside exam facts.
+- Kept the score-band interpretation explicitly attributed to Certification Synergy rather than presenting it as an official CompTIA grading rubric.
+- Rejoined the transcript's broken `CompTIA.` / `A+ Core 1 Certification Exam` sentence naturally in Uyghur without modifying the original English source.
+- Preserved the Exam Objectives roadmap, checklist, download-link and course-use guidance.
+- Restored source ideas that had been softened or omitted, including the guided-experience framing, playful two-part-certification metaphor, legal cheat-sheet analogy and final subscription invitation.
+
+### Uyghur quality
+- Standardized polite second-person address instead of mixing singular and plural forms.
+- Replaced code-switched `domain` and `exam objective` prose with natural `ساھە` and `ئىمتىھان نىشانى`, while retaining the English labels at their first useful occurrence.
+- Corrected the Objective 1.1 example to `قاتتىق دېتال ھالىتىنى نازارەت قىلىش` and `زاپچاس ئالماشتۇرۇش ئۇسۇللىرى`, matching the established terminology guide.
+- Improved headings, lists, sentence flow, case endings and punctuation for readable RTL study content.
+- Added a standalone reviewed source artifact at `source/comptia_a_core_1_Introduction_Uyghur.txt` and embedded the same text in the app lesson data.
 
 ## What was corrected in Objective 1.1
 
@@ -1027,3 +1050,13 @@ Each objective should be checked for:
 - Rebuilt Objective 5.6 into 15 symptom → cause → action sections.
 - Standardized laser-quality defects, paper handling, finishing, queue/spooler and connectivity terminology.
 - Added a source-derived comparison table and compact final exam rules without expanding beyond the transcript.
+
+
+## Whole-file untranslated-content review
+
+- Reviewed all objectives from 1.1 through 5.6 for English-only headings, explanatory prose, tables, memory cues and source-boundary notes.
+- Translated the remaining ordinary English scaffolding while retaining canonical abbreviations, protocol names, model identifiers, formulas and explicitly quoted transcript text where recognition matters.
+- Rebuilt the English-heavy comparison, exam-summary and troubleshooting blocks from Objectives 3.2 through 5.6 as coherent Uyghur sections rather than isolated word substitutions.
+- Corrected context-sensitive terminology collisions, especially CPU core versus fiber core and storage device versus storage capacity.
+- Normalized repeated bilingual forms for printer, scanner, router, firmware, IP address, capacity and resolution.
+- Verified all 27 objective identifiers remain represented, all Markdown tables retain consistent columns, and the file contains no replacement characters or hidden bidirectional-control characters.

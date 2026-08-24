@@ -94,9 +94,7 @@ V5.2 fixes the study-card alignment boundary bug, improves reading-position resu
 
 ## Translation review status
 
-All exam objectives **1.1–1.3, 2.1–2.8, 3.1–3.8, 4.1–4.2, and 5.1–5.6** have received deep source-vs-Uyghur human-style review.
-
-The **Introduction** is not yet claimed as deeply reviewed.
+The **Introduction** and all exam objectives **1.1–1.3, 2.1–2.8, 3.1–3.8, 4.1–4.2, and 5.1–5.6** have received deep source-vs-Uyghur human-style review.
 
 ## V6 study workspace redesign
 
