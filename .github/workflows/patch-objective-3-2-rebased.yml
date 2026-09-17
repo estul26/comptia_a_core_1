@@ -4,13 +4,14 @@ on:
   push:
     branches:
       - fix/objective-3-2-rebased
+    paths:
+      - .github/workflows/patch-objective-3-2-rebased.yml
 
 permissions:
   contents: write
 
 jobs:
   patch:
-    if: github.event.head_commit.message == 'chore: run rebased Objective 3.2 patch'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
