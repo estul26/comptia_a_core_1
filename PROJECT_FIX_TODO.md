@@ -2,6 +2,10 @@
 
 This checklist tracks the safe, incremental cleanup of the CompTIA A+ Core 1 English ↔ Uyghur study app.
 
+**Baseline main commit:** `89c662e26429c6ba14dc0df6a82130e31b4e2a49`  
+**Baseline app version:** `6.5.0`  
+**Cleanup branch:** `fix/full-project-cleanup`
+
 ## Rules for this cleanup
 
 - Keep the current working app behavior intact.
@@ -14,37 +18,37 @@ This checklist tracks the safe, incremental cleanup of the CompTIA A+ Core 1 Eng
 ## Phase 0 — Safety baseline
 
 - [x] Create dedicated cleanup branch: `fix/full-project-cleanup`
-- [ ] Record current app version and baseline commit
+- [x] Record current app version and baseline commit
 - [ ] Capture baseline structural checks
 - [ ] Confirm current app loads without JavaScript syntax errors
 - [ ] Confirm current PWA manifest and service worker files are valid
 
 ## Phase 1 — Automated validation
 
-- [ ] Add `scripts/validate-content.mjs`
-- [ ] Validate all expected objective IDs exist
-- [ ] Validate objective IDs are unique
-- [ ] Validate English content is not empty
-- [ ] Validate Uyghur content is not empty
-- [ ] Detect duplicate HTML IDs
-- [ ] Validate `manifest.webmanifest`
-- [ ] Validate service-worker core asset paths
-- [ ] Validate important internal references
-- [ ] Add `npm run validate`
-- [ ] Add `npm run check`
+- [x] Add `scripts/validate-content.mjs`
+- [x] Validate all expected objective IDs exist
+- [x] Validate objective IDs are unique
+- [x] Validate English content is not empty
+- [x] Validate Uyghur content is not empty
+- [x] Detect duplicate HTML IDs
+- [x] Validate `manifest.webmanifest`
+- [x] Validate service-worker core asset paths
+- [x] Validate important internal references
+- [x] Add `npm run validate`
+- [x] Add `npm run check`
 
 ## Phase 2 — Reproducible development setup
 
 - [ ] Commit `package-lock.json`
-- [ ] Keep Wrangler pinned to an exact version
+- [x] Keep Wrangler pinned to an exact version
 - [ ] Verify `npm ci` works from a clean checkout
 - [ ] Document local development and validation commands
 
 ## Phase 3 — Continuous integration
 
-- [ ] Add GitHub Actions validation workflow
-- [ ] Run validation on pushes and pull requests
-- [ ] Run JavaScript syntax checks in CI
+- [x] Add GitHub Actions validation workflow
+- [x] Run validation on pushes and pull requests
+- [x] Run JavaScript syntax checks in CI
 - [ ] Verify CI passes on the cleanup branch
 
 ## Phase 4 — Deployment boundary cleanup
