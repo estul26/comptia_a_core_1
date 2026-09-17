@@ -1,0 +1,48 @@
+name: Inspect Objective 3.5 socket content
+
+on:
+  push:
+    branches:
+      - fix/objective-3-5-sockets
+    paths:
+      - .github/workflows/inspect-objective-3-5.yml
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Print bounded Objective 3.5 socket snippets
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          text = Path('index.html').read_text(encoding='utf-8')
+          start = text.find('"id": "3.5"')
+          end = text.find('"id": "3.6"', start)
+          if start < 0 or end < 0:
+              raise SystemExit('Objective 3.5 bounds not found')
+          en_marker = text.find('"english": "', start, end)
+          ug_marker = text.find('\", \"uyghur\": \"', en_marker, end)
+          if en_marker < 0 or ug_marker < 0:
+              raise SystemExit('Language bounds not found')
+          en_start = en_marker + len('"english": "')
+          ug_start = ug_marker + len('\", \"uyghur\": \"')
+          english = text[en_start:ug_marker]
+          uyghur = text[ug_start:end]
+
+          print('=== ENGLISH SOCKET WINDOW ===')
+          candidates = [english.find('LGA'), english.find('PGA'), english.find('Intel'), english.find('AMD')]
+          candidates = [x for x in candidates if x >= 0]
+          if not candidates:
+              raise SystemExit('English socket anchor not found')
+          p = min(candidates)
+          print(english[max(0,p-2200):p+6500])
+
+          print('=== UYGHUR SOCKET WINDOW ===')
+          candidates = [uyghur.find('LGA'), uyghur.find('PGA'), uyghur.find('Intel'), uyghur.find('AMD')]
+          candidates = [x for x in candidates if x >= 0]
+          if not candidates:
+              raise SystemExit('Uyghur socket anchor not found')
+          q = min(candidates)
+          print(uyghur[max(0,q-2600):q+8000])
+          PY
