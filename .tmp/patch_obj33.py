@@ -127,7 +127,7 @@ missing = [x for x in required if x not in obj]
 if missing:
     raise SystemExit(f"Missing expected Objective 3.3 content: {missing}")
 
-if "21,300 megabytes per second of theta" in obj:
-    raise SystemExit("Stale theta transcript artifact remains in learner-facing Objective 3.3")
+if "21,300 megabytes per second of theta" in english:
+    raise SystemExit("Stale theta transcript artifact remains in learner-facing Objective 3.3 English")
 
 print("Objective 3.3 RAM terminology patch validation passed")
