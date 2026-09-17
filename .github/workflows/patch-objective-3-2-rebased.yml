@@ -1,0 +1,29 @@
+name: Apply rebased Objective 3.2 fix
+
+on:
+  push:
+    branches:
+      - fix/objective-3-2-rebased
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.event.head_commit.message == 'chore: run rebased Objective 3.2 patch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Apply bounded Objective 3.2 patch
+        run: python3 .tmp/patch_obj32_rebased.py
+      - name: Verify source transcript unchanged
+        run: git diff --exit-code -- source/
+      - name: Commit Objective 3.2 content
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html OBJECTIVE_3_2_REVIEW.md TRANSCRIPT_CORRECTIONS.md
+          git commit -m "fix: complete Objective 3.2 cable coverage"
+          git push origin HEAD:fix/objective-3-2-rebased
