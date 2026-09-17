@@ -48,12 +48,17 @@ Source progression:
 
 Source says each newer generation improves speed/efficiency and generations are not interchangeable due to slot/electrical/performance differences.
 
-### ECC
-Source:
+### ECC / non-ECC
+Source ECC coverage:
 - additional circuitry for error detection/correction
 - server/critical-system focus
 - financial transactions and medical records examples
 - higher cost trade-off
+
+Learner-facing exam clarification:
+- **ECC** supports system-level error detection/correction on a compatible platform
+- **non-ECC** does not provide the system-level ECC function
+- CPU/memory-controller and motherboard support are required for ECC operation
 
 ### Example module specification
 Source example:
@@ -63,7 +68,7 @@ Source example:
 - PC4-21300
 - theoretical bandwidth: 21,300 MB/s
 
-The transcript describes 2666 as MHz / cycles per second. This is preserved as source teaching and not externally reconciled.
+The original transcript describes 2666 as MHz / cycles per second and remains unchanged. Learner-facing English and Uyghur correctly distinguish **DDR4-2666 ≈ 2666 MT/s effective transfer rate** from an **≈1333 MHz I/O clock**.
 
 ## RAM channels
 
@@ -99,5 +104,5 @@ The source repeatedly emphasizes checking motherboard documentation for compatib
 - Preserve source organization and exam emphasis.
 - Correct only clear transcription artifacts.
 - Explicitly document internal source conflicts.
-- Preserve source-stated speed/bandwidth terminology without importing outside corrections.
+- Preserve the original source, but correct learner-facing DDR transfer-rate terminology to **MT/s** where the transcript confuses transfer rate with MHz.
 - Do not add RAM characteristics absent from the transcript.
