@@ -33,16 +33,20 @@ Source purpose:
 
 ## Cable tester
 
-Source-stated checks:
+The transcript groups all of the following under one generic cable tester:
 - proper wire pinout
 - resistance
 - signal attenuation
-- noise
-- interference
+- noise/interference
 - estimated cable length
-- performance certification before critical deployment
+- performance certification
 
-The translation preserves these as one source-described tester. It does not split them into different industry tester categories.
+Learner-facing English and Uyghur now correct that overgeneralization by distinguishing tester levels:
+- **verification/basic tester:** continuity + wiremap/pinout; wiring faults; optional features vary by model
+- **qualification tester:** determines whether an existing link can support a specific network technology/speed/application
+- **certification tester/cable certifier:** performs standards-based measurements and produces standards-compliance pass/fail results
+
+The original transcript remains unchanged. The key study correction is: **a basic cable tester is not automatically a cable certifier**.
 
 ## Punchdown tool
 
@@ -97,7 +101,8 @@ Source:
 ## Translation approach
 
 - Keep the eight tools separate by action and purpose.
-- Preserve all source-stated connector/tool examples.
+- Preserve all source-stated connector/tool examples, but correct capability overgeneralizations that could create a study mistake.
+- Distinguish **verification, qualification, and certification** without expanding into unrelated troubleshooting tools.
 - Do not introduce extra tools such as TDR, OTDR, packet sniffer or spectrum analyzer.
 - Use action-oriented natural Uyghur for exam recall.
 - Retain source-attributed terminology where the transcript itself defines an expansion.
