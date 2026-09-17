@@ -4,7 +4,8 @@ This checklist tracks the safe, incremental cleanup of the CompTIA A+ Core 1 Eng
 
 **Baseline main commit:** `89c662e26429c6ba14dc0df6a82130e31b4e2a49`  
 **Baseline app version:** `6.5.0`  
-**Cleanup branch:** `fix/full-project-cleanup`
+**Cleanup branch:** `fix/full-project-cleanup`  
+**Baseline validation:** `20 passed, 0 failed`
 
 ## Rules for this cleanup
 
@@ -19,9 +20,9 @@ This checklist tracks the safe, incremental cleanup of the CompTIA A+ Core 1 Eng
 
 - [x] Create dedicated cleanup branch: `fix/full-project-cleanup`
 - [x] Record current app version and baseline commit
-- [ ] Capture baseline structural checks
-- [ ] Confirm current app loads without JavaScript syntax errors
-- [ ] Confirm current PWA manifest and service worker files are valid
+- [x] Capture baseline structural checks
+- [x] Confirm current app loads without JavaScript syntax errors
+- [x] Confirm current PWA manifest and service worker files are valid
 
 ## Phase 1 — Automated validation
 
@@ -49,7 +50,7 @@ This checklist tracks the safe, incremental cleanup of the CompTIA A+ Core 1 Eng
 - [x] Add GitHub Actions validation workflow
 - [x] Run validation on pushes and pull requests
 - [x] Run JavaScript syntax checks in CI
-- [ ] Verify CI passes on the cleanup branch
+- [x] Verify CI passes on the cleanup branch
 
 ## Phase 4 — Deployment boundary cleanup
 
@@ -71,13 +72,13 @@ This checklist tracks the safe, incremental cleanup of the CompTIA A+ Core 1 Eng
 
 ## Phase 6 — Service worker / PWA hardening
 
-- [ ] Restrict cache cleanup to this app's cache prefix
-- [ ] Make background cache refresh lifecycle-safe
-- [ ] Make navigation cache writes lifecycle-safe
+- [x] Restrict cache cleanup to this app's cache prefix
+- [x] Make background cache refresh lifecycle-safe
+- [x] Make navigation cache writes lifecycle-safe
 - [ ] Remove manual cache-version drift
-- [ ] Verify offline fallback behavior
-- [ ] Verify old caches are removed safely
-- [ ] Verify PWA install still works
+- [ ] Verify offline fallback behavior in a real browser
+- [x] Verify old cache deletion is scoped safely
+- [ ] Verify PWA install still works in a real browser
 
 ## Phase 7 — Split the giant `index.html`
 
@@ -93,6 +94,8 @@ This checklist tracks the safe, incremental cleanup of the CompTIA A+ Core 1 Eng
 - [ ] Re-run validation after every extraction
 
 ## Phase 8 — Browser regression tests
+
+> This phase must be completed before the high-risk parts of Phase 4 and Phase 7 are merged.
 
 - [ ] Add browser test framework
 - [ ] Test initial application load
@@ -161,4 +164,3 @@ This checklist tracks the safe, incremental cleanup of the CompTIA A+ Core 1 Eng
 - [ ] Add automated release notes
 - [ ] Add accessibility audit tooling
 - [ ] Add performance budget
-
