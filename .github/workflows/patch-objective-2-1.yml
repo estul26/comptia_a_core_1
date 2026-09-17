@@ -1,0 +1,141 @@
+name: Apply Objective 2.1 content fix
+
+on:
+  push:
+    branches:
+      - fix/objective-2-1-ports
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Patch learner-facing Objective 2.1 content
+        shell: python
+        run: |
+          from pathlib import Path
+
+          def replace_exact(text, old, new, label, expected=1):
+              count = text.count(old)
+              if count != expected:
+                  raise SystemExit(f"{label}: expected {expected} match(es), found {count}")
+              return text.replace(old, new)
+
+          index = Path("index.html")
+          text = index.read_text(encoding="utf-8")
+
+          text = replace_exact(
+              text,
+              "NetBIOS operates using multiple ports, with each serving a specific function. Port 137 is designated for name services, essential for the identification of networked computers. Meanwhile, port 139 is involved in session services, enabling the establishment and maintenance of network connections between devices.",
+              "NetBIOS operates using multiple ports, with each serving a specific function. Port 137 is designated for name services, essential for the identification of networked computers. Port 138 is used for datagram services, supporting connectionless NetBIOS communication. Meanwhile, port 139 is involved in session services, enabling the establishment and maintenance of network connections between devices.",
+              "English NetBIOS ports",
+          )
+
+          text = replace_exact(
+              text,
+              "IMAP, or Internet Message Access Protocol, is a modern, synchronized way of handling emails.\\n\\nWhen you use IMAP",
+              "IMAP, or Internet Message Access Protocol, is a modern, synchronized way of handling emails. IMAP uses port 143 by default.\\n\\nWhen you use IMAP",
+              "English IMAP port",
+          )
+
+          text = replace_exact(
+              text,
+              "مەنبە NetBIOS نىڭ بىر نەچچە پورت ئىشلىتىدىغانلىقىنى ئېيتىدۇ، ئەمما بۇ بۆلەكتە تۆۋەندىكى ئىككى پورتنىلا تەپسىلىي كۆرسىتىدۇ:\\n\\n- **Port 137 — Name service:** توردىكى كومپيۇتېرلارنى نام ئارقىلىق تونۇشقا ياردەم بېرىدۇ.\\n- **Port 139 — Session service:** ئۈسكۈنىلەر ئارىسىدىكى تور session ىنى قۇرۇش ۋە داۋاملاشتۇرۇشقا ئىشلىتىلىدۇ.",
+              "مەنبە بۇ بۆلەكتە Port 137 ۋە Port 139 نى تەپسىلىي چۈشەندۈرىدۇ. **Exam Note:** 220-1201 ئۈچۈن NetBIOS/NetBT نىڭ **137–139** پورتلىرىنى بىلىش كېرەك.\\n\\n- **Port 137 — Name service:** توردىكى كومپيۇتېرلارنى نام ئارقىلىق تونۇشقا ياردەم بېرىدۇ.\\n- **Port 138 — Datagram service:** connectionless NetBIOS datagram ئالاقىسىگە ئىشلىتىلىدۇ.\\n- **Port 139 — Session service:** ئۈسكۈنىلەر ئارىسىدىكى تور session ىنى قۇرۇش ۋە داۋاملاشتۇرۇشقا ئىشلىتىلىدۇ.",
+              "Uyghur NetBIOS ports",
+          )
+
+          text = replace_exact(
+              text,
+              "**مەنبەدىكى مۇھىم چەك:** بۇ transcript پارچىسى IMAP نىڭ default port نومۇرىنى كۆرسەتمەيدۇ. شۇڭا بۇ تەرجىمە سىرتقى مەنبەدىن پورت نومۇرى قوشمايدۇ.",
+              "**Exam Note:** بۇ transcript پارچىسى IMAP نىڭ port نومۇرىنى كۆرسەتمەيدۇ، ئەمما 220-1201 ئۈچۈن **IMAP default port = 143** دەپ ئەستە تۇتۇڭ.",
+              "Uyghur IMAP exam note",
+          )
+
+          text = replace_exact(
+              text,
+              "| NetBIOS | 137, 139 | name/session services (source details) |\\n| IMAP | — | source بۇ بۆلەكتە port بەرمەيدۇ |",
+              "| NetBIOS / NetBT | 137–139 | name/datagram/session services |\\n| IMAP | 143 | server-based email synchronization |",
+              "Uyghur Objective 2.1 summary table",
+          )
+
+          index.write_text(text, encoding="utf-8")
+
+          review = Path("OBJECTIVE_2_1_REVIEW.md")
+          r = review.read_text(encoding="utf-8")
+          r = replace_exact(r, "| NetBIOS | 137, 139 |", "| NetBIOS / NetBT | 137–139 |", "review NetBIOS table")
+          r = replace_exact(r, "| IMAP | Not stated |", "| IMAP | 143 (Exam Note; not stated in transcript) |", "review IMAP table")
+          r = replace_exact(
+              r,
+              "The source explains server-based synchronization and multi-device behavior, but does not provide an IMAP default port. No outside port number was inserted.",
+              "The source explains server-based synchronization and multi-device behavior, but does not provide an IMAP default port. The learner-facing study content now adds an **Exam Note: IMAP uses port 143 by default**, matching the current 220-1201 objective while preserving the original transcript unchanged.",
+              "review IMAP decision",
+          )
+          r = replace_exact(
+              r,
+              "The source says NetBIOS uses multiple ports, but only explicitly explains:\n- 137 — name service\n- 139 — session service\n\nNo additional NetBIOS port was inserted.",
+              "The source says NetBIOS uses multiple ports, but only explicitly explains:\n- 137 — name service\n- 139 — session service\n\nThe learner-facing study content adds **port 138 — datagram service** as an Exam Note so the current 220-1201 **NetBIOS/NetBT 137–139** requirement is complete.",
+              "review NetBIOS decision",
+          )
+          r = replace_exact(
+              r,
+              "- Source omissions are labeled instead of filled with outside knowledge.",
+              "- Source omissions are labeled; current 220-1201-required facts may be added as clearly identified **Exam Notes**.",
+              "review translation approach",
+          )
+          review.write_text(r, encoding="utf-8")
+
+          corrections = Path("TRANSCRIPT_CORRECTIONS.md")
+          c = corrections.read_text(encoding="utf-8")
+          c = replace_exact(
+              c,
+              "- Objective 2.1 source gap: the IMAP segment explains synchronization behavior but does **not** state an IMAP default port number. The reviewed Uyghur intentionally does not add one from outside knowledge.",
+              "- Objective 2.1 source gap: the IMAP segment explains synchronization behavior but does **not** state an IMAP default port number. The original transcript remains unchanged; learner-facing study content adds **Exam Note: IMAP 143** to match the current 220-1201 objective.",
+              "corrections IMAP note",
+          )
+          c = replace_exact(
+              c,
+              "- Objective 2.1 source scope: the NetBIOS segment says multiple ports are used but only explains ports 137 and 139; the reviewed Uyghur does not silently add another port.",
+              "- Objective 2.1 source scope: the NetBIOS segment says multiple ports are used but only explains ports 137 and 139. The original transcript remains unchanged; learner-facing study content adds **Exam Note: NetBIOS/NetBT 137–139**, including port 138 datagram service, to match the current 220-1201 objective.",
+              "corrections NetBIOS note",
+          )
+          corrections.write_text(c, encoding="utf-8")
+
+      - name: Verify Objective 2.1 changes
+        shell: python
+        run: |
+          from pathlib import Path
+          text = Path("index.html").read_text(encoding="utf-8")
+          checks = [
+              "Port 138 is used for datagram services",
+              "IMAP uses port 143 by default",
+              "NetBIOS / NetBT | 137–139",
+              "| IMAP | 143 |",
+              "IMAP default port = 143",
+          ]
+          missing = [item for item in checks if item not in text]
+          if missing:
+              raise SystemExit(f"Missing expected learner-facing content: {missing}")
+          if "| IMAP | — | source بۇ بۆلەكتە port بەرمەيدۇ |" in text:
+              raise SystemExit("Old IMAP summary-table gap is still present")
+          print("Objective 2.1 bounded content checks passed")
+
+      - name: Remove temporary inspection workflows
+        run: |
+          rm -f .github/workflows/inspect-objective-2-1.yml
+          rm -f .github/workflows/inspect-objective-2-1-bilingual.yml
+          rm -f .github/workflows/patch-objective-2-1.yml
+
+      - name: Commit patched content
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html OBJECTIVE_2_1_REVIEW.md TRANSCRIPT_CORRECTIONS.md .github/workflows
+          git commit -m "fix: complete objective 2.1 required ports"
+          git push origin HEAD:fix/objective-2-1-ports
