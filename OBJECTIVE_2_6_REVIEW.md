@@ -49,7 +49,10 @@ Source teaching:
 - ISPs assign public IP addresses
 
 Important source gap:
-the transcript says the private ranges are shown visually “to the right,” but the ranges themselves are not present in transcript text. No RFC1918 ranges were added.
+the transcript says the private ranges are shown visually “to the right,” but the ranges themselves are not present in transcript text. The original transcript remains unchanged. Learner-facing English and Uyghur now add the current exam-required RFC1918 ranges as a clearly labeled **Exam Note**:
+- `10.0.0.0/8` (`10.0.0.0–10.255.255.255`)
+- `172.16.0.0/12` (`172.16.0.0–172.31.255.255`)
+- `192.168.0.0/16` (`192.168.0.0–192.168.255.255`)
 
 ## APIPA
 
@@ -87,7 +90,7 @@ The transcript includes a simplified description of return traffic through the g
 ## Translation approach
 
 - Preserve source numbers and comparisons exactly.
-- Do not reconstruct visual-only information missing from the transcript.
+- Preserve visual-only omissions in the original transcript; when a current 220-1201-required fact is missing, add it to learner-facing content only as a clearly labeled **Exam Note**.
 - Keep IPv4, IPv6, DHCP, APIPA and SOHO visible for exam recognition.
 - Use natural Uyghur for the explanatory structure.
 - Avoid adding subnetting, NAT, routing or IPv6 details not present in this objective.
