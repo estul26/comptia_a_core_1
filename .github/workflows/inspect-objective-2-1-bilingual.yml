@@ -1,0 +1,33 @@
+name: Inspect Objective 2.1 bilingual occurrences
+
+on:
+  push:
+    branches:
+      - fix/objective-2-1-ports
+
+permissions:
+  contents: read
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Print all NetBIOS and IMAP occurrences
+        shell: python
+        run: |
+          from pathlib import Path
+          text = Path("index.html").read_text(encoding="utf-8")
+          for needle in ("NetBIOS", "IMAP"):
+              positions = []
+              pos = 0
+              while True:
+                  i = text.find(needle, pos)
+                  if i == -1:
+                      break
+                  positions.append(i)
+                  pos = i + len(needle)
+              print(f"=== {needle}: {len(positions)} occurrences ===")
+              for n, i in enumerate(positions, 1):
+                  print(f"--- occurrence {n} @ {i} ---")
+                  print(text[max(0, i-300):min(len(text), i+1400)])
