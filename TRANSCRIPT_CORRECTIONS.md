@@ -13,6 +13,7 @@ The website's embedded English study text corrects a few obvious speech-to-text 
 The DDR/DIMM/SODIMM terminology matches the CompTIA A+ 220-1201 RAM objective terminology.
 
 - Objective 1.2: `NSC` → `NFC` in the Near-Field Communication segment (speech-to-text error in the original transcript).
+- Objective 1.2 source-gap note: the transcript teaches **drawing pads** and **trackpads/touchpads** but omits **track points / pointing sticks** from the current objective coverage. The original transcript remains unchanged; learner-facing English and Uyghur add a clearly labeled **Exam Note** explaining **track point / pointing stick = small pressure-sensitive keyboard-integrated pointer control**.
 
 - Objective 1.3: `pen code` → `PIN code` in the Bluetooth pairing segment (speech-to-text error in the original transcript).
 - Objective 1.3: the MDM sentence `employees often accessed sensitive corporate data` is treated as a grammatical speech-to-text artifact; the reviewed Uyghur preserves the intended ongoing workplace meaning without altering the original English source.

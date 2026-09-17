@@ -9,6 +9,12 @@ The English source covers four repeated Objective 1.2 segments:
 3. Port replicator
 4. Docking station
 
+## Current-objective source gap — Track Point / Pointing Stick
+
+The transcript covers **drawing pads** and **trackpads/touchpads** but does not teach **track points / pointing sticks**, which are part of current Objective 1.2 input/accessory coverage. The original transcript remains unchanged. Learner-facing English and Uyghur add a clearly labeled **Exam Note** that distinguishes:
+- **trackpad** = touch-sensitive surface
+- **track point / pointing stick** = small pressure-sensitive keyboard-integrated pointer control
+
 ## Key source-derived comparisons
 
 ### Passive vs active stylus
@@ -36,4 +42,5 @@ The reviewed Uyghur:
 - keeps exam labels/abbreviations visible;
 - translates surrounding explanation naturally;
 - does not silently resolve source-internal tensions;
-- preserves the source's organization and level of detail.
+- preserves the source's organization and level of detail;
+- adds missing current-objective facts as clearly labeled **Exam Notes** without changing the archival transcript.
