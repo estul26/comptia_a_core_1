@@ -28,3 +28,5 @@ jobs:
           git add index.html OBJECTIVE_3_6_REVIEW.md TRANSCRIPT_CORRECTIONS.md
           git commit -m "fix: align Objective 3.6 power supply guidance"
           git push origin HEAD:fix/objective-3-6-power-supply
+
+# rerun after documentation anchor fix
