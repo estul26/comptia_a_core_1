@@ -519,7 +519,14 @@ body.dark{--muted:#a8b5c6;--muted-2:#8e9caf}
   .top{position:sticky;top:0;display:block;padding:8px 10px;z-index:60}.top-main{min-width:0}
   .focus-toggle{display:none!important}.top-tools{margin-top:7px;justify-content:space-between;overflow-x:auto;scrollbar-width:none}
   .top-tools::-webkit-scrollbar{display:none}.view-tools,.study-tools{flex:0 0 auto}.top #languageMode{min-width:132px}
-  .global-results{top:48px;left:0;right:0;width:100%;max-height:62vh}.more-menu{display:block}
+  .global-results{top:48px;left:0;right:0;width:100%;max-height:62vh}.more-menu{display:block;position:static}
+  .more-popover{
+    top:calc(100% + 6px);right:10px;
+    max-height:calc(100vh - 112px);
+    max-height:calc(100dvh - 112px - env(safe-area-inset-bottom));
+    overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch
+  }
+  .top .study-tools #focusLineBtn{display:block}
   .lesson-context{display:none}.compact-mobile-objective{display:grid;grid-template-columns:auto 1fr;gap:8px;align-items:center;margin:8px 10px 0;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--panel)}
   .compact-mobile-objective label{font-size:10px;font-weight:850;letter-spacing:.06em;color:var(--muted);text-transform:uppercase}
   .compact-mobile-objective select{min-width:0;width:100%;padding:7px 8px;border:0;border-radius:7px;background:var(--panel-soft);font-size:12px;font-weight:700;color:var(--text)}
