@@ -17,8 +17,8 @@ The DDR/DIMM/SODIMM terminology matches the CompTIA A+ 220-1201 RAM objective te
 - Objective 1.3: `pen code` → `PIN code` in the Bluetooth pairing segment (speech-to-text error in the original transcript).
 - Objective 1.3: the MDM sentence `employees often accessed sensitive corporate data` is treated as a grammatical speech-to-text artifact; the reviewed Uyghur preserves the intended ongoing workplace meaning without altering the original English source.
 - Objective 2.1: `Comp-TA plus` / `CompTIA AE plus` are treated as speech-to-text variants of `CompTIA A+`; the original English source remains unchanged.
-- Objective 2.1 source gap: the IMAP segment explains synchronization behavior but does **not** state an IMAP default port number. The reviewed Uyghur intentionally does not add one from outside knowledge.
-- Objective 2.1 source scope: the NetBIOS segment says multiple ports are used but only explains ports 137 and 139; the reviewed Uyghur does not silently add another port.
+- Objective 2.1 source gap: the IMAP segment explains synchronization behavior but does **not** state an IMAP default port number. The original transcript remains unchanged; learner-facing study content adds **Exam Note: IMAP 143** to match the current 220-1201 objective.
+- Objective 2.1 source scope: the NetBIOS segment says multiple ports are used but only explains ports 137 and 139. The original transcript remains unchanged; learner-facing study content adds **Exam Note: NetBIOS/NetBT 137–139**, including port 138 datagram service, to match the current 220-1201 objective.
 - Objective 2.2: `online gaining` → `online gaming` in the 5 GHz use-case example (speech-to-text error in the original transcript).
 - Objective 2.2: the NFC segment begins with `NFC` but later repeatedly says `NSC`; the reviewed Uyghur consistently uses **NFC** while preserving the original English source.
 - Objective 2.2 source-attribution note: the transcript describes Wi-Fi as short for `wireless fidelity`. The reviewed Uyghur attributes that wording to the source rather than independently asserting or replacing it.
