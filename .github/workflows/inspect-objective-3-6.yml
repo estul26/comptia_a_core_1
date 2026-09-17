@@ -12,33 +12,36 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Print bounded Objective 3.6 snippets
+      - name: Print exact Objective 3.6 anchors
         run: |
           python3 - <<'PY'
           from pathlib import Path
           text = Path('index.html').read_text(encoding='utf-8')
           start = text.find('"id": "3.6"')
           end = text.find('"id": "3.7"', start)
-          if start < 0 or end < 0:
-              raise SystemExit('Objective 3.6 bounds not found')
           en_marker = text.find('"english": "', start, end)
           ug_marker = text.find('", "uyghur": "', en_marker, end)
-          if en_marker < 0 or ug_marker < 0:
-              raise SystemExit('Language bounds not found')
           en_start = en_marker + len('"english": "')
           ug_start = ug_marker + len('", "uyghur": "')
           english = text[en_start:ug_marker]
           uyghur = text[ug_start:end]
 
-          for label, body in [('ENGLISH', english), ('UYGHUR', uyghur)]:
-              print(f'=== {label} VOLTAGE/WATTAGE/EFFICIENCY ===')
-              anchors = ['120 VAC', '240 VAC', 'wattage', 'efficiency']
-              ps = [body.lower().find(a.lower()) for a in anchors if body.lower().find(a.lower()) >= 0]
-              p = min(ps) if ps else 0
-              print(body[max(0,p-1600):p+9500])
+          print('=== ENGLISH START ===')
+          print(english[:4200])
+          print('=== ENGLISH OVERSIZE ===')
+          p = english.find('Conversely, choosing a PSU with excessive wattage')
+          print(english[p-500:p+1800])
+          print('=== ENGLISH UPS START ===')
+          q = english.find('Lastly, in situations where there are sudden and unexpected power interruptions')
+          print(english[q:q+1800])
 
-              print(f'=== {label} UPS ===')
-              q = body.find('UPS')
-              if q >= 0:
-                  print(body[max(0,q-1600):q+8500])
+          print('=== UYGHUR INPUT ===')
+          p = uyghur.find('### Input Voltage')
+          print(uyghur[p:p+1800])
+          print('=== UYGHUR OVERSIZE ===')
+          q = uyghur.find('### Wattage بەك يۇقىرى بولسا')
+          print(uyghur[q:q+2200])
+          print('=== UYGHUR UPS START ===')
+          r = uyghur.find('## UPS — Uninterruptible Power Supply')
+          print(uyghur[r:r+1200])
           PY
