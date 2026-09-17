@@ -1,0 +1,56 @@
+name: Inspect Objective 3.3 RAM terminology
+
+on:
+  push:
+    branches:
+      - fix/objective-3-3-ram-terminology
+    paths:
+      - .github/workflows/inspect-objective-3-3.yml
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Print bounded Objective 3.3 snippets
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          text = Path('index.html').read_text(encoding='utf-8')
+          start = text.find('"id": "3.3"')
+          end = text.find('"id": "3.4"', start)
+          if start < 0 or end < 0:
+              raise SystemExit('Objective 3.3 bounds not found')
+          en_marker = text.find('"english": "', start, end)
+          ug_marker = text.find('", "uyghur": "', en_marker, end)
+          if en_marker < 0 or ug_marker < 0:
+              raise SystemExit('Language bounds not found')
+          en_start = en_marker + len('"english": "')
+          ug_start = ug_marker + len('", "uyghur": "')
+          english = text[en_start:ug_marker]
+          uyghur = text[ug_start:end]
+
+          print('=== ENGLISH ECC WINDOW ===')
+          candidates = [english.find('ECC'), english.find('error correction'), english.find('error-correction')]
+          candidates = [x for x in candidates if x >= 0]
+          if not candidates:
+              raise SystemExit('English ECC anchor not found')
+          p = min(candidates)
+          print(english[max(0,p-1800):p+4200])
+
+          print('=== ENGLISH DDR SPEED WINDOW ===')
+          candidates = [english.find('2666'), english.find('21,300'), english.find('megahertz')]
+          candidates = [x for x in candidates if x >= 0]
+          if not candidates:
+              raise SystemExit('English DDR speed anchor not found')
+          p = min(candidates)
+          print(english[max(0,p-1800):p+4200])
+
+          print('=== UYGHUR ECC/SPEED WINDOW ===')
+          candidates = [uyghur.find('ECC'), uyghur.find('2666'), uyghur.find('21,300')]
+          candidates = [x for x in candidates if x >= 0]
+          if not candidates:
+              raise SystemExit('Uyghur RAM anchor not found')
+          q = min(candidates)
+          print(uyghur[max(0,q-2200):q+7000])
+          PY
