@@ -1,0 +1,46 @@
+name: Inspect Objective 2.4 DNS content
+
+on:
+  push:
+    branches:
+      - fix/objective-2-4-cname
+    paths:
+      - .github/workflows/inspect-objective-2-4.yml
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Print bounded DNS-record snippets
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          text = Path('index.html').read_text(encoding='utf-8')
+          start = text.find('"id": "2.4"')
+          end = text.find('"id": "2.5"', start)
+          if start < 0 or end < 0:
+              raise SystemExit('Objective 2.4 bounds not found')
+          en_marker = text.find('"english": "', start, end)
+          ug_marker = text.find('\", \"uyghur\": \"', en_marker, end)
+          if en_marker < 0 or ug_marker < 0:
+              raise SystemExit('Language bounds not found')
+          en_start = en_marker + len('"english": "')
+          ug_start = ug_marker + len('\", \"uyghur\": \"')
+          english = text[en_start:ug_marker]
+          uyghur = text[ug_start:end]
+
+          print('=== ENGLISH DNS RECORD WINDOW ===')
+          p = english.find('Up next, we have Quad A records.')
+          if p < 0:
+              p = english.find('Quad A records')
+          print(english[max(0,p-900):p+2600])
+
+          print('=== UYGHUR DNS RECORD WINDOW ===')
+          candidates = [uyghur.find('AAAA'), uyghur.find('MX'), uyghur.find('DNS Records'), uyghur.find('DNS records')]
+          candidates = [x for x in candidates if x >= 0]
+          if not candidates:
+              raise SystemExit('Uyghur DNS record anchor not found')
+          q = min(candidates)
+          print(uyghur[max(0,q-1200):q+4200])
+          PY
