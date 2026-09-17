@@ -28,3 +28,5 @@ jobs:
           git add index.html OBJECTIVE_2_8_REVIEW.md TRANSCRIPT_CORRECTIONS.md
           git commit -m "fix: correct Objective 2.8 cable tester guidance"
           git push origin HEAD:fix/objective-2-8-cable-tester
+
+# rerun with bounded review-section patch
