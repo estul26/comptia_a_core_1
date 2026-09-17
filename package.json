@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "wrangler dev",
+    "validate": "node scripts/validate-content.mjs",
+    "check": "npm run validate",
     "deploy": "wrangler deploy"
   },
   "devDependencies": {
