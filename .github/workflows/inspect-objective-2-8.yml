@@ -1,0 +1,44 @@
+name: Inspect Objective 2.8 cable tester content
+
+on:
+  push:
+    branches:
+      - fix/objective-2-8-cable-tester
+    paths:
+      - .github/workflows/inspect-objective-2-8.yml
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Print bounded Objective 2.8 cable tester snippets
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          text = Path('index.html').read_text(encoding='utf-8')
+          start = text.find('"id": "2.8"')
+          end = text.find('"id": "3.1"', start)
+          if start < 0 or end < 0:
+              raise SystemExit('Objective 2.8 bounds not found')
+          en_marker = text.find('"english": "', start, end)
+          ug_marker = text.find('", "uyghur": "', en_marker, end)
+          if en_marker < 0 or ug_marker < 0:
+              raise SystemExit('Language bounds not found')
+          en_start = en_marker + len('"english": "')
+          ug_start = ug_marker + len('", "uyghur": "')
+          english = text[en_start:ug_marker]
+          uyghur = text[ug_start:end]
+
+          print('=== ENGLISH CABLE TESTER WINDOW ===')
+          p = english.lower().find('cable tester')
+          if p < 0:
+              raise SystemExit('English cable tester anchor not found')
+          print(english[max(0,p-1400):p+6500])
+
+          print('=== UYGHUR CABLE TESTER WINDOW ===')
+          q = uyghur.lower().find('cable tester')
+          if q < 0:
+              raise SystemExit('Uyghur cable tester anchor not found')
+          print(uyghur[max(0,q-1800):q+8000])
+          PY
