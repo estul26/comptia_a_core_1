@@ -141,8 +141,8 @@ review = Path("OBJECTIVE_3_6_REVIEW.md")
 r = review.read_text(encoding="utf-8")
 r = replace_exact(
     r,
-    "## Source-stated values\\nInput:\\n- 120 VAC\\n- 240 VAC",
-    "## Input voltage\\nTranscript nominal values:\\n- 120 VAC\\n- 240 VAC\\n\\nCurrent 220-1201 learner-facing Exam Note:\\n- **110–120 VAC**\\n- **220–240 VAC**",
+    "## Source-stated values\nInput:\n- 120 VAC\n- 240 VAC",
+    "## Input voltage\nTranscript nominal values:\n- 120 VAC\n- 240 VAC\n\nCurrent 220-1201 learner-facing Exam Note:\n- **110–120 VAC**\n- **220–240 VAC**",
     "review input ranges",
 )
 r = replace_exact(
@@ -153,14 +153,14 @@ r = replace_exact(
 )
 r = replace_exact(
     r,
-    "## UPS\\n- immediate short-term emergency power",
-    "## UPS — Supplemental for Objective 3.6\\nCurrent 220-1201 Objective 3.6 does not list UPS as a named bullet. The transcript's UPS material is retained as supporting knowledge.\\n\\nSource covers:\\n- immediate short-term emergency power",
+    "## UPS\n- immediate short-term emergency power",
+    "## UPS — Supplemental for Objective 3.6\nCurrent 220-1201 Objective 3.6 does not list UPS as a named bullet. The transcript's UPS material is retained as supporting knowledge.\n\nSource covers:\n- immediate short-term emergency power",
     "review UPS scope",
 )
 r = replace_exact(
     r,
-    "- Preserve every source-stated number and device example.\\n- Do not answer missing-data wattage questions.\\n- Correct only clear transcription errors.\\n- Do not import modern PSU/UPS specifications absent from Objective 3.6.",
-    "- Preserve the original transcript and its device examples.\\n- Correct learner-facing input voltage to the current objective ranges **110–120 VAC vs. 220–240 VAC** while noting the transcript's nominal 120/240 values.\\n- Correct the blanket oversized-PSU inefficiency implication without adding a detailed efficiency-curve matrix.\\n- Do not answer missing-data wattage questions.\\n- Label UPS as **Supplemental for Objective 3.6** rather than removing the source material.\\n- Do not import unrelated modern PSU/UPS specifications.",
+    "- Preserve every source-stated number and device example.\n- Do not answer missing-data wattage questions.\n- Correct only clear transcription errors.\n- Do not import modern PSU/UPS specifications absent from Objective 3.6.",
+    "- Preserve the original transcript and its device examples.\n- Correct learner-facing input voltage to the current objective ranges **110–120 VAC vs. 220–240 VAC** while noting the transcript's nominal 120/240 values.\n- Correct the blanket oversized-PSU inefficiency implication without adding a detailed efficiency-curve matrix.\n- Do not answer missing-data wattage questions.\n- Label UPS as **Supplemental for Objective 3.6** rather than removing the source material.\n- Do not import unrelated modern PSU/UPS specifications.",
     "review translation approach",
 )
 review.write_text(r, encoding="utf-8")
@@ -177,7 +177,7 @@ c = replace_exact(
 anchor = "- Objective 3.6 source-scope note: the transcript states that an 80 Plus-rated PSU guarantees at least 80% efficiency at certain load levels and lists Bronze, Silver, Gold, Platinum, and Titanium; no external load-percentage table or certification threshold matrix is added."
 insert = (
     "- Objective 3.6 technical correction: the transcript broadly suggests an excessively high-wattage PSU causes inefficiency. "
-    "Learner-facing English and Uyghur clarify that **higher wattage alone does not inherently make a PSU inefficient**; the system draws the power it requires, while conversion efficiency varies with PSU design and operating load. Right-sizing still considers peak demand and reasonable upgrade headroom.\\n"
+    "Learner-facing English and Uyghur clarify that **higher wattage alone does not inherently make a PSU inefficient**; the system draws the power it requires, while conversion efficiency varies with PSU design and operating load. Right-sizing still considers peak demand and reasonable upgrade headroom.\n"
     + anchor
 )
 c = replace_exact(c, anchor, insert, "transcript PSU efficiency note")
