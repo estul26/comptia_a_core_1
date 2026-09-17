@@ -1,0 +1,30 @@
+name: Apply Objective 3.6 power supply fix
+
+on:
+  push:
+    branches:
+      - fix/objective-3-6-power-supply
+    paths:
+      - .github/workflows/patch-objective-3-6-power.yml
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Apply bounded Objective 3.6 patch
+        run: python3 .tmp/patch_obj36_power.py
+      - name: Verify source transcript unchanged
+        run: git diff --exit-code -- source/
+      - name: Commit Objective 3.6 content
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html OBJECTIVE_3_6_REVIEW.md TRANSCRIPT_CORRECTIONS.md
+          git commit -m "fix: align Objective 3.6 power supply guidance"
+          git push origin HEAD:fix/objective-3-6-power-supply
