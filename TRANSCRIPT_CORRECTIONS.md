@@ -71,7 +71,7 @@ The DDR/DIMM/SODIMM terminology matches the CompTIA A+ 220-1201 RAM objective te
 - Objective 3.4: `SAS offers several advantages over SADOC` is treated as a speech-to-text error; the surrounding source and summary clearly compare SAS with **SATA**.
 - Objective 3.4: the removable-storage section twice says `many SD cards` while describing a smaller SD variant later replaced by microSD. The reviewed Uyghur identifies this as **MiniSD** based on the source's own description; original English remains unchanged.
 - Objective 3.4 source-scope note: the HDD RPM explanation is preserved at the source conclusion level (higher RPM generally improves access time) without externally rewriting its mechanical explanation.
-- Objective 3.4 source-scope note: RAID 6 and RAID 10 minimum-drive counts are not stated in this transcript segment, so no outside values were inserted.
+- Objective 3.4 source-gap note: RAID 6 and RAID 10 minimum-drive counts are not stated in this transcript segment. The original transcript remains unchanged; learner-facing English and Uyghur add clearly labeled exam-support notes: **RAID 6 = minimum 4 drives** and **RAID 10 = minimum 4 drives**.
 - Objective 3.4 source-scope note: the transcript does not state `RAID is not a backup`; the reviewed source-based lesson does not add that industry rule.
 - Objective 3.4 source-scope note: the xD section expands XD as `extreme digital`; the reviewed lesson preserves this as source wording rather than externally replacing it.
 - Objective 3.4 source-scope note: CD/DVD/Blu-ray capacities are preserved exactly as transcript-attributed CompTIA study-guide maximums: 700 MB, approximately 17 GB, and 128 GB.

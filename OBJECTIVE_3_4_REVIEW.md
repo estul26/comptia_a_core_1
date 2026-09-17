@@ -60,7 +60,8 @@ No outside generation/version matrices were added.
 **RAID 6**
 - striping + two parity sets
 - withstand two-drive failures
-- source does not state minimum drive count
+- transcript does not state minimum drive count
+- learner-facing **Exam Note: minimum 4 drives**
 
 **RAID 10**
 - RAID 1+0
@@ -68,7 +69,8 @@ No outside generation/version matrices were added.
 - high performance / redundancy
 - faster rebuild than parity-based source comparison
 - half usable capacity
-- source does not state minimum drive count
+- transcript does not state minimum drive count
+- learner-facing **Exam Note: minimum 4 drives**
 
 ## Removable storage
 
@@ -90,4 +92,5 @@ Source-stated optical maximums:
 - Preserve source structure and numerical values.
 - Correct only clear transcript errors or internally resolvable labels.
 - Explicitly note source gaps.
+- Add missing exam-support facts as clearly labeled **Exam Notes** while preserving the original transcript.
 - Avoid importing newer storage standards/specifications.
