@@ -116,38 +116,30 @@ index.write_text(text, encoding="utf-8")
 # Update Objective 2.8 review documentation.
 review = Path("OBJECTIVE_2_8_REVIEW.md")
 r = review.read_text(encoding="utf-8")
-old_review = (
-    "## Cable tester\\n\\n"
-    "Source-stated checks:\\n"
-    "- proper wire pinout\\n"
-    "- resistance\\n"
-    "- signal attenuation\\n"
-    "- noise\\n"
-    "- interference\\n"
-    "- estimated cable length\\n"
-    "- performance certification before critical deployment\\n\\n"
-    "The translation preserves these as one source-described tester. It does not split them into different industry tester categories."
-)
+sec_start = r.find("## Cable tester\n")
+sec_end = r.find("## Punchdown tool\n", sec_start)
+if sec_start < 0 or sec_end < 0:
+    raise SystemExit("Could not locate bounded Cable tester review section")
 new_review = (
-    "## Cable tester\\n\\n"
-    "The transcript groups all of the following under one generic cable tester:\\n"
-    "- proper wire pinout\\n"
-    "- resistance\\n"
-    "- signal attenuation\\n"
-    "- noise/interference\\n"
-    "- estimated cable length\\n"
-    "- performance certification\\n\\n"
-    "Learner-facing English and Uyghur now correct that overgeneralization by distinguishing tester levels:\\n"
-    "- **verification/basic tester:** continuity + wiremap/pinout; wiring faults; optional features vary by model\\n"
-    "- **qualification tester:** determines whether an existing link can support a specific network technology/speed/application\\n"
-    "- **certification tester/cable certifier:** performs standards-based measurements and produces standards-compliance pass/fail results\\n\\n"
-    "The original transcript remains unchanged. The key study correction is: **a basic cable tester is not automatically a cable certifier**."
+    "## Cable tester\n\n"
+    "The transcript groups all of the following under one generic cable tester:\n"
+    "- proper wire pinout\n"
+    "- resistance\n"
+    "- signal attenuation\n"
+    "- noise/interference\n"
+    "- estimated cable length\n"
+    "- performance certification\n\n"
+    "Learner-facing English and Uyghur now correct that overgeneralization by distinguishing tester levels:\n"
+    "- **verification/basic tester:** continuity + wiremap/pinout; wiring faults; optional features vary by model\n"
+    "- **qualification tester:** determines whether an existing link can support a specific network technology/speed/application\n"
+    "- **certification tester/cable certifier:** performs standards-based measurements and produces standards-compliance pass/fail results\n\n"
+    "The original transcript remains unchanged. The key study correction is: **a basic cable tester is not automatically a cable certifier**.\n\n"
 )
-r = replace_exact(r, old_review, new_review, "review cable tester section")
+r = r[:sec_start] + new_review + r[sec_end:]
 r = replace_exact(
     r,
-    "- Preserve all source-stated connector/tool examples.\\n- Do not introduce extra tools such as TDR, OTDR, packet sniffer or spectrum analyzer.",
-    "- Preserve all source-stated connector/tool examples, but correct capability overgeneralizations that could create a study mistake.\\n- Distinguish **verification, qualification, and certification** without expanding into unrelated troubleshooting tools.\\n- Do not introduce extra tools such as TDR, OTDR, packet sniffer or spectrum analyzer.",
+    "- Preserve all source-stated connector/tool examples.\n- Do not introduce extra tools such as TDR, OTDR, packet sniffer or spectrum analyzer.",
+    "- Preserve all source-stated connector/tool examples, but correct capability overgeneralizations that could create a study mistake.\n- Distinguish **verification, qualification, and certification** without expanding into unrelated troubleshooting tools.\n- Do not introduce extra tools such as TDR, OTDR, packet sniffer or spectrum analyzer.",
     "review translation approach",
 )
 review.write_text(r, encoding="utf-8")
