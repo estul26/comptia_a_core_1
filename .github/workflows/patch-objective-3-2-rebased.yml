@@ -28,3 +28,5 @@ jobs:
           git add index.html OBJECTIVE_3_2_REVIEW.md TRANSCRIPT_CORRECTIONS.md
           git commit -m "fix: complete Objective 3.2 cable coverage"
           git push origin HEAD:fix/objective-3-2-rebased
+
+# temporary one-shot workflow
