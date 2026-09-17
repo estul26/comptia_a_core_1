@@ -53,7 +53,7 @@ Source covers:
 - multi-socket server boards
 - ARM-based mobile processors
 
-Intel=LGA / AMD=PGA is kept as source-time framing, not universal current guidance.
+The original transcript uses Intel=LGA / AMD=PGA as its teaching model. Learner-facing English and Uyghur no longer present that as a universal current rule. They explicitly teach that socket type depends on the processor platform/generation and add **AMD Socket AM5 = 1718-pin LGA** as a current example. The original transcript remains unchanged.
 
 ## CPU architecture
 Source covers:
@@ -119,5 +119,6 @@ BitLocker/FileVault are source examples, not externally researched product claim
 ## Translation approach
 - Preserve every source section and source-stated scenario.
 - Correct only clear transcription artifacts.
-- Mark time-sensitive, overgeneralized, or questionable source wording as source framing rather than silently rewriting it from outside knowledge.
-- Avoid adding motherboard/CPU/security specifications absent from the transcript.
+- Preserve the original transcript, but correct materially outdated or overgeneralized learner-facing guidance when it could create an exam or real-world compatibility mistake.
+- Add narrowly scoped current examples only when they clarify required compatibility concepts; here, **AM5 uses LGA** demonstrates why vendor name alone does not determine socket type.
+- Avoid unrelated motherboard/CPU/security specifications absent from the objective.
