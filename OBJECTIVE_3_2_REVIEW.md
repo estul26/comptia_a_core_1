@@ -32,12 +32,13 @@ Source-covered:
 - twisted pair
 - EMI / crosstalk
 - UTP / STP
+- direct-burial cable — **Exam Note; absent from transcript but required by current 220-1201**
 - plenum-rated cable
 - T568A / T568B
 
 Source CAT speeds/distances are preserved exactly.
 
-The transcript's Ethernet-standard labels are not externally normalized.
+The original transcript's Ethernet-standard labels remain unchanged in `source/`. Learner-facing study content uses the canonical names **100BASE-TX, 1000BASE-T, and 10GBASE-T**.
 
 ## Fiber
 
@@ -64,7 +65,7 @@ Source-covered:
 - serial cable — one bit at a time, per source
 - Thunderbolt — data/video/network/power
 
-The serial-vs-USB wording is preserved as source framing, not externally corrected.
+The original transcript incorrectly contrasts legacy serial transmission with `parallel transmission used in interfaces like USB`. Learner-facing English and Uyghur explicitly correct this: **USB is also a serial interface (Universal Serial Bus)**. The source transcript remains unchanged.
 
 ## Video cables
 
@@ -83,6 +84,10 @@ No current version/bandwidth tables were added.
 
 - SATA — internal HDD/SSD to motherboard, 7-pin data cable
 - eSATA — external SATA-based storage connection
+
+## Adapters
+
+The current 220-1201 objective includes **adapters**, but the transcript has no dedicated adapter section. Learner-facing English and Uyghur therefore add a clearly labeled **Exam Note** explaining that adapters bridge compatible connector/interface types and do not automatically create unsupported capabilities.
 
 ## Connector types
 
@@ -107,4 +112,6 @@ Source-covered:
 - Preserve all six source sections and source-stated values.
 - Correct only clear transcript artifacts, documenting each one.
 - Keep source-era claims source-attributed.
-- Do not import newer cable/interface specifications.
+- Correct materially false learner-facing claims while preserving the original transcript.
+- Add current 220-1201-required facts missing from the transcript as clearly labeled **Exam Notes**.
+- Do not import unrelated newer cable/interface specifications.

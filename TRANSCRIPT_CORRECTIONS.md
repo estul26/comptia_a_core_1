@@ -51,11 +51,13 @@ The DDR/DIMM/SODIMM terminology matches the CompTIA A+ 220-1201 RAM objective te
 - Objective 3.1 source-scope note: no extra panel technologies, HDR standards, response-time metrics, color-space percentages, OLED subtypes, adaptive-sync technologies, or additional resolutions were added because the transcript does not teach them here.
 - Objective 3.2: `CAT6a ... The 80 stands for augmented` is treated as a speech-to-text error; reviewed Uyghur uses **`a` stands for augmented**.
 - Objective 3.2: `80 plus Core 1` is treated as **A+ Core 1**.
-- Objective 3.2: `T5-68A`, `T5-68B`, and `pinup standards` are treated as speech-to-text errors for **T568A**, **T568B**, and **pinout standards**.
-- Objective 3.2: the DVI narration says `DVI-T is the digital variant`, but the same source section later summarizes `DVI-D transmits digital signals`; reviewed Uyghur uses canonical **DVI-D**.
-- Objective 3.2: `RJ11, where the RG stands for registered jack` is treated as a speech-to-text error; reviewed Uyghur uses **RJ = Registered Jack**.
-- Objective 3.2 source-scope note: the transcript labels Ethernet standards as `100BaseTx`, `1000BaseTx`, and `10GBaseTx`. The reviewed Uyghur preserves the source-stated speed/distance teaching and does not silently substitute externally verified standard names.
-- Objective 3.2 source-framing note: the serial-cable segment contrasts serial transmission with `parallel transmission used in interfaces like USB`. Reviewed Uyghur preserves the source lesson without silently replacing that claim from outside knowledge.
+- Objective 3.2: `T5-68A`, `T5-68B`, and `pinup standards` are treated as speech-to-text errors for **T568A**, **T568B**, and **pinout standards** in learner-facing study content; the original transcript remains unchanged.
+- Objective 3.2: the DVI narration says `DVI-T is the digital variant`, but the same source section later summarizes `DVI-D transmits digital signals`; learner-facing study content uses canonical **DVI-D**.
+- Objective 3.2: `RJ11, where the RG stands for registered jack` is treated as a speech-to-text error; learner-facing study content uses **RJ = Registered Jack**.
+- Objective 3.2 source-scope note: the transcript labels Ethernet standards as `100BaseTx`, `1000BaseTx`, and `10GBaseTx`. The original transcript remains unchanged; learner-facing content normalizes these to **100BASE-TX, 1000BASE-T, and 10GBASE-T**.
+- Objective 3.2 technical correction: the serial-cable segment incorrectly contrasts serial transmission with `parallel transmission used in interfaces like USB`. The original transcript remains unchanged; learner-facing English and Uyghur explicitly state that **USB is a serial interface**.
+- Objective 3.2 source-gap note: the transcript does not provide dedicated **direct-burial cable** or **adapter** teaching required by the current 220-1201 objective. Learner-facing English and Uyghur add both as clearly labeled **Exam Notes**.
+- Objective 3.2 identification note: the transcript presents blue connectors as an easy USB 3.0 identifier. Learner-facing content clarifies that blue is a common convention, not a universal rule.
 - Objective 3.2 source-time note: Lightning connector/device wording is retained as transcript-era course content and is not updated from current Apple product information.
 - Objective 3.3: source repeatedly says `DIM`; reviewed Uyghur uses canonical **DIMM — Dual Inline Memory Module**.
 - Objective 3.3: source says `SO-DIM`; reviewed Uyghur uses canonical **SODIMM — Small Outline Dual Inline Memory Module**.
