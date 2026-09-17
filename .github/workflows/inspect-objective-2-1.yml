@@ -20,17 +20,19 @@ jobs:
           from pathlib import Path
 
           text = Path("index.html").read_text(encoding="utf-8")
-          needles = [
-              "Port 137 is designated for name services",
-              "IMAP, or Internet Message Access Protocol",
-              "SNMP, or Simple Network Management Protocol",
-          ]
+          for needle in ["NetBIOS", "IMAP"]:
+              positions = []
+              start = 0
+              while True:
+                  i = text.find(needle, start)
+                  if i < 0:
+                      break
+                  positions.append(i)
+                  start = i + len(needle)
 
-          for needle in needles:
-              i = text.find(needle)
-              print(f"\n=== {needle!r} @ {i} ===")
-              if i < 0:
-                  continue
-              start = max(0, i - 500)
-              end = min(len(text), i + 2200)
-              print(text[start:end])
+              print(f"\n=== {needle}: {len(positions)} occurrences ===")
+              for n, i in enumerate(positions, 1):
+                  print(f"\n--- occurrence {n} @ {i} ---")
+                  lo = max(0, i - 350)
+                  hi = min(len(text), i + 1600)
+                  print(text[lo:hi])
