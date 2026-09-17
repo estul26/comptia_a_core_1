@@ -1,0 +1,45 @@
+name: Inspect Objective 1.2 track point content
+
+on:
+  push:
+    branches:
+      - fix/objective-1-2-track-point
+    paths:
+      - .github/workflows/inspect-objective-1-2.yml
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Print bounded Objective 1.2 accessory snippets
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          text = Path('index.html').read_text(encoding='utf-8')
+          start = text.find('"id": "1.2"')
+          end = text.find('"id": "1.3"', start)
+          if start < 0 or end < 0:
+              raise SystemExit('Objective 1.2 bounds not found')
+          en_marker = text.find('"english": "', start, end)
+          ug_marker = text.find('", "uyghur": "', en_marker, end)
+          if en_marker < 0 or ug_marker < 0:
+              raise SystemExit('Language bounds not found')
+          en_start = en_marker + len('"english": "')
+          ug_start = ug_marker + len('", "uyghur": "')
+          english = text[en_start:ug_marker]
+          uyghur = text[ug_start:end]
+
+          print('=== ENGLISH INPUT/ACCESSORY WINDOW ===')
+          anchors = ['stylus', 'trackpad', 'drawing pad', 'track point', 'pointing stick']
+          pos = [english.lower().find(a) for a in anchors if english.lower().find(a) >= 0]
+          p = min(pos) if pos else 0
+          print(english[max(0,p-1600):p+7500])
+
+          print('=== UYGHUR INPUT/ACCESSORY WINDOW ===')
+          anchors = ['stylus', 'trackpad', 'drawing pad', 'track point', 'pointing stick']
+          low = uyghur.lower()
+          pos = [low.find(a) for a in anchors if low.find(a) >= 0]
+          q = min(pos) if pos else 0
+          print(uyghur[max(0,q-1800):q+9000])
+          PY
