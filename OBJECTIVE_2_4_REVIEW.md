@@ -31,7 +31,10 @@ Source-covered records/mechanisms:
 - SPF
 - DMARC
 
-No other record types were added.
+Current 220-1201-required addition:
+- **CNAME — Canonical Name** → alias hostname to canonical hostname — **Exam Note; absent from transcript**
+
+The original transcript remains unchanged. Learner-facing English and Uyghur add CNAME only as a clearly labeled Exam Note.
 
 ## DHCP
 
@@ -69,4 +72,5 @@ No VPN protocol, cipher, tunnel mode or port was added.
 - Keep exam acronyms and record names visible.
 - Translate surrounding explanations into natural Uyghur.
 - Do not import facts from earlier objectives unless explicitly marked as cross-reference.
+- Add facts required by the current 220-1201 objectives but missing from the transcript only as clearly labeled **Exam Notes**.
 - Document transcript artifacts instead of modifying the original English source.
