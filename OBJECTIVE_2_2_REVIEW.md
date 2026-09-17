@@ -29,6 +29,12 @@ The source explicitly teaches:
 - wider channels improve throughput but use more spectrum and may reduce effective range / increase sensitivity to obstacles and interference.
 - regional regulations affect channel and power availability.
 
+## Wi-Fi terminology correction
+
+The transcript says **Wi-Fi is short for `wireless fidelity`**. That phrase is preserved only in the original transcript under `source/`. Learner-facing English and Uyghur now explicitly teach that **Wi-Fi is a brand name, not an acronym, and `Wireless Fidelity` is not its official expansion**.
+
+This correction is intentionally narrow: it does not alter the objective's 802.11, frequency-band, channel, or performance teaching.
+
 ## Source-stated 802.11 progression
 
 | Standard | Year | Band | Source-stated performance |
@@ -83,6 +89,7 @@ Source examples preserved:
 ## Translation approach
 
 - Natural Uyghur grammar around canonical wireless terms.
+- Preserve the original transcript, but correct materially misleading learner-facing terminology when it could become a study mistake.
 - Explicit source attribution for claims not independently researched.
 - No silent insertion of missing 802.11 values.
-- Documented speech-to-text corrections only.
+- Keep terminology corrections narrowly scoped to the objective.
