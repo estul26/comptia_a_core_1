@@ -1,0 +1,36 @@
+name: Inspect Objective 2.1 embedded content
+
+on:
+  push:
+    branches:
+      - fix/objective-2-1-ports
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Print bounded Objective 2.1 excerpts
+        shell: python
+        run: |
+          from pathlib import Path
+
+          text = Path("index.html").read_text(encoding="utf-8")
+          needles = [
+              "Port 137 is designated for name services",
+              "IMAP, or Internet Message Access Protocol",
+              "SNMP, or Simple Network Management Protocol",
+          ]
+
+          for needle in needles:
+              i = text.find(needle)
+              print(f"\n=== {needle!r} @ {i} ===")
+              if i < 0:
+                  continue
+              start = max(0, i - 500)
+              end = min(len(text), i + 2200)
+              print(text[start:end])
