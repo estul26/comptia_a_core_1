@@ -1,0 +1,55 @@
+name: Inspect Objective 3.4 RAID content
+
+on:
+  push:
+    branches:
+      - fix/objective-3-4-raid-minimums
+    paths:
+      - .github/workflows/inspect-objective-3-4.yml
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Print bounded Objective 3.4 RAID snippets
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          text = Path('index.html').read_text(encoding='utf-8')
+          start = text.find('"id": "3.4"')
+          end = text.find('"id": "3.5"', start)
+          if start < 0 or end < 0:
+              raise SystemExit('Objective 3.4 bounds not found')
+          en_marker = text.find('"english": "', start, end)
+          ug_marker = text.find('", "uyghur": "', en_marker, end)
+          if en_marker < 0 or ug_marker < 0:
+              raise SystemExit('Language bounds not found')
+          en_start = en_marker + len('"english": "')
+          ug_start = ug_marker + len('", "uyghur": "')
+          english = text[en_start:ug_marker]
+          uyghur = text[ug_start:end]
+
+          print('=== ENGLISH RAID WINDOW ===')
+          p = english.find('RAID 0')
+          if p < 0:
+              p = english.find('RAID')
+          if p < 0:
+              raise SystemExit('English RAID anchor not found')
+          print(english[max(0,p-1500):p+10500])
+
+          print('=== UYGHUR RAID WINDOW ===')
+          q = uyghur.find('RAID 0')
+          if q < 0:
+              q = uyghur.find('RAID')
+          if q < 0:
+              raise SystemExit('Uyghur RAID anchor not found')
+          print(uyghur[max(0,q-1800):q+12500])
+
+          print('=== TRANSCRIPT CORRECTIONS OBJECTIVE 3.4 ===')
+          c = Path('TRANSCRIPT_CORRECTIONS.md').read_text(encoding='utf-8')
+          lines = c.splitlines()
+          for i,line in enumerate(lines):
+              if 'Objective 3.4' in line:
+                  print('\n'.join(lines[max(0,i-2):min(len(lines),i+8)]))
+          PY
