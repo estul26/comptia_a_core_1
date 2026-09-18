@@ -103,3 +103,10 @@ The archived Uyghur source also receives deterministic cleanup for duplicated la
 The V6 interface keeps the reviewed V5.30 bilingual lesson content and study engine while making the app substantially calmer and easier to scan. Course navigation, objective controls, and the bilingual reader now have distinct visual levels; secondary toolbar actions are grouped under **More**; English and Uyghur reading panes use improved typography and spacing; and mobile navigation has been refined for phone-sized study sessions.
 
 Existing browser-saved progress, bookmarks, notes, font choice, reading position, language layout, and recall settings remain compatible.
+
+
+## V6.9 learner-quality release
+
+V6.9.0 completes a full learner-language audit of all 27 objectives. It keeps exam-standard technical identifiers in English where useful, while translating ordinary explanatory scaffolding into clearer Uyghur. The release also adds a regression guard for recurring editorial and mixed-language grammar artifacts.
+
+See [V6_9_LEARNER_QUALITY_AUDIT.md](V6_9_LEARNER_QUALITY_AUDIT.md) for scope and release criteria.
