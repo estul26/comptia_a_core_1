@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;500;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -699,6 +699,63 @@ body.dark{--muted:#a8b5c6;--muted-2:#8e9caf}
   body.language-ug #ugPane{padding-left:clamp(30px,4vw,62px);padding-right:clamp(30px,4vw,62px)}
 }
 
+
+/* =========================================================
+   v6.6 — Mobile usability polish
+   One page scroll, touch-friendly controls, safe areas,
+   visible mobile progress, and touch-aware reading actions.
+   ========================================================= */
+.mobile-progress{display:none}
+
+@media(max-width:900px){
+  .top{
+    padding-top:calc(8px + env(safe-area-inset-top));
+    padding-left:calc(10px + env(safe-area-inset-left));
+    padding-right:calc(10px + env(safe-area-inset-right))
+  }
+  .compact-mobile-objective{grid-template-columns:auto minmax(0,1fr)}
+  .mobile-progress{
+    display:block;grid-column:1/-1;margin-top:1px;text-align:right;
+    color:var(--muted);font-size:11px;font-weight:700;font-variant-numeric:tabular-nums
+  }
+
+  /* Use the document as the single scroll surface on phones/tablets. */
+  .content-wrap{
+    padding-left:calc(8px + env(safe-area-inset-left));
+    padding-right:calc(8px + env(safe-area-inset-right));
+    padding-bottom:calc(76px + env(safe-area-inset-bottom))
+  }
+  .pane{height:auto;overflow:visible}
+  .pane-title{position:static}
+
+  /* Synchronized pane scrolling is desktop-only once mobile uses page scrolling. */
+  #syncBtn{display:none}
+
+  /* Keep lesson navigation reachable throughout long objectives. */
+  .bottom{
+    position:fixed;left:0;right:0;bottom:0;z-index:70;width:auto;max-width:none;margin:0;
+    padding:7px calc(8px + env(safe-area-inset-right))
+      calc(7px + env(safe-area-inset-bottom))
+      calc(8px + env(safe-area-inset-left));
+    background:color-mix(in srgb,var(--bg) 93%,transparent);
+    backdrop-filter:blur(14px);border-top:1px solid var(--line)
+  }
+}
+
+@media(max-width:900px) and (pointer:coarse){
+  .top input{height:44px}
+  .top select,.top .btn,.more-menu>summary{height:44px;min-height:44px}
+  .compact-mobile-objective select{min-height:44px}
+  .more-popover .btn,.more-popover .menu-resume{min-height:44px}
+  .more-popover .menu-complete{height:44px;min-height:44px}
+  .more-select{height:44px!important;min-height:44px!important}
+  .bottom .btn{height:44px;min-height:44px}
+
+  /* A tapped reading block reveals its copy action on touch devices. */
+  .copybtn,#ugArticle .copybtn{min-width:32px;min-height:32px;padding:4px 7px}
+  .article .touch-active>.copybtn{opacity:.9;pointer-events:auto}
+}
+
 </style>
 </head>
 <body>
@@ -793,6 +850,7 @@ body.dark{--muted:#a8b5c6;--muted-2:#8e9caf}
     <div class="mobile-study-nav compact-mobile-objective">
       <label for="mobileLessonSelect">Objective</label>
       <select id="mobileLessonSelect" aria-label="Jump to objective"></select>
+      <span class="mobile-progress" id="mobileProgress" aria-live="polite"></span>
     </div>
 
     <div class="lesson-context" aria-label="Current objective">
@@ -1271,6 +1329,8 @@ function progress(){
   $("progressText").textContent=`${done} / ${objectiveCount}`;
   $("progressPercent").textContent=pct+"%";
   $("progressBar").style.width=pct+"%";
+  const mobileProgress=$("mobileProgress");
+  if(mobileProgress)mobileProgress.textContent=`${done} / ${objectiveCount} complete · ${pct}%`;
 }
 function buildMobileLessonSelect(){
   const sel=$("mobileLessonSelect");
@@ -1375,12 +1435,20 @@ $("ugPane").addEventListener("scroll",()=>{
   syncScroll($("ugPane"),$("enPane"));
 });
 ["enArticle","ugArticle"].forEach(id=>{
-  $(id).addEventListener("mouseover",e=>{
+  const article=$(id);
+  const activateReadingBlock=e=>{
+    if(e.target.closest(".copybtn"))return;
     const t=e.target.closest("p,li,h3,h4,h5,h6,blockquote");
-    if(!t)return;
-    $(id).querySelectorAll(".focus-line").forEach(x=>x.classList.remove("focus-line"));
+    if(!t||!article.contains(t))return;
+    article.querySelectorAll(".focus-line").forEach(x=>x.classList.remove("focus-line"));
     t.classList.add("focus-line");
-  });
+    if(e.type==="click"){
+      document.querySelectorAll(".article .touch-active").forEach(x=>x.classList.remove("touch-active"));
+      t.classList.add("touch-active");
+    }
+  };
+  article.addEventListener("mouseover",activateReadingBlock);
+  article.addEventListener("click",activateReadingBlock);
 });
 $("syncBtn").onclick=()=>{
   state.sync=!state.sync;localStorage.setItem("a1-sync",state.sync?"1":"0");
@@ -1421,8 +1489,10 @@ $("bookmarksOnlyBtn").onclick=()=>{
   document.body.classList.toggle("bookmarks-only",state.bookmarksOnly);
   buildNav($("courseSearch").value.trim());
 };
+const moreMenu=document.querySelector(".more-menu");
 document.addEventListener("click",e=>{
   if(!e.target.closest("#lessonSearch")&&!e.target.closest("#globalResults"))$("globalResults").classList.remove("open");
+  if(moreMenu?.open&&!moreMenu.contains(e.target))moreMenu.open=false;
 });
 $("focusBtn").onclick=()=>document.body.classList.toggle("focus");
 function applyLanguageMode(mode){
@@ -1471,6 +1541,7 @@ $("exportNotesBtn").onclick=()=>{
   setTimeout(()=>URL.revokeObjectURL(a.href),1000);toast("Notes exported");
 };
 window.addEventListener("keydown",e=>{
+  if(e.key==="Escape"&&moreMenu?.open){moreMenu.open=false;moreMenu.querySelector("summary")?.focus();return}
   if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="f"){e.preventDefault();$("lessonSearch").focus()}
   if(e.key==="/"&&!["INPUT","TEXTAREA"].includes(document.activeElement.tagName)){e.preventDefault();$("lessonSearch").focus()}
   if(e.altKey&&e.key==="ArrowRight"&&state.index<LESSONS.length-1){state.index++;render()}
