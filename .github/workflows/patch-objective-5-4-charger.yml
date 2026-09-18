@@ -1,0 +1,30 @@
+name: Align Objective 5.4 charger documentation
+
+on:
+  push:
+    branches:
+      - fix/objective-5-4-charger-power
+    paths:
+      - .github/workflows/patch-objective-5-4-charger.yml
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Validate live lesson and update docs
+        run: python3 .tmp/patch_obj54_charger_docs.py
+      - name: Verify learner content and source transcript unchanged
+        run: git diff --exit-code -- index.html source/
+      - name: Commit Objective 5.4 documentation
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add OBJECTIVE_5_4_REVIEW.md TRANSCRIPT_CORRECTIONS.md
+          git commit -m "docs: align Objective 5.4 charger guidance"
+          git push origin HEAD:fix/objective-5-4-charger-power
