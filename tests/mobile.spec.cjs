@@ -320,7 +320,15 @@ test("priority Uyghur content avoids known translation artifacts", async ({ page
     "Reviewed Uyghur",
     "reviewed lesson",
     "Repair ياكى component replacement",
-    "reviewed flow:"
+    "reviewed flow:",
+    "Exam Objective ",
+    "Source-Stated Possible Causes",
+    "Source-stated benefits:",
+    "Source teaching model:",
+    "Source components:",
+    "Source process:",
+    "Source example:",
+    "Source examples:"
   ];
 
   for (const objective of priority) {
