@@ -1,4 +1,4 @@
-const CACHE = "aplus-uyghur-v6.5-rtl-content-polish-translation-v5.30";
+const CACHE = "aplus-uyghur-v6.6-mobile-usability-translation-v5.30";
 const CORE = [
   "/",
   "/index.html",
