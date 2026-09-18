@@ -43,3 +43,8 @@ OBJECTIVE_5_3_REVIEW.md
 OBJECTIVE_5_4_REVIEW.md
 OBJECTIVE_5_5_REVIEW.md
 OBJECTIVE_5_6_REVIEW.md
+tests/
+playwright.config.cjs
+playwright-report/
+test-results/
+artifacts/
