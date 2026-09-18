@@ -111,6 +111,5 @@ This release keeps the reviewed V5.30 bilingual lesson data and the existing stu
 - Added automatic mobile screenshots for the reader, More menu, and Reading Focus states.
 - Added a GitHub Actions workflow that runs the mobile suite on relevant pull requests, pushes to main, and manual dispatch.
 - Added Playwright HTML reports, screenshots, and failure traces as GitHub Actions artifacts.
-- Hardened mobile Cards/Columns transitions against browser scroll anchoring so the preserved reading position stays stable across layout changes.
 - Excluded test sources and generated QA artifacts from Cloudflare static asset publishing.
-- Bumped the package version to V6.7.0 and the service-worker cache for deployment pickup.
+- Bumped the package version to V6.7.0; the production reader and service-worker runtime remain unchanged.
