@@ -1,0 +1,39 @@
+name: Inspect Objective 4.2 private cloud wording
+
+on:
+  push:
+    branches:
+      - fix/objective-4-2-private-cloud
+    paths:
+      - .github/workflows/inspect-objective-4-2.yml
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Print bounded private-cloud snippets
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          text = Path('index.html').read_text(encoding='utf-8')
+          start = text.find('"id": "4.2"')
+          end = text.find('"id": "5.1"', start)
+          if start < 0 or end < 0:
+              raise SystemExit('Objective 4.2 bounds not found')
+          en_marker = text.find('"english": "', start, end)
+          ug_marker = text.find('", "uyghur": "', en_marker, end)
+          if en_marker < 0 or ug_marker < 0:
+              raise SystemExit('Language bounds not found')
+          en_start = en_marker + len('"english": "')
+          ug_start = ug_marker + len('", "uyghur": "')
+          english = text[en_start:ug_marker]
+          uyghur = text[ug_start:end]
+
+          for label, body in [('ENGLISH', english), ('UYGHUR', uyghur)]:
+              print(f'=== {label} PRIVATE CLOUD ===')
+              p = body.lower().find('private cloud')
+              if p < 0:
+                  raise SystemExit(f'{label} private cloud anchor not found')
+              print(body[max(0,p-1800):p+7000])
+          PY
