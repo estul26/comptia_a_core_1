@@ -728,6 +728,9 @@ body.dark{--muted:#a8b5c6;--muted-2:#8e9caf}
   .pane{height:auto;overflow:visible}
   .pane-title{position:static}
 
+  /* Cards use the same document scroll surface as Columns on mobile. */
+  .pair-view{height:auto;min-height:0;overflow:visible;flex:0 0 auto}
+
   /* Synchronized pane scrolling is desktop-only once mobile uses page scrolling. */
   #syncBtn{display:none}
 
