@@ -17,7 +17,7 @@ jobs:
       - name: Capture mobile UI
         run: |
           python3 -m http.server 8080 >/tmp/server.log 2>&1 &
-          cat > /tmp/review.mjs <<'JS'
+          cat > review.mjs <<'JS'
           import { chromium } from 'playwright';
           import fs from 'fs';
           const browser = await chromium.launch({headless:true});
@@ -75,7 +75,7 @@ jobs:
           await browser.close();
           JS
           mkdir -p ui-review
-          node /tmp/review.mjs
+          node review.mjs
       - uses: actions/upload-artifact@v4
         with:
           name: mobile-ui-review
