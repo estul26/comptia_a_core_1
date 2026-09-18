@@ -23,13 +23,13 @@
 15. Unable to install applications
 
 ## Important source-framing decisions
-- Charger power-rating statements are preserved as source teaching; no USB-PD/charging-negotiation material is imported.
+- Charger power-rating wording is technically corrected in learner-facing content: **insufficient supported power can cause slow/no charging, while a compatible charger's higher maximum wattage does not by itself damage the battery**. Compatibility depends on the supported charging protocol, voltage, and cable. The archival transcript remains unchanged.
 - Swollen battery retains the source's explicit safety action: stop use and seek professional replacement.
 - Liquid-damage handling remains exactly at the transcript's level; no external drying or disassembly techniques are added.
 - Parental-control/MDM restrictions remain possible causes; no bypass guidance is added.
 
 ## Key exam flows
-- Charging issue → cable → port/debris → source-described power rating.
+- Charging issue → cable → port/debris → charging protocol / voltage / cable / supported-power compatibility.
 - Swollen battery → stop using device → professional help/replacement.
 - Suspected bad port → test another cable.
 - Overheating → battery/workload/background apps/hotspot/GPS.
@@ -44,4 +44,4 @@
 - App install fails → storage + settings/parental controls/MDM.
 
 ## Translation approach
-Preserve source symptom/cause/action relationships, source uncertainty, and safety wording without importing external mobile-repair procedures.
+Preserve source symptom/cause/action relationships, source uncertainty, and safety wording, but correct learner-facing charger-compatibility claims when the transcript's wattage shortcut would be technically misleading. Do not expand into device-specific repair procedures.
