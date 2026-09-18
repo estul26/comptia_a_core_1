@@ -103,3 +103,13 @@ This release keeps the reviewed V5.30 bilingual lesson data and the existing stu
 - Preserved all lesson/translation content and saved study data.
 - Bumped the service-worker cache and package version to V6.6.2.
 
+## V6.7 — Mobile QA & Accessibility Guardrails
+
+- Added permanent Playwright mobile regression tests at 390×844 and 430×932 viewports.
+- Added assertions for single-surface mobile scrolling, 44px touch targets, language switching, objective navigation, More-menu dismissal, automatic Reading Focus, Resume Reading, and Cards/Columns position continuity.
+- Added accessibility guardrails for duplicate DOM IDs and visible interactive controls without accessible names.
+- Added automatic mobile screenshots for the reader, More menu, and Reading Focus states.
+- Added a GitHub Actions workflow that runs the mobile suite on relevant pull requests, pushes to main, and manual dispatch.
+- Added Playwright HTML reports, screenshots, and failure traces as GitHub Actions artifacts.
+- Excluded test sources and generated QA artifacts from Cloudflare static asset publishing.
+- Bumped the package version to V6.7.0; the production reader and service-worker runtime remain unchanged.
