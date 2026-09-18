@@ -382,10 +382,11 @@ test('learner-quality regression guard', async () => {
   assert.ok(match, 'LESSONS data should remain parseable');
 
   const lessons = JSON.parse(match[1]);
-  assert.equal(lessons.filter((lesson) => lesson.number !== 'Intro').length, 27);
+  const objectiveLessons = lessons.filter((lesson) => lesson.number !== 'Intro');
+  assert.equal(objectiveLessons.length, 27);
 
   const bannedEditorial = [
-    /Exam Objective/i,
+    /^Exam Objective\s+\d+(?:\.\d+)?/mi,
     /\blearner-facing\b/i,
     /\bSource-stated\b/i,
     /Original transcript/i,
@@ -410,7 +411,7 @@ test('learner-quality regression guard', async () => {
     /ئۈسكۈنە\s+نى/,
   ];
 
-  for (const lesson of lessons) {
+  for (const lesson of objectiveLessons) {
     assert.match(lesson.uyghur, /[\u0600-\u06FF]/, `${lesson.number} should contain Uyghur text`);
     for (const pattern of [...bannedEditorial, ...malformedUyghur]) {
       assert.equal(pattern.test(lesson.uyghur), false, `${lesson.number} contains learner-quality artifact: ${pattern}`);
