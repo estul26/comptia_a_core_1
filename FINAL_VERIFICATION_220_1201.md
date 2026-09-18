@@ -8,7 +8,7 @@ Reference: CompTIA A+ Core 1 (220-1201) V15 — Exam Objectives Document Version
 
 ## Result
 
-PASS — all 27 objectives are represented in learner-facing content after the final terminology alignment.
+PASS — all 27 objectives are represented in learner-facing content after the final terminology alignment.\n\nFinal automated result: **345/345 concept-marker requirements passed; 0 gaps across 27/27 objectives.**
 
 The final automated pass checked 345 objective-specific concept markers across Objectives 1.1–5.6, followed by manual review of every marker gap. Most automated gaps were formatting/synonym differences. Four places were improved so the exact current-objective term is visible to learners:
 
