@@ -1,12 +1,15 @@
 {
   "name": "comptia-a-core-1",
-  "version": "6.6.2",
+  "version": "6.7.0",
   "private": true,
   "scripts": {
     "dev": "wrangler dev",
-    "deploy": "wrangler deploy"
+    "deploy": "wrangler deploy",
+    "test": "npm run test:mobile",
+    "test:mobile": "playwright test"
   },
   "devDependencies": {
+    "@playwright/test": "1.55.0",
     "wrangler": "4.125.0"
   }
 }
