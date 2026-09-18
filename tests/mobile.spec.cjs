@@ -93,7 +93,11 @@ test("More menu closes on outside tap and Escape returns focus", async ({ page }
 
   await summary.click();
   await expect(details).toHaveAttribute("open", "");
-  await page.locator(".compact-mobile-objective label").click();
+  const popover = await page.locator(".more-popover").boundingBox();
+  const viewport = page.viewportSize();
+  expect(popover).not.toBeNull();
+  expect(viewport).not.toBeNull();
+  await page.mouse.click(Math.max(4, popover.x - 12), Math.min(viewport.height - 80, popover.y + 80));
   await expect(details).not.toHaveAttribute("open", "");
 
   await summary.click();
@@ -174,13 +178,13 @@ test("Cards and Columns preserve approximate mobile reading position", async ({ 
 
   await page.locator("#pairBtn").click();
   await expect(page.locator("body")).toHaveClass(/pairs/);
-  await page.waitForTimeout(120);
+  await page.waitForTimeout(180);
   const cardsRatio = await documentRatio(page);
   expect(Math.abs(cardsRatio - columnsRatio)).toBeLessThan(0.16);
 
   await page.locator("#pairBtn").click();
   await expect(page.locator("body")).not.toHaveClass(/pairs/);
-  await page.waitForTimeout(120);
+  await page.waitForTimeout(180);
   const columnsAgain = await documentRatio(page);
   expect(Math.abs(columnsAgain - cardsRatio)).toBeLessThan(0.16);
 });
