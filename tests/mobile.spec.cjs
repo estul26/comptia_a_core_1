@@ -349,3 +349,50 @@ test("priority Uyghur content avoids known translation artifacts", async ({ page
   expect(archived.split(/\r?\n/).some(line => line.trim() === ".")).toBe(false);
 });
 
+
+
+test('learner-quality regression guard', async () => {
+  const fs = require('node:fs');
+  const path = require('node:path');
+  const assert = require('node:assert/strict');
+
+  const source = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
+  const match = source.match(/const LESSONS = (\[.*?\]);\n/s);
+  assert.ok(match, 'LESSONS data should remain parseable');
+
+  const lessons = JSON.parse(match[1]);
+  assert.equal(lessons.filter((lesson) => lesson.number !== 'Intro').length, 27);
+
+  const bannedEditorial = [
+    /Exam Objective/i,
+    /\blearner-facing\b/i,
+    /\bSource-stated\b/i,
+    /Original transcript/i,
+    /Reviewed Uyghur/i,
+    /Source-scope note:/i,
+    /Source-framing note:/i,
+    /Transcript correction:/i,
+    /§[A-Z]\d+§/,
+  ];
+  const malformedUyghur = [
+    /قوزغىتىدۇ\s+قىلىدۇ/,
+    /يۈكلىنىدۇ\s+قىلىدۇ/,
+    /باشقۇرىدۇ\s+قىلىدۇ/,
+    /ئۆتكۈزۈۋالىدۇ\s+قىلىش/,
+    /ئەسلىگە كەلتۈرۈشى\s+قىلىشى/,
+    /زىيارەت\s+نى/,
+    /ئۆزگەرتىش\s+دىن/,
+    /ئۇلىنىش\s+نى/,
+    /تەڭشەك\s+نى/,
+    /كابېل\s+نى/,
+    /پورت\s+نى/,
+    /ئۈسكۈنە\s+نى/,
+  ];
+
+  for (const lesson of lessons) {
+    assert.match(lesson.uyghur, /[\u0600-\u06FF]/, `${lesson.number} should contain Uyghur text`);
+    for (const pattern of [...bannedEditorial, ...malformedUyghur]) {
+      assert.equal(pattern.test(lesson.uyghur), false, `${lesson.number} contains learner-quality artifact: ${pattern}`);
+    }
+  }
+});
