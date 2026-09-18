@@ -94,9 +94,11 @@ V5.2 fixes the study-card alignment boundary bug, improves reading-position resu
 
 ## Translation review status
 
-All 27 exam objectives have completed technical/source-fidelity review. **V6.8 adds a dedicated Uyghur language-polish pass to the user-facing study text.** The first pass focused on **3.5, 3.8, 4.1, 5.3, and 5.6**; the follow-up pass extends that work across **3.1–3.4, 3.6–3.7, 4.2, and 5.1–5.5**. Recognized exam acronyms, protocol names and product/standard identifiers remain visible, while ordinary English scaffolding and study cues are rewritten as natural Uyghur.
+All 27 exam objectives have completed technical/source-fidelity review. **V6.8 introduced the broad Uyghur language-polish pass; V6.9 is the learner-quality audit of the published reader.** V6.9 began with line-by-line review of **3.2, 3.3, and 3.5**, then extended the same standard across the remaining objectives after the audit found older English-heavy study scaffolding in Domains 1, 2, storage/RAID, virtualization/cloud, power/printer content, and troubleshooting summaries.
 
-The archived Uyghur source also receives deterministic cleanup for duplicated labels, stray English plural suffixes, malformed source-scope wording, isolated punctuation lines, and other translation artifacts.
+The published Uyghur reader now favors natural Uyghur for explanations, headings, comparison tables, troubleshooting actions and exam-memory cues while keeping canonical exam-recognition terms visible where useful, including acronyms, protocol names, connector/standard identifiers, formulas, official English expansions and explicitly quoted source wording.
+
+The archived Uyghur source remains intentionally fuller than the published lesson text and is **not** replaced wholesale by the shorter reader version. It keeps the prior deterministic cleanup for malformed wording and formatting artifacts, while V6.9 regression tests now scan **all 27 objectives** plus the archive for known learner-quality regressions.
 
 ## V6 study workspace redesign
 
