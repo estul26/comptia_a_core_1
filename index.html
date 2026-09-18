@@ -1360,6 +1360,16 @@ function buildNav(filter=""){
   });
   if(!visible)nav.innerHTML='<div class="empty">No matching lesson</div>';
 }
+function isDocumentReadingScroll(){
+  return window.matchMedia("(max-width:900px)").matches;
+}
+function scrollMetrics(src){
+  if(src===window){
+    const root=document.documentElement;
+    return {top:window.scrollY,max:Math.max(0,root.scrollHeight-window.innerHeight)};
+  }
+  return {top:src.scrollTop,max:Math.max(0,src.scrollHeight-src.clientHeight)};
+}
 function readingRatioFor(id){
   const r=Number(localStorage.getItem("a1-scroll-ratio-"+id));
   if(Number.isFinite(r)&&r>0)return Math.min(1,Math.max(0,r));
@@ -1368,15 +1378,48 @@ function readingRatioFor(id){
   return Number.isFinite(px)&&px>0&&max>0?Math.min(1,px/max):0;
 }
 function setScrollImmediate(el,top){
+  if(el===window){
+    const root=document.documentElement;
+    const prior=root.style.scrollBehavior;root.style.scrollBehavior="auto";
+    window.scrollTo(0,Math.max(0,top));
+    requestAnimationFrame(()=>{root.style.scrollBehavior=prior});
+    return;
+  }
   const prior=el.style.scrollBehavior;el.style.scrollBehavior="auto";el.scrollTop=Math.max(0,top);
   requestAnimationFrame(()=>{el.style.scrollBehavior=prior});
 }
 function saveReadingPosition(src){
   if(suppressScrollSave)return;
-  const max=src.scrollHeight-src.clientHeight;if(max<=0)return;
-  const ratio=Math.min(1,Math.max(0,src.scrollTop/max));
+  const {top,max}=scrollMetrics(src);if(max<=0)return;
+  const ratio=Math.min(1,Math.max(0,top/max));
   localStorage.setItem("a1-scroll-ratio-"+current().id,String(ratio));
-  if(src===$("enPane"))localStorage.setItem("a1-scroll-"+current().id,String(Math.round(src.scrollTop)));
+  if(src===$("enPane"))localStorage.setItem("a1-scroll-"+current().id,String(Math.round(top)));
+}
+function activeReadingSource(){
+  if(isDocumentReadingScroll())return window;
+  return state.pairMode?$("pairView"):$("enPane");
+}
+function currentReadingRatio(){
+  const {top,max}=scrollMetrics(activeReadingSource());
+  return max>0?Math.min(1,Math.max(0,top/max)):readingRatioFor(current().id);
+}
+function restoreReadingRatio(ratio){
+  const safe=Math.min(1,Math.max(0,Number(ratio)||0));
+  if(isDocumentReadingScroll()){
+    const {max}=scrollMetrics(window);setScrollImmediate(window,safe*max);return;
+  }
+  if(state.pairMode){
+    const box=$("pairView");setScrollImmediate(box,safe*Math.max(0,box.scrollHeight-box.clientHeight));return;
+  }
+  const en=$("enPane"),ug=$("ugPane");
+  setScrollImmediate(en,safe*Math.max(0,en.scrollHeight-en.clientHeight));
+  setScrollImmediate(ug,safe*Math.max(0,ug.scrollHeight-ug.clientHeight));
+}
+function resetReadingPosition(){
+  setScrollImmediate($("enPane"),0);
+  setScrollImmediate($("ugPane"),0);
+  setScrollImmediate($("pairView"),0);
+  if(isDocumentReadingScroll())setScrollImmediate(window,0);
 }
 function render(){
   const l=current();localStorage.setItem("a1-last",l.id);
@@ -1398,13 +1441,9 @@ function render(){
   $("prevBtn").disabled=state.index===0;$("nextBtn").disabled=state.index===LESSONS.length-1;
   const savedRatio=readingRatioFor(l.id);
   $("resumePill").classList.toggle("show",savedRatio>.01);
-  $("resumePill").onclick=()=>{
-    const en=$("enPane"),ug=$("ugPane");
-    setScrollImmediate(en,savedRatio*Math.max(0,en.scrollHeight-en.clientHeight));
-    setScrollImmediate(ug,savedRatio*Math.max(0,ug.scrollHeight-ug.clientHeight));
-  };
+  $("resumePill").onclick=()=>restoreReadingRatio(savedRatio);
   suppressScrollSave=true;
-  setScrollImmediate($("enPane"),0);setScrollImmediate($("ugPane"),0);
+  resetReadingPosition();
   requestAnimationFrame(()=>requestAnimationFrame(()=>{suppressScrollSave=false}));
   buildMobileLessonSelect();
   buildNav($("courseSearch").value.trim());
@@ -1434,6 +1473,17 @@ $("ugPane").addEventListener("scroll",()=>{
   saveReadingPosition($("ugPane"));
   syncScroll($("ugPane"),$("enPane"));
 });
+$("pairView").addEventListener("scroll",()=>{
+  if(!isDocumentReadingScroll())saveReadingPosition($("pairView"));
+});
+let pageScrollFrame=0;
+window.addEventListener("scroll",()=>{
+  if(!isDocumentReadingScroll()||pageScrollFrame)return;
+  pageScrollFrame=requestAnimationFrame(()=>{
+    pageScrollFrame=0;
+    saveReadingPosition(window);
+  });
+},{passive:true});
 ["enArticle","ugArticle"].forEach(id=>{
   const article=$(id);
   const activateReadingBlock=e=>{
@@ -1522,9 +1572,16 @@ $("themeBtn").onclick=()=>{
   document.body.classList.toggle("dark");localStorage.setItem("a1-theme",document.body.classList.contains("dark")?"dark":"light");
 };
 $("pairBtn").onclick=()=>{
+  const ratio=currentReadingRatio();
   state.pairMode=!state.pairMode;localStorage.setItem("a1-pair-mode",state.pairMode?"1":"0");
   if(!state.pairMode){state.recallSide="";localStorage.setItem("a1-recall-side","");}
   applyStudyModes();if(state.pairMode)buildPairs();
+  suppressScrollSave=true;
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    restoreReadingRatio(ratio);
+    suppressScrollSave=false;
+    saveReadingPosition(activeReadingSource());
+  }));
 };
 $("focusLineBtn").onclick=()=>{
   state.focusLine=!state.focusLine;localStorage.setItem("a1-focus-line",state.focusLine?"1":"0");applyStudyModes();
