@@ -1,0 +1,11 @@
+name: Final 27-objective verification
+on:
+  push:
+    branches: [audit/final-27-objective-verification]
+    paths: [.github/workflows/final-27-objective-audit.yml]
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 .tmp/final_audit.py
