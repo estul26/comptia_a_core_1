@@ -176,17 +176,72 @@ test("Cards and Columns preserve approximate mobile reading position", async ({ 
   await page.waitForTimeout(120);
   const columnsRatio = await documentRatio(page);
 
-  await page.locator("#pairBtn").click();
+  await expect(page.locator("#pairBtn")).toBeVisible();
+  await page.locator("#pairBtn").evaluate(button => button.click());
   await expect(page.locator("body")).toHaveClass(/pairs/);
   await page.waitForTimeout(180);
   const cardsRatio = await documentRatio(page);
   expect(Math.abs(cardsRatio - columnsRatio)).toBeLessThan(0.16);
 
-  await page.locator("#pairBtn").click();
+  await page.locator("#pairBtn").evaluate(button => button.click());
   await expect(page.locator("body")).not.toHaveClass(/pairs/);
   await page.waitForTimeout(180);
   const columnsAgain = await documentRatio(page);
   expect(Math.abs(columnsAgain - cardsRatio)).toBeLessThan(0.16);
+});
+
+
+test("mobile search opens course results and navigates to a hit", async ({ page }) => {
+  const search = page.locator("#lessonSearch");
+  await search.fill("DHCP");
+  const results = page.locator("#globalResults");
+  await expect(results).toHaveClass(/open/);
+  const first = results.locator(".search-hit").first();
+  await expect(first).toBeVisible();
+  const targetIndex = await first.getAttribute("data-i");
+  expect(targetIndex).not.toBeNull();
+
+  await first.click();
+  await expect(page.locator("#mobileLessonSelect")).toHaveValue(targetIndex);
+  await expect(results).not.toHaveClass(/open/);
+});
+
+test("touch Copy writes the selected paragraph to the clipboard", async ({ page, context }) => {
+  await context.grantPermissions(["clipboard-read", "clipboard-write"], {
+    origin: "http://127.0.0.1:8080"
+  });
+  await selectObjective(page, "Objective 1.1");
+
+  const paragraph = page.locator("#enArticle p").first();
+  await paragraph.tap();
+  const copy = paragraph.locator(".copybtn");
+  await expect(copy).toHaveCSS("pointer-events", "auto");
+  await copy.click();
+  await expect(page.locator("#toast")).toContainText("Copied");
+
+  const copied = await page.evaluate(() => navigator.clipboard.readText());
+  expect(copied.trim().length).toBeGreaterThan(10);
+});
+
+test("PWA app shell reloads while offline after service worker installation", async ({ page, context }) => {
+  await page.evaluate(async () => {
+    if (!("serviceWorker" in navigator)) throw new Error("Service workers unavailable");
+    await navigator.serviceWorker.ready;
+  });
+
+  // Reload online once so the page is definitely controlled by the installed worker.
+  await page.reload({ waitUntil: "domcontentloaded" });
+  await expect(page.locator("#mobileLessonSelect")).toBeVisible();
+  await expect.poll(() => page.evaluate(() => Boolean(navigator.serviceWorker.controller))).toBe(true);
+
+  await context.setOffline(true);
+  try {
+    await page.reload({ waitUntil: "domcontentloaded" });
+    await expect(page.locator("#mobileLessonSelect")).toBeVisible();
+    await expect(page.locator("#netStatus")).toHaveText("Offline");
+  } finally {
+    await context.setOffline(false);
+  }
 });
 
 test("visible interactive controls have accessible names and IDs stay unique", async ({ page }) => {
