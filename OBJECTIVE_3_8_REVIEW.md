@@ -92,6 +92,9 @@ Maintenance:
 
 The opening impact paragraph contains garbled `card and paper` wording. The reviewed lesson uses only the clearly supported multipart-form and later carbon-copy content.
 
+## Final v4.0 terminology alignment
+- Inkjet **feeder** is explicitly named as the paper-feed mechanism using the pickup/feed rollers already taught by the source.
+
 ## Translation approach
 - Preserve printer-specific maintenance rather than merging consumables/components.
 - Preserve all source-stated process stages and procedures.

@@ -51,6 +51,9 @@ Use cases:
 - legacy apps/OS
 - cross-platform development/testing
 
+## Final v4.0 terminology alignment
+- Learner-facing English/Uyghur explicitly name **Application virtualization** and connect it to the existing legacy-software / OS-dependent application use case.
+
 ## Current-objective VM requirements
 Current 220-1201 Objective 4.1 explicitly names three requirement categories:
 - **Security**

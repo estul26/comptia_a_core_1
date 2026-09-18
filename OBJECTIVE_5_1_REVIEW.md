@@ -14,6 +14,9 @@ Before repair or component replacement:
 STT correction:
 - `protest taking tip` → pro test-taking tip
 
+## Final v4.0 terminology alignment
+- Current objective wording **Blank screen** is made explicit; the transcript's **black screen** wording is retained as a synonymous source description.
+
 ## Symptom groups
 
 ### No power

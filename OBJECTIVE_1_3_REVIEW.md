@@ -64,6 +64,9 @@ The source covers:
 - email status synchronization
 - cloud-storage file access and editing
 
+## Final v4.0 terminology alignment
+- Learner-facing English/Uyghur explicitly label **Cellular Location Services**; the existing cell-tower triangulation explanation remains the underlying example.
+
 ## Translation approach
 
 The reviewed Uyghur preserves source organization and meaning, but:
