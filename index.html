@@ -1444,7 +1444,10 @@ function render(){
   $("resumePill").onclick=()=>restoreReadingRatio(savedRatio);
   suppressScrollSave=true;
   resetReadingPosition();
-  requestAnimationFrame(()=>requestAnimationFrame(()=>{suppressScrollSave=false}));
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    suppressScrollSave=false;
+    updateReadingFocusFromViewport();
+  }));
   buildMobileLessonSelect();
   buildNav($("courseSearch").value.trim());
   progress();
@@ -1476,12 +1479,34 @@ $("ugPane").addEventListener("scroll",()=>{
 $("pairView").addEventListener("scroll",()=>{
   if(!isDocumentReadingScroll())saveReadingPosition($("pairView"));
 });
+function clearReadingFocus(){
+  document.querySelectorAll(".article .focus-line").forEach(x=>x.classList.remove("focus-line"));
+}
+function updateReadingFocusFromViewport(){
+  if(!state.focusLine||!isDocumentReadingScroll()||state.pairMode)return;
+  const topBar=$(".top")?.getBoundingClientRect();
+  const bottomBar=$(".bottom")?.getBoundingClientRect();
+  const visibleTop=Math.max(0,topBar?.bottom||0);
+  const visibleBottom=Math.min(window.innerHeight,bottomBar?.top||window.innerHeight);
+  const targetY=visibleTop+Math.max(0,visibleBottom-visibleTop)*.48;
+  let best=null,bestDistance=Infinity;
+  document.querySelectorAll(".article p,.article li").forEach(el=>{
+    const r=el.getBoundingClientRect();
+    if(r.height<=0||r.bottom<visibleTop||r.top>visibleBottom)return;
+    const distance=targetY<r.top?r.top-targetY:targetY>r.bottom?targetY-r.bottom:0;
+    if(distance<bestDistance){best=el;bestDistance=distance}
+  });
+  if(!best||best.classList.contains("focus-line"))return;
+  clearReadingFocus();
+  best.classList.add("focus-line");
+}
 let pageScrollFrame=0;
 window.addEventListener("scroll",()=>{
   if(!isDocumentReadingScroll()||pageScrollFrame)return;
   pageScrollFrame=requestAnimationFrame(()=>{
     pageScrollFrame=0;
     saveReadingPosition(window);
+    updateReadingFocusFromViewport();
   });
 },{passive:true});
 ["enArticle","ugArticle"].forEach(id=>{
@@ -1585,6 +1610,12 @@ $("pairBtn").onclick=()=>{
 };
 $("focusLineBtn").onclick=()=>{
   state.focusLine=!state.focusLine;localStorage.setItem("a1-focus-line",state.focusLine?"1":"0");applyStudyModes();
+  if(state.focusLine){
+    requestAnimationFrame(updateReadingFocusFromViewport);
+  }else{
+    clearReadingFocus();
+    document.querySelectorAll(".article .touch-active").forEach(x=>x.classList.remove("touch-active"));
+  }
 };
 $("exportNotesBtn").onclick=()=>{
   const chunks=[];
