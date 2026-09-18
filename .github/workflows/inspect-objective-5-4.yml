@@ -1,0 +1,36 @@
+name: Inspect Objective 5.4 charger wording
+
+on:
+  push:
+    branches:
+      - fix/objective-5-4-charger-power
+    paths:
+      - .github/workflows/inspect-objective-5-4.yml
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Print bounded charging snippets
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          text = Path('index.html').read_text(encoding='utf-8')
+          start = text.find('"id": "5.4"')
+          end = text.find('"id": "5.5"', start)
+          if start < 0 or end < 0:
+              raise SystemExit('Objective 5.4 bounds not found')
+          en_marker = text.find('"english": "', start, end)
+          ug_marker = text.find('", "uyghur": "', en_marker, end)
+          en_start = en_marker + len('"english": "')
+          ug_start = ug_marker + len('", "uyghur": "')
+          english = text[en_start:ug_marker]
+          uyghur = text[ug_start:end]
+          for label, body in [('ENGLISH', english), ('UYGHUR', uyghur)]:
+              print(f'=== {label} CHARGING ===')
+              anchors=['charger','charging','watt','power rating']
+              ps=[body.lower().find(a) for a in anchors if body.lower().find(a)>=0]
+              p=min(ps) if ps else 0
+              print(body[max(0,p-1800):p+8000])
+          PY
