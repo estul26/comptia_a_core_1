@@ -93,4 +93,13 @@ This release keeps the reviewed V5.30 bilingual lesson data and the existing stu
 - Objective changes still reset to the top while keeping the saved Resume point available.
 - Preserved all lesson/translation content and existing saved-state keys.
 - Bumped the service-worker cache and package version to V6.6.1.
+## V6.6.2 — Automatic Reading Focus
+
+- Reading Focus now automatically follows the paragraph nearest the center of the usable mobile reading area while scrolling.
+- The calculation accounts for the sticky top toolbar and fixed bottom Previous / Next navigation.
+- Turning Reading Focus on immediately focuses the current visible paragraph.
+- Turning Reading Focus off clears the active focus state.
+- Manual tap/hover focus behavior remains available.
+- Preserved all lesson/translation content and saved study data.
+- Bumped the service-worker cache and package version to V6.6.2.
 
