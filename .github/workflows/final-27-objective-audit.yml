@@ -1,4 +1,4 @@
-name: Inspect four final terminology gaps
+name: Final 27-objective verification
 on:
   push:
     branches: [audit/final-27-objective-verification]
@@ -8,13 +8,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: |
-          python3 - <<'PY'
-          from pathlib import Path
-          t=Path('index.html').read_text(encoding='utf-8')
-          order=['1.1','1.2','1.3','2.1','2.2','2.3','2.4','2.5','2.6','2.7','2.8','3.1','3.2','3.3','3.4','3.5','3.6','3.7','3.8','4.1','4.2','5.1','5.2','5.3','5.4','5.5','5.6']
-          def b(x):
-              i=order.index(x);s=t.find(f'"id": "{x}"');e=t.find(f'"id": "{order[i+1]}"',s) if i+1<len(order) else len(t);return t[s:e]
-          for oid,term in [('1.3','Apart from GPS'),('3.8','Moving on, the pickup roller'),('4.1','client-side virtualization is invaluable'),('5.1','Encountering a black screen')]:
-              x=b(oid);p=x.find(term);print('===',oid,'===');print(x[max(0,p-900):p+2600])
-          PY
+      - run: python3 .tmp/final_audit.py
