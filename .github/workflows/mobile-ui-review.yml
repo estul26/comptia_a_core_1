@@ -1,82 +1,71 @@
 name: Mobile UI review screenshots
-
 on:
   push:
     branches: [audit/ui-ux-mobile-review]
     paths: [.github/workflows/mobile-ui-review.yml]
-
 jobs:
   capture:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Install Playwright
-        run: |
+      - run: |
           npm install --no-save playwright@1.55.0
           npx playwright install chromium
-      - name: Capture mobile UI
+      - name: Capture interaction states
         run: |
           python3 -m http.server 8080 >/tmp/server.log 2>&1 &
           cat > review.mjs <<'JS'
           import { chromium } from 'playwright';
           import fs from 'fs';
-          const browser = await chromium.launch({headless:true});
-          const cases = [
-            ['iphone430',430,932],
-            ['iphone390',390,844],
-            ['small375',375,667],
-          ];
-          for (const [name,width,height] of cases) {
-            const page = await browser.newPage({viewport:{width,height}, deviceScaleFactor:1});
-            await page.goto('http://127.0.0.1:8080/', {waitUntil:'networkidle'});
-            await page.screenshot({path:`ui-review/${name}-top.png`, fullPage:false});
-            if (name==='iphone390') {
-              const info = await page.locator('button, a, select, input, textarea').evaluateAll(els => els.map((e,i)=>({
-                i, tag:e.tagName, text:(e.innerText||e.value||e.getAttribute('aria-label')||e.getAttribute('title')||'').trim().replace(/\s+/g,' ').slice(0,120),
-                aria:e.getAttribute('aria-label'), title:e.getAttribute('title'),
-                rect:(()=>{const r=e.getBoundingClientRect();return {x:Math.round(r.x),y:Math.round(r.y),w:Math.round(r.width),h:Math.round(r.height)}})(),
-                visible:!!(e.offsetWidth||e.offsetHeight||e.getClientRects().length)
-              })));
-              fs.writeFileSync('ui-review/controls.json',JSON.stringify(info,null,2));
-              console.log('CONTROLS',JSON.stringify(info.filter(x=>x.visible),null,2));
-              const body = await page.locator('body').innerText();
-              console.log('BODY_START',body.slice(0,5000));
-              // Click first visible objective-like control if available.
-              const candidates = page.getByText(/1\.1|Mobile Devices|Objective/i);
-              console.log('objective candidates',await candidates.count());
-              // Open More if present.
-              const more=page.getByRole('button',{name:/more/i});
-              if(await more.count()){
-                await more.first().click();
-                await page.waitForTimeout(200);
-                await page.screenshot({path:'ui-review/iphone390-more.png',fullPage:false});
-              }
-              // Close any open overlay with Escape, select 1.1 via select if present.
-              await page.keyboard.press('Escape');
-              const selects=page.locator('select');
-              console.log('selects',await selects.count());
-              for(let i=0;i<await selects.count();i++){
-                const opts=await selects.nth(i).locator('option').allTextContents();
-                console.log('SELECT',i,opts.slice(0,40));
-                const idx=opts.findIndex(x=>x.includes('1.1'));
-                if(idx>=0){
-                  const val=await selects.nth(i).locator('option').nth(idx).getAttribute('value');
-                  if(val!==null){await selects.nth(i).selectOption(val);await page.waitForTimeout(300);}
-                  break;
-                }
-              }
-              await page.screenshot({path:'ui-review/iphone390-objective.png',fullPage:false});
-              await page.evaluate(()=>window.scrollTo(0,Math.min(document.body.scrollHeight*0.35,1800)));
-              await page.waitForTimeout(100);
-              await page.screenshot({path:'ui-review/iphone390-reading.png',fullPage:false});
-            }
-            await page.close();
-          }
+          const browser=await chromium.launch({headless:true});
+          const page=await browser.newPage({viewport:{width:390,height:844},deviceScaleFactor:1});
+          await page.goto('http://127.0.0.1:8080/',{waitUntil:'networkidle'});
+          const metric=async(label)=>{
+            const x=await page.evaluate(()=>({
+              innerWidth:innerWidth,clientWidth:document.documentElement.clientWidth,scrollWidth:document.documentElement.scrollWidth,
+              bodyScrollWidth:document.body.scrollWidth,
+              top:(()=>{const e=document.querySelector('.top');const r=e?.getBoundingClientRect();return e?{position:getComputedStyle(e).position,top:Math.round(r.top),bottom:Math.round(r.bottom),height:Math.round(r.height)}:null})(),
+              reader:(()=>{const e=document.querySelector('.reader');const r=e?.getBoundingClientRect();return e?{top:Math.round(r.top),height:Math.round(r.height)}:null})(),
+              panes:[...document.querySelectorAll('.pane')].map(e=>{const r=e.getBoundingClientRect();return {h:Math.round(r.height),scrollHeight:e.scrollHeight,clientHeight:e.clientHeight,overflow:getComputedStyle(e).overflowY}}),
+              bottom:(()=>{const e=document.querySelector('.bottom');const r=e?.getBoundingClientRect();return e?{top:Math.round(r.top),bottom:Math.round(r.bottom),position:getComputedStyle(e).position}:null})()
+            }));
+            console.log('METRIC',label,JSON.stringify(x));
+          };
+          await metric('top');
+          const summary=page.locator('details.more-menu > summary');
+          console.log('MORE_SUMMARY_COUNT',await summary.count());
+          await summary.click();
+          await page.waitForTimeout(100);
+          await page.screenshot({path:'ui-review/more-open.png'});
+          const menuItems=await page.locator('.more-popover button,.more-popover select,.more-popover input').evaluateAll(els=>els.map(e=>{const r=e.getBoundingClientRect();return {text:(e.innerText||e.value||e.title||'').trim(),x:Math.round(r.x),y:Math.round(r.y),w:Math.round(r.width),h:Math.round(r.height),right:Math.round(r.right)}}));
+          console.log('MENU_ITEMS',JSON.stringify(menuItems,null,2));
+          await page.keyboard.press('Escape');
+          // Select objective 1.1
+          const sel=page.locator('select[aria-label="Jump to objective"]');
+          const opts=await sel.locator('option').allTextContents();
+          const idx=opts.findIndex(x=>x.includes('1.1'));
+          if(idx>=0){const v=await sel.locator('option').nth(idx).getAttribute('value');await sel.selectOption(v);await page.waitForTimeout(150);}
+          await page.evaluate(()=>window.scrollTo(0,1100));
+          await page.waitForTimeout(100);
+          await metric('scroll1100');
+          await page.screenshot({path:'ui-review/scrolled.png'});
+          // Cards mode
+          await page.evaluate(()=>window.scrollTo(0,0));
+          const cards=page.getByRole('button',{name:/Cards/i});
+          await cards.click(); await page.waitForTimeout(150);
+          await page.screenshot({path:'ui-review/cards.png'});
+          await metric('cards');
+          // English only
+          const lang=page.locator('select[aria-label="Language layout"]');
+          const langOpts=await lang.locator('option').allTextContents();
+          console.log('LANG_OPTIONS',JSON.stringify(langOpts));
+          if(langOpts.length>1){const v=await lang.locator('option').nth(1).getAttribute('value');await lang.selectOption(v);await page.waitForTimeout(100);}
+          await page.screenshot({path:'ui-review/english-only.png'});
           await browser.close();
           JS
           mkdir -p ui-review
           node review.mjs
       - uses: actions/upload-artifact@v4
         with:
-          name: mobile-ui-review
+          name: mobile-ui-review-2
           path: ui-review/
