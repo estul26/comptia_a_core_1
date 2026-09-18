@@ -304,3 +304,48 @@ test("capture mobile reader, menu, and focus screenshots", async ({ page }, test
   await page.waitForTimeout(160);
   await page.screenshot({ path: path.join(dir, `${prefix}-reading-focus.png`) });
 });
+
+test("priority Uyghur content avoids known translation artifacts", async ({ page }) => {
+  const priority = ["Objective 3.1", "Objective 3.2", "Objective 3.3", "Objective 3.4", "Objective 3.5", "Objective 3.6", "Objective 3.7", "Objective 3.8", "Objective 4.1", "Objective 4.2", "Objective 5.1", "Objective 5.2", "Objective 5.3", "Objective 5.4", "Objective 5.5", "Objective 5.6"];
+  const forbidden = [
+    "Exam memory:",
+    "Source-scope note:",
+    "Source-framing note:",
+    "Source-safety note:",
+    "Source-accuracy note:",
+    "Source-model caution:",
+    "Source-boundary note:",
+    "Source-attribution caution:",
+    "Transcript correction:",
+    "Reviewed Uyghur",
+    "reviewed lesson",
+    "Repair ياكى component replacement",
+    "reviewed flow:",
+    "Exam Objective ",
+    "Source-Stated Possible Causes",
+    "Source-stated benefits:",
+    "Source teaching model:",
+    "Source components:",
+    "Source process:",
+    "Source example:",
+    "Source examples:"
+  ];
+
+  for (const objective of priority) {
+    await selectObjective(page, objective);
+    const uyghur = await page.locator("#ugArticle").innerText();
+    for (const needle of forbidden) {
+      expect(uyghur, objective + " still contains: " + needle).not.toContain(needle);
+    }
+  }
+
+  const archived = fs.readFileSync(
+    path.join(process.cwd(), "source", "comptia_a_core_1_Uyghur.txt"),
+    "utf8"
+  );
+  expect(archived).not.toContain("مەنبەدەئىرىسى");
+  expect(archived).not.toContain("ئالامەت / ئالامەت");
+  expect(archived).not.toMatch(/[\u0600-\u06FF]s\b/);
+  expect(archived.split(/\r?\n/).some(line => line.trim() === ".")).toBe(false);
+});
+

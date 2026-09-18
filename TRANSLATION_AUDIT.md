@@ -1060,3 +1060,32 @@ Each objective should be checked for:
 - Corrected context-sensitive terminology collisions, especially CPU core versus fiber core and storage device versus storage capacity.
 - Normalized repeated bilingual forms for printer, scanner, router, firmware, IP address, capacity and resolution.
 - Verified all 27 objective identifiers remain represented, all Markdown tables retain consistent columns, and the file contains no replacement characters or hidden bidirectional-control characters.
+
+## V6.8 — Uyghur final-language polish pass
+
+### User-facing study text
+- Polished Objectives **3.5, 3.8, 4.1, 5.3 and 5.6**, the sections with the heaviest ordinary-English code-switching in the published reader.
+- Replaced mixed English scaffolding with natural Uyghur while preserving exam-recognition terms such as CPU, RAM, PCIe, VM, VDI, TPM, BIOS/UEFI and other canonical acronyms.
+- Translated recurring review labels such as `Transcript correction`, `Source-scope note`, `Source-framing note`, `Source-safety note`, `Source-accuracy note`, `Source-model caution`, `Exam term` and `Exam memory`.
+- Reworked troubleshooting memory cues in Objectives 5.3 and 5.6 so the action flow is readable in Uyghur rather than English sentence fragments.
+- Normalized the published Uyghur spelling of `Wi-Fi`.
+
+### Archived Uyghur source cleanup
+- Corrected malformed `مەنبەدەئىرىسى` wording to `مەنبە دائىرىسى`.
+- Removed duplicated `ئالامەت / ئالامەت` headings.
+- Removed isolated dot-only lines.
+- Corrected English plural-s artifacts attached to Uyghur words, including cable, form-factor, paper and troubleshooting headings.
+- Replaced the literal RAM expansion with a natural functional description.
+- Rewrote the thermal-paper storage memory cue and the mixed-language display-flicker cue.
+
+### Guardrail
+- Added a mobile regression assertion for the priority objectives and archived source so known raw review scaffolding and malformed Uyghur artifacts do not silently return.
+
+### V6.8 follow-up language pass
+- Extended the published-reader language polish across **3.1–3.4, 3.6–3.7, 4.2, and 5.1–5.5**.
+- Rewrote the learner-facing exam-memory cues so the actions and comparisons read primarily in Uyghur instead of English sentence fragments.
+- Reduced ordinary-English scaffolding in display, cabling, RAM, storage, power-supply, printer, cloud, PC/storage troubleshooting, mobile-device troubleshooting, and network-troubleshooting explanations.
+- Preserved canonical terms where English recognition is useful for the exam, including protocol/standard names, acronyms, connector names, model identifiers, formulas and quoted source corrections.
+- Expanded the regression guardrail to cover all polished **3.x–5.x** objectives for known editor-style artifacts.
+- This is a language-polish pass, not a change to the underlying English transcript or the approved reader UI/runtime.
+
