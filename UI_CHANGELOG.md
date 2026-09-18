@@ -84,4 +84,13 @@ This release keeps the reviewed V5.30 bilingual lesson data and the existing stu
 - Added `viewport-fit=cover` and safe-area padding for installed iPhone/PWA use.
 - Preserved all lesson text, translations, localStorage keys, progress, notes, bookmarks, recall settings, search, and desktop behavior.
 - Bumped the service-worker cache and package version to V6.6.
+## V6.6.1 — Mobile Reading Position Fix
+
+- Fixed Resume reading after V6.6 moved mobile lessons to a single document scroll.
+- Mobile now saves and restores the page scroll ratio for each objective.
+- Cards mode now saves its own active scroll surface on desktop.
+- Switching between Columns and Cards preserves the learner's approximate reading position.
+- Objective changes still reset to the top while keeping the saved Resume point available.
+- Preserved all lesson/translation content and existing saved-state keys.
+- Bumped the service-worker cache and package version to V6.6.1.
 
