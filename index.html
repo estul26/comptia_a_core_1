@@ -1415,6 +1415,34 @@ function restoreReadingRatio(ratio){
   setScrollImmediate(en,safe*Math.max(0,en.scrollHeight-en.clientHeight));
   setScrollImmediate(ug,safe*Math.max(0,ug.scrollHeight-ug.clientHeight));
 }
+function restoreReadingRatioAfterLayout(ratio,done){
+  const safe=Math.min(1,Math.max(0,Number(ratio)||0));
+  if(!isDocumentReadingScroll()){
+    restoreReadingRatio(safe);
+    if(done)done();
+    return;
+  }
+  const root=document.documentElement;
+  const priorAnchor=root.style.overflowAnchor;
+  const priorBehavior=root.style.scrollBehavior;
+  root.style.overflowAnchor="none";
+  root.style.scrollBehavior="auto";
+  let frame=0;
+  const apply=()=>{
+    const {max}=scrollMetrics(window);
+    window.scrollTo(0,safe*max);
+    frame++;
+    if(frame<4){requestAnimationFrame(apply);return}
+    requestAnimationFrame(()=>{
+      const {max:finalMax}=scrollMetrics(window);
+      window.scrollTo(0,safe*finalMax);
+      root.style.overflowAnchor=priorAnchor;
+      root.style.scrollBehavior=priorBehavior;
+      if(done)done();
+    });
+  };
+  requestAnimationFrame(apply);
+}
 function resetReadingPosition(){
   setScrollImmediate($("enPane"),0);
   setScrollImmediate($("ugPane"),0);
@@ -1602,11 +1630,11 @@ $("pairBtn").onclick=()=>{
   if(!state.pairMode){state.recallSide="";localStorage.setItem("a1-recall-side","");}
   applyStudyModes();if(state.pairMode)buildPairs();
   suppressScrollSave=true;
-  requestAnimationFrame(()=>requestAnimationFrame(()=>{
-    restoreReadingRatio(ratio);
+  restoreReadingRatioAfterLayout(ratio,()=>{
     suppressScrollSave=false;
     saveReadingPosition(activeReadingSource());
-  }));
+    updateReadingFocusFromViewport();
+  });
 };
 $("focusLineBtn").onclick=()=>{
   state.focusLine=!state.focusLine;localStorage.setItem("a1-focus-line",state.focusLine?"1":"0");applyStudyModes();
