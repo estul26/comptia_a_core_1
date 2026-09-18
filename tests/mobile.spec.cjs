@@ -306,7 +306,7 @@ test("capture mobile reader, menu, and focus screenshots", async ({ page }, test
 });
 
 test("priority Uyghur content avoids known translation artifacts", async ({ page }) => {
-  const priority = ["Objective 3.5", "Objective 3.8", "Objective 4.1", "Objective 5.3", "Objective 5.6"];
+  const priority = ["Objective 3.1", "Objective 3.2", "Objective 3.3", "Objective 3.4", "Objective 3.5", "Objective 3.6", "Objective 3.7", "Objective 3.8", "Objective 4.1", "Objective 4.2", "Objective 5.1", "Objective 5.2", "Objective 5.3", "Objective 5.4", "Objective 5.5", "Objective 5.6"];
   const forbidden = [
     "Exam memory:",
     "Source-scope note:",
@@ -319,7 +319,8 @@ test("priority Uyghur content avoids known translation artifacts", async ({ page
     "Transcript correction:",
     "Reviewed Uyghur",
     "reviewed lesson",
-    "Repair ياكى component replacement"
+    "Repair ياكى component replacement",
+    "reviewed flow:"
   ];
 
   for (const objective of priority) {
