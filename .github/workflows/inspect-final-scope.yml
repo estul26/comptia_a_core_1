@@ -1,0 +1,23 @@
+name: Inspect final scope labels
+
+on:
+  push:
+    branches: [fix/final-scope-labels]
+    paths: [.github/workflows/inspect-final-scope.yml]
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          t=Path('index.html').read_text()
+          def o(a,b):
+              s=t.find(f'"id": "{a}"');e=t.find(f'"id": "{b}"',s);return t[s:e]
+          for oid,nxt,term in [('2.1','2.2','Next, we have SNMP'),('3.2','3.3','USB version 1.0'),('3.4','3.5','### MiniSD'),('3.4','3.5','### xD Card')]:
+              b=o(oid,nxt);p=b.find(term)
+              print(f'=== {oid} {term} ===')
+              print(b[max(0,p-500):p+1800] if p>=0 else 'NOT FOUND')
+          PY
