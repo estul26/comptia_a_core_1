@@ -314,6 +314,8 @@ test("priority Uyghur content avoids known translation artifacts", async ({ page
     "Source-safety note:",
     "Source-accuracy note:",
     "Source-model caution:",
+    "Source-boundary note:",
+    "Source-attribution caution:",
     "Transcript correction:",
     "Reviewed Uyghur",
     "reviewed lesson",
