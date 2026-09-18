@@ -51,6 +51,19 @@ Use cases:
 - legacy apps/OS
 - cross-platform development/testing
 
+## Current-objective VM requirements
+Current 220-1201 Objective 4.1 explicitly names three requirement categories:
+- **Security**
+- **Network**
+- **Storage**
+
+The transcript already discusses host resource allocation, networking capability, and virtualization security, but it does not present **Security / Network / Storage** together as the objective's named requirements. Learner-facing English and Uyghur now add a clearly labeled **Exam Note**:
+- Security = access control/protection + VM isolation
+- Network = appropriate virtual networking/IP connectivity or deliberate isolation
+- Storage = enough host space for the VM virtual disk, guest OS/apps/data while preserving host capacity
+
+No vendor-specific virtual-network modes, storage platforms, or advanced virtualization features are added.
+
 ## Hypervisors
 Definition:
 - software layer enabling multiple OS/VMs on one physical hardware platform
@@ -96,5 +109,6 @@ No cross-platform runtime/hidden-VM implementation details are imported.
 ## Translation approach
 - Preserve source architecture and use cases.
 - Mark course simplifications as source models.
+- Add missing current-objective requirements as clearly labeled learner-facing **Exam Notes** without changing the archival transcript.
 - Correct only clear transcription artifacts.
-- Avoid external virtualization/vendor/platform material not taught in 4.1.
+- Avoid vendor-specific or advanced virtualization/platform material not needed for 4.1.
