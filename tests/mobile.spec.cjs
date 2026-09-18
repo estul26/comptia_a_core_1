@@ -305,8 +305,8 @@ test("capture mobile reader, menu, and focus screenshots", async ({ page }, test
   await page.screenshot({ path: path.join(dir, `${prefix}-reading-focus.png`) });
 });
 
-test("priority Uyghur content avoids known translation artifacts", async ({ page }) => {
-  const priority = ["Objective 3.1", "Objective 3.2", "Objective 3.3", "Objective 3.4", "Objective 3.5", "Objective 3.6", "Objective 3.7", "Objective 3.8", "Objective 4.1", "Objective 4.2", "Objective 5.1", "Objective 5.2", "Objective 5.3", "Objective 5.4", "Objective 5.5", "Objective 5.6"];
+test("all objective Uyghur content avoids known learner-quality artifacts", async ({ page }) => {
+  const priority = ["Objective 1.1", "Objective 1.2", "Objective 1.3", "Objective 2.1", "Objective 2.2", "Objective 2.3", "Objective 2.4", "Objective 2.5", "Objective 2.6", "Objective 2.7", "Objective 2.8", "Objective 3.1", "Objective 3.2", "Objective 3.3", "Objective 3.4", "Objective 3.5", "Objective 3.6", "Objective 3.7", "Objective 3.8", "Objective 4.1", "Objective 4.2", "Objective 5.1", "Objective 5.2", "Objective 5.3", "Objective 5.4", "Objective 5.5", "Objective 5.6"];
   const forbidden = [
     "Exam memory:",
     "Source-scope note:",
@@ -328,7 +328,21 @@ test("priority Uyghur content avoids known translation artifacts", async ({ page
     "Source components:",
     "Source process:",
     "Source example:",
-    "Source examples:"
+    "Source examples:",
+    "learner-facing",
+    "Original transcript",
+    "قوزغىتىدۇ قىلىدۇ",
+    "يۈكلەنمەيدۇ بولمايدۇ",
+    "قايتا قۇرۇلىدۇ قىلىنىدۇ",
+    "باشقۇرىدۇ قىلىدۇ",
+    "سايلايدۇ قىلىدۇ",
+    "چۈشىنىلىدۇ قىلىنىدۇ",
+    "زىيارەت نى",
+    "ئۆزگەرتىش دىن",
+    "زىيارىتى قا",
+    "ساقلاش سىغىمى غا",
+    "بېشى نىڭ",
+    "دەرس نىڭ"
   ];
 
   for (const objective of priority) {
@@ -346,6 +360,13 @@ test("priority Uyghur content avoids known translation artifacts", async ({ page
   expect(archived).not.toContain("مەنبەدەئىرىسى");
   expect(archived).not.toContain("ئالامەت / ئالامەت");
   expect(archived).not.toMatch(/[\u0600-\u06FF]s\b/);
+  expect(archived).not.toContain("قوزغىتىدۇ قىلىدۇ");
+  expect(archived).not.toContain("يۈكلەنمەيدۇ بولمايدۇ");
+  expect(archived).not.toContain("قايتا قۇرۇلىدۇ قىلىنىدۇ");
+  expect(archived).not.toContain("باشقۇرىدۇ قىلىدۇ");
+  expect(archived).not.toContain("زىيارەت نى");
+  expect(archived).not.toContain("ئۆزگەرتىش دىن");
+  expect(archived).not.toContain("زىيارىتى قا");
   expect(archived.split(/\r?\n/).some(line => line.trim() === ".")).toBe(false);
 });
 
