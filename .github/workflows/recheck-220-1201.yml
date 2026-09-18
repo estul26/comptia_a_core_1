@@ -1,4 +1,4 @@
-name: Recheck remaining 220-1201 audit items
+name: Final remaining-scope audit
 
 on:
   push:
@@ -12,24 +12,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Inspect remaining candidate items
+      - name: Print compact remaining-scope findings
         run: |
           python3 - <<'PY'
           from pathlib import Path
-          text=Path('index.html').read_text(encoding='utf-8')
-          def obj(a,b):
-              s=text.find(f'"id": "{a}"'); e=text.find(f'"id": "{b}"',s)
-              return text[s:e]
-
-          for oid,nxt,terms in [
-              ('2.1','2.2',['SNMP','161','162']),
-              ('3.2','3.3',['serial transmission','USB 1','blue','100BASE-TX']),
-              ('3.4','3.5',['xD','MiniSD','removable']),
-          ]:
-              body=obj(oid,nxt)
-              print(f'=== OBJECTIVE {oid} ===')
-              positions=[body.lower().find(t.lower()) for t in terms if body.lower().find(t.lower())>=0]
-              for p in sorted(set(positions)):
-                  print(body[max(0,p-1000):p+2600])
-                  print('---')
+          t=Path('index.html').read_text(encoding='utf-8')
+          def o(a,b):
+              s=t.find(f'"id": "{a}"'); e=t.find(f'"id": "{b}"',s); return t[s:e]
+          for oid,nxt,term in [('2.1','2.2','SNMP'),('3.2','3.3','USB 1.0'),('3.4','3.5','### MiniSD'),('3.4','3.5','### xD Card')]:
+              b=o(oid,nxt); p=b.find(term)
+              print(f'[{oid} {term}]')
+              print(b[max(0,p-350):p+1300] if p>=0 else 'NOT FOUND')
+              print('---')
           PY
