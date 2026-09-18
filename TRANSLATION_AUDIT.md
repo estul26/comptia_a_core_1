@@ -1081,3 +1081,11 @@ Each objective should be checked for:
 ### Guardrail
 - Added a mobile regression assertion for the priority objectives and archived source so known raw review scaffolding and malformed Uyghur artifacts do not silently return.
 
+### V6.8 follow-up language pass
+- Extended the published-reader language polish across **3.1–3.4, 3.6–3.7, 4.2, and 5.1–5.5**.
+- Rewrote the learner-facing exam-memory cues so the actions and comparisons read primarily in Uyghur instead of English sentence fragments.
+- Reduced ordinary-English scaffolding in display, cabling, RAM, storage, power-supply, printer, cloud, PC/storage troubleshooting, mobile-device troubleshooting, and network-troubleshooting explanations.
+- Preserved canonical terms where English recognition is useful for the exam, including protocol/standard names, acronyms, connector names, model identifiers, formulas and quoted source corrections.
+- Expanded the regression guardrail to cover all polished **3.x–5.x** objectives for known editor-style artifacts.
+- This is a language-polish pass, not a change to the underlying English transcript or the approved reader UI/runtime.
+

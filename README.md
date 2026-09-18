@@ -94,7 +94,7 @@ V5.2 fixes the study-card alignment boundary bug, improves reading-position resu
 
 ## Translation review status
 
-All 27 exam objectives have completed technical/source-fidelity review. **V6.8 adds a dedicated Uyghur language-polish pass to the user-facing study text**, starting with the highest code-switching sections: **3.5, 3.8, 4.1, 5.3, and 5.6**. Recognized exam acronyms and protocol/product names remain visible, while ordinary English scaffolding is rewritten as natural Uyghur.
+All 27 exam objectives have completed technical/source-fidelity review. **V6.8 adds a dedicated Uyghur language-polish pass to the user-facing study text.** The first pass focused on **3.5, 3.8, 4.1, 5.3, and 5.6**; the follow-up pass extends that work across **3.1–3.4, 3.6–3.7, 4.2, and 5.1–5.5**. Recognized exam acronyms, protocol names and product/standard identifiers remain visible, while ordinary English scaffolding and study cues are rewritten as natural Uyghur.
 
 The archived Uyghur source also receives deterministic cleanup for duplicated labels, stray English plural suffixes, malformed source-scope wording, isolated punctuation lines, and other translation artifacts.
 
