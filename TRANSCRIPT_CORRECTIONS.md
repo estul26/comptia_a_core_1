@@ -17,6 +17,9 @@ The DDR/DIMM/SODIMM terminology matches the CompTIA A+ 220-1201 RAM objective te
 
 - Objective 1.3: `pen code` → `PIN code` in the Bluetooth pairing segment (speech-to-text error in the original transcript).
 - Objective 1.3: the MDM sentence `employees often accessed sensitive corporate data` is treated as a grammatical speech-to-text artifact; the reviewed Uyghur preserves the intended ongoing workplace meaning without altering the original English source.
+- Objective 2.1 scope-label note: SNMP 161/162 is retained as useful networking knowledge but explicitly labeled **Supplemental** because it is not directly tested in the current Objective 2.1 port list.
+- Objective 3.2 scope-label note: USB 1.x history is retained but explicitly labeled **Legacy / Supplemental**; current Objective 3.2 emphasis remains USB 2.0 and USB 3.x.
+- Objective 3.4 scope-label note: MiniSD and xD removable-media material is retained but explicitly labeled **Legacy / Supplemental** so it does not receive the same study emphasis as current storage topics. Learner-facing English also corrects the transcript's `many SD cards` wording to **MiniSD**.
 - Objective 2.1: `Comp-TA plus` / `CompTIA AE plus` are treated as speech-to-text variants of `CompTIA A+`; the original English source remains unchanged.
 - Objective 2.1 source gap: the IMAP segment explains synchronization behavior but does **not** state an IMAP default port number. The original transcript remains unchanged; learner-facing study content adds **Exam Note: IMAP 143** to match the current 220-1201 objective.
 - Objective 2.1 source scope: the NetBIOS segment says multiple ports are used but only explains ports 137 and 139. The original transcript remains unchanged; learner-facing study content adds **Exam Note: NetBIOS/NetBT 137–139**, including port 138 datagram service, to match the current 220-1201 objective.

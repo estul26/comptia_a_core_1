@@ -105,11 +105,11 @@ The original English transcript under `source/` should remain an immutable sourc
 
 ### Low / scope labeling
 
-- [ ] **2.1 — Mark SNMP 161/162 supplemental** rather than part of the current v4.0 2.1 memorization list.
-- [ ] **3.2 — Mark USB 1.x material supplemental** because the current objective explicitly calls out USB 2.0 and USB 3.0.
+- [x] **2.1 — Mark SNMP 161/162 supplemental** rather than part of the current v4.0 2.1 memorization list.
+- [x] **3.2 — Mark USB 1.x material supplemental** because the current objective explicitly calls out USB 2.0 and USB 3.0.
 - [x] **3.6 — Mark UPS material supplemental** under the current v4.0 Objective 3.6.
 - [x] **3.7 — Mark 3D-printer discussion supplemental** if retained in this objective.
-- [ ] **3.4 — Consider labeling uncommon legacy removable formats (for example xD/MiniSD) as supplemental/legacy** so they do not receive the same study emphasis as current objective bullets.
+- [x] **3.4 — Consider labeling uncommon legacy removable formats (for example xD/MiniSD) as supplemental/legacy** so they do not receive the same study emphasis as current objective bullets.
 
 ## Content policy for fixes
 
