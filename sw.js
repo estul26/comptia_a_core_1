@@ -1,4 +1,4 @@
-const CACHE = "aplus-uyghur-v6.8-language-polish";
+const CACHE = "aplus-uyghur-v6.9-learner-quality";
 const CORE = [
   "/",
   "/index.html",

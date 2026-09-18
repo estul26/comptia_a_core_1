@@ -1089,3 +1089,26 @@ Each objective should be checked for:
 - Expanded the regression guardrail to cover all polished **3.x–5.x** objectives for known editor-style artifacts.
 - This is a language-polish pass, not a change to the underlying English transcript or the approved reader UI/runtime.
 
+## V6.9 — Learner-quality audit
+
+### Published reader
+- Performed a human-style learner-quality audit of the published Uyghur reader, starting with Objectives **3.2, 3.3 and 3.5** and then extending the same standard across all 27 objectives when the audit found older English-heavy scaffolding elsewhere.
+- Rewrote ordinary English explanation fragments, headings, troubleshooting actions, comparison-table labels and exam-memory summaries as natural Uyghur.
+- Preserved canonical recognition terms where they are useful for CompTIA A+ study: acronyms, protocol names, connector/standard identifiers, formulas, official English expansions and explicit quoted source wording.
+- Fixed awkward mixed-language grammar discovered during the pass, including duplicated verb constructions, detached Uyghur particles and partial English sentence fragments.
+- Reworked major learner-facing blocks in networking, storage/RAID, power, printers, virtualization/cloud, PC/storage/display/mobile/network troubleshooting, while keeping the previously reviewed technical meaning intact.
+- Did not perform a broad terminology replacement after the human-style pass; remaining English-heavy lines are primarily canonical exam terms, official expansions, product/provider names, code/URLs or explicit source quotations.
+
+### Source/archive boundary
+- The archived Uyghur source is substantially fuller than the published lesson text. V6.9 therefore **does not overwrite objective ranges in the archive with the shorter live lessons**.
+- The archive was checked for the same deterministic malformed-wording patterns used by the V6.9 guardrail and passed those checks.
+- V6.9 is a learner-facing quality release, not a rewrite of the original English transcript or a destructive compaction of the archived Uyghur source.
+
+### Regression guardrail
+- Extended the Playwright learner-quality test from the V6.8 priority set to **all 27 objectives**.
+- Added checks for newly discovered artifacts such as mixed-language editor labels, duplicated Uyghur verb constructions and detached suffix/particle spacing.
+- Retained archived-source checks for malformed labels, stray English plural suffixes and isolated punctuation lines.
+
+### Release intent
+- V6.9 is intended to be the **final broad content-quality pass**. Future translation edits should be narrow, evidence-based corrections or clearly identified learner feedback rather than another global wording sweep.
+
