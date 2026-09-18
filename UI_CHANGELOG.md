@@ -72,3 +72,16 @@ This release keeps the reviewed V5.30 bilingual lesson data and the existing stu
 - Moved the stacked/mobile layout breakpoint to 900px to avoid cramped narrow-desktop layouts.
 - Preserved all existing study-engine IDs, localStorage keys, notes, bookmarks, progress, recall, cards, PWA, and offline behavior.
 - Bumped the service-worker cache to V6.2.
+## V6.6 — Mobile Usability Polish
+
+- Replaced stacked fixed-height mobile reading panes with a single natural page scroll to remove nested scrolling.
+- Kept Previous / Next objective navigation always reachable with a safe-area-aware fixed bottom bar.
+- Hid synchronized scrolling on mobile, where the reader now uses document scrolling.
+- Increased primary touch targets to 44px on coarse-pointer mobile devices.
+- Added compact mobile course progress below the objective selector.
+- Added tap support for reading-focus selection and touch-revealed Copy actions.
+- Added outside-tap and Escape dismissal for the More menu, with keyboard focus returned to its trigger.
+- Added `viewport-fit=cover` and safe-area padding for installed iPhone/PWA use.
+- Preserved all lesson text, translations, localStorage keys, progress, notes, bookmarks, recall settings, search, and desktop behavior.
+- Bumped the service-worker cache and package version to V6.6.
+
