@@ -1,0 +1,28 @@
+name: Inspect UI structure
+on:
+  push:
+    branches: [audit/ui-ux-mobile-review]
+    paths: [.github/workflows/inspect-ui-structure.yml]
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          t=Path('index.html').read_text(encoding='utf-8')
+          print('SIZE',len(t))
+          print('MEDIA QUERIES')
+          for m in re.finditer(r'@media[^\{]+\{',t):
+              print(t[m.start():m.end()].replace('\n',' ')[:200])
+          print('\nCSS MOBILE-RELATED SELECTORS/SNIPPETS')
+          for term in ['mobile','toolbar','sidebar','reader','pane','objective-select','bottom','sticky','more-menu','font-size','safe-area']:
+              print('\nTERM',term)
+              for m in list(re.finditer(term,t,re.I))[:12]:
+                  print(t[max(0,m.start()-180):m.start()+350].replace('\n',' ')[:530])
+          print('\nACCESSIBILITY ATTRS COUNTS')
+          for x in ['aria-label','aria-expanded','aria-controls','role=','focus-visible','prefers-reduced-motion','min-height: 44','min-height:44','touch-action','env(safe-area-inset']:
+              print(x,t.lower().count(x.lower()))
+          PY
