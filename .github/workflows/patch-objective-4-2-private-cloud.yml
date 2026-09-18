@@ -1,0 +1,30 @@
+name: Apply Objective 4.2 private cloud fix
+
+on:
+  push:
+    branches:
+      - fix/objective-4-2-private-cloud
+    paths:
+      - .github/workflows/patch-objective-4-2-private-cloud.yml
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Apply bounded Objective 4.2 patch
+        run: python3 .tmp/patch_obj42_private_cloud.py
+      - name: Verify source transcript unchanged
+        run: git diff --exit-code -- source/
+      - name: Commit Objective 4.2 content
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html OBJECTIVE_4_2_REVIEW.md TRANSCRIPT_CORRECTIONS.md
+          git commit -m "fix: correct Objective 4.2 private cloud guidance"
+          git push origin HEAD:fix/objective-4-2-private-cloud
