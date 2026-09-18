@@ -29,8 +29,14 @@ Models:
 - Hybrid
 - Community
 
-Private-cloud caution:
-the transcript says private clouds maintain access during local Internet outages. The reviewed lesson labels this as source teaching rather than a universal topology guarantee.
+Private-cloud technical correction:
+- the transcript says private clouds maintain access during local Internet outages and uses guarantee-style wording for reliability/compliance
+- learner-facing English and Uyghur no longer preserve those claims as study rules
+- **private cloud = exclusive use by one organization**; it may exist on-premises or off-premises
+- outage behavior depends on deployment topology and the user's access path
+- on-prem local access may survive an Internet outage if internal networking/services remain available; off-premises or remote access may depend on WAN/Internet/private-link connectivity
+- high availability depends on redundancy/failover architecture, not the private-cloud label alone
+- private cloud can support compliance/security goals but does not automatically guarantee compliance or prevent breaches
 
 ## Cloud characteristics
 Source characteristics:
@@ -110,6 +116,7 @@ No vendor-specific responsibility model is imported.
 
 ## Translation approach
 - Preserve source categories, hierarchy and examples.
-- Keep source simplifications/source claims labeled when architecture-dependent.
-- Correct only clear grammatical/transcription artifacts.
-- Do not add cloud services or operational details absent from Objective 4.2.
+- Correct architecture-dependent source claims when preserving them would create a learner-facing technical error.
+- Keep the private-cloud correction concise: exclusive use, on/off premises, topology-dependent access, and architecture-dependent availability.
+- Correct clear grammatical/transcription artifacts.
+- Do not add unrelated cloud services or operational details absent from Objective 4.2.
